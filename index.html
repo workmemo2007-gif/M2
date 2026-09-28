@@ -3,14 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>موقعي التفاعلي - تأثير البارالاكس العميق</title>
-    <!-- Tailwind CSS for modern design -->
+    <title>مخطوطة رتاج التفاعلية</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Cairo', sans-serif;
-            color: #ffffff;
             margin: 0;
             padding: 0;
             overflow-x: hidden;
@@ -23,255 +21,133 @@
             will-change: background-position;
         }
 
-        /* Custom Glassmorphism styles */
-        .glass-card {
-            background: rgba(15, 23, 42, 0.75);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        /* أنماط النص والتوهج الأساسية */
+        .letter-group {
+            cursor: pointer;
+            transition: all 0.4s ease;
         }
 
-        .glass-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
-            border-color: rgba(74, 222, 128, 0.3);
+        .main-letter {
+            fill: #ffffff;
+            filter: drop-shadow(0px 0px 8px #3b82f6) drop-shadow(0px 0px 18px #1d4ed8);
+            transition: all 0.3s ease;
         }
 
-        /* Glowing text gradient */
-        .gradient-text {
-            background: linear-gradient(135deg, #4ade80 0%, #3b82f6 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .connector-line {
+            stroke: rgba(255, 255, 255, 0.4);
+            stroke-width: 1.5;
+            stroke-dasharray: 4 2;
+            transition: all 0.3s ease;
         }
 
-        /* Floating animation for indicators */
-        @keyframes bounce-slow {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(12px); }
+        .circle-node {
+            fill: rgba(13, 17, 23, 0.85);
+            stroke: #3b82f6;
+            stroke-width: 2;
+            filter: drop-shadow(0px 0px 6px #3b82f6);
+            transition: all 0.3s ease;
         }
 
-        .animate-bounce-slow {
-            animation: bounce-slow 2.5s infinite ease-in-out;
+        .circle-text {
+            fill: #ffffff;
+            font-weight: bold;
+            font-size: 18px;
+            text-anchor: middle;
+            dominant-baseline: central;
+            transition: all 0.3s ease;
         }
 
-        /* Smooth scrolling behavior */
-        html {
-            scroll-behavior: smooth;
+        /* تأثير التوهج الذهبي عند التحديد */
+        .letter-group.active .main-letter {
+            fill: #ffd700;
+            filter: drop-shadow(0px 0px 12px #ffd700) drop-shadow(0px 0px 25px #ffaa00);
+        }
+
+        .letter-group.active .connector-line {
+            stroke: #ffd700;
+            stroke-width: 2.5;
+            stroke-dasharray: none;
+            filter: drop-shadow(0px 0px 6px #ffd700);
+        }
+
+        .letter-group.active .circle-node {
+            stroke: #ffd700;
+            fill: rgba(255, 215, 0, 0.15);
+            filter: drop-shadow(0px 0px 10px #ffd700);
+        }
+
+        .letter-group.active .circle-text {
+            fill: #ffd700;
+        }
+
+        .letter-group:hover .main-letter {
+            filter: drop-shadow(0px 0px 12px #60a5fa) drop-shadow(0px 0px 22px #2563eb);
         }
     </style>
 </head>
-<body class="min-h-screen">
+<body class="min-h-screen flex flex-col justify-between items-center justify-center">
 
-    <header class="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800/80 px-6 py-4 transition-all">
-        <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-green-500 to-blue-600 flex items-center justify-center font-black text-xl shadow-lg shadow-green-500/20">
-                    م
-                </div>
-                <span class="text-2xl font-black tracking-wide gradient-text">موقعي التفاعلي</span>
-            </div>
+    <main class="w-full max-w-5xl px-4 py-12 flex flex-col items-center justify-center min-h-screen">
+        
+        <div class="w-full max-w-3xl aspect-[16/9] flex items-center justify-center">
+            <svg viewBox="0 0 900 450" class="w-full h-full overflow-visible">
+                
+                <g class="letter-group" onclick="selectLetter(this)">
+                    <line x1="680" y1="210" x2="770" y2="100" class="connector-line" />
+                    <circle cx="770" cy="100" r="24" class="circle-node" />
+                    <text x="770" y="100" class="circle-text">ر</text>
+                    <path d="M 660 200 C 670 205, 680 215, 675 235 C 665 270, 630 300, 600 310 C 590 313, 585 305, 595 298 C 620 280, 645 255, 650 220 Z" class="main-letter" />
+                </g>
 
-            <nav class="hidden md:flex items-center gap-8 font-medium text-slate-300">
-                <a href="#home" class="hover:text-green-400 transition-colors">الرئيسية</a>
-                <a href="#about" class="hover:text-green-400 transition-colors">عن الموقع</a>
-                <a href="#parallax-demo" class="hover:text-green-400 transition-colors">تأثير البارالاكس</a>
-                <a href="#services" class="hover:text-green-400 transition-colors">الخدمات</a>
-                <a href="#stats" class="hover:text-green-400 transition-colors">الإحصائيات</a>
-                <a href="#contact" class="hover:text-green-400 transition-colors">تواصل معنا</a>
-            </nav>
+                <g class="letter-group" onclick="selectLetter(this)">
+                    <line x1="530" y1="200" x2="550" y2="70" class="connector-line" />
+                    <circle cx="550" cy="70" r="24" class="circle-node" />
+                    <text x="550" y="70" class="circle-text">ت</text>
+                    <circle cx="520" cy="165" r="5" class="main-letter" />
+                    <circle cx="538" cy="165" r="5" class="main-letter" />
+                    <path d="M 580 205 L 580 215 C 580 230, 560 230, 480 230 L 470 205 L 485 205 C 530 205, 560 205, 565 205 Z" class="main-letter" />
+                </g>
 
-            <a href="#contact" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-slate-950 font-bold shadow-lg shadow-green-500/20 transition-all hover:scale-105">
-                ابدأ الآن
-            </a>
+                <g class="letter-group" onclick="selectLetter(this)">
+                    <line x1="435" y1="120" x2="380" y2="50" class="connector-line" />
+                    <circle cx="380" cy="50" r="24" class="circle-node" />
+                    <text x="380" y="50" class="circle-text">ا</text>
+                    <path d="M 430 230 L 430 110 C 430 100, 442 100, 442 110 L 442 230 Z" class="main-letter" />
+                </g>
+
+                <g class="letter-group" onclick="selectLetter(this)">
+                    <line x1="300" y1="210" x2="160" y2="120" class="connector-line" />
+                    <circle cx="160" cy="120" r="24" class="circle-node" />
+                    <text x="160" y="120" class="circle-text">ج</text>
+                    <circle cx="270" cy="285" r="6" class="main-letter" />
+                    <path d="M 410 230 L 320 230 C 280 230, 240 250, 240 280 C 240 320, 290 330, 330 310 C 345 302, 350 312, 338 322 C 280 350, 215 325, 215 270 C 215 225, 260 205, 310 205 L 360 205 C 375 190, 390 190, 370 205 Z" class="main-letter" />
+                </g>
+
+            </svg>
         </div>
-    </header>
-
-    <main class="max-w-5xl mx-auto px-4 py-12 space-y-48">
-
-        <!-- Hero Section -->
-        <section id="home" class="min-h-[80vh] flex flex-col justify-center items-center text-center pt-10">
-            <div class="glass-card p-8 md:p-14 rounded-3xl max-w-3xl border border-white/10">
-                <span class="px-4 py-1.5 rounded-full bg-green-500/10 text-green-400 border border-green-500/20 font-semibold text-sm mb-6 inline-block">
-                    ✨ تجربة تصفح تفاعلية بعمق عالي
-                </span>
-                <h1 class="text-4xl md:text-6xl font-black mb-6 leading-tight">
-                    استمتع بحركة <span class="gradient-text">البارالاكس التفاعلية</span> أثناء النزول
-                </h1>
-                <p class="text-slate-300 text-lg md:text-xl mb-8 leading-relaxed">
-                    تم زيادة عمق الصفحة وربط حركة التصفح بالخلفية بشكل بطيء وناعم لتوفير تجربة بصرية ممتعة وممتازة.
-                </p>
-                <div class="flex flex-wrap gap-4 justify-center">
-                    <a href="#about" class="px-8 py-3.5 rounded-xl bg-green-500 hover:bg-green-600 text-slate-950 font-bold text-lg shadow-lg shadow-green-500/25 transition-all">
-                        استكشف العمق
-                    </a>
-                    <a href="#parallax-demo" class="px-8 py-3.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-white font-bold text-lg border border-slate-700 transition-all">
-                        معاينة التأثير
-                    </a>
-                </div>
-            </div>
-
-            <!-- Scroll Down Indicator -->
-            <div class="mt-16 flex flex-col items-center gap-2 animate-bounce-slow text-slate-400">
-                <span class="text-sm font-medium">قم بالتصفح للأسفل لرؤية الحركة</span>
-                <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-                </svg>
-            </div>
-        </section>
-
-        <section id="about" class="pt-12">
-            <div class="glass-card p-8 md:p-12 rounded-3xl">
-                <div class="inline-block p-3 bg-green-500/10 rounded-2xl text-green-400 mb-4">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                </div>
-                <h2 class="text-3xl md:text-4xl font-bold mb-6 gradient-text">عن تصميم الصفحة العميق</h2>
-                <p class="text-slate-300 text-lg leading-relaxed mb-6">
-                    قمنا بزيادة المسافات بين الأقسام وعمق الصفحة بشكل كبير، مما يمنح محرك الخلفية مساحة واسعة للتحرك والتفاعل أثناء صعود ونزول السكرول.
-                </p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-                    <div class="p-6 rounded-2xl bg-slate-900/60 border border-slate-800">
-                        <h3 class="text-xl font-bold text-green-400 mb-2">سرعة استجابة مخصصة</h3>
-                        <p class="text-slate-400">تتحرك الخلفية بنسبة 25% من سرعة التصفح العادية، مما يحافظ على استقرار القراءة ويعطي إحساساً بالعمق.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl bg-slate-900/60 border border-slate-800">
-                        <h3 class="text-xl font-bold text-blue-400 mb-2">تصميم هادئ ومريح</h3>
-                        <p class="text-slate-400">تم دمج بطاقات الشفافية مع ظلال العرض العميقة لتكون النصوص واضحة كلياً مهما كانت ألوان خلفية الصورة.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="parallax-demo" class="pt-12">
-            <div class="glass-card p-8 md:p-12 rounded-3xl border-r-4 border-r-green-500">
-                <h2 class="text-3xl md:text-4xl font-bold mb-6">كيف يعمل تأثر البارالاكس؟</h2>
-                <p class="text-slate-300 text-lg leading-relaxed mb-6">
-                    تعتمد هذه الطريقة على ربط إحداثيات السكرول العمودي (`pageYOffset`) بموقع الخلفية العمودي (`backgroundPositionY`).
-                </p>
-                <div class="p-6 rounded-2xl bg-slate-950/90 font-mono text-green-400 text-sm dir-ltr overflow-x-auto border border-slate-800 mb-6">
-                    document.body.style.backgroundPositionY = -(scrollPosition * 0.25) + 'px';
-                </div>
-                <p class="text-slate-400">
-                    استمر بالنزول لرؤية كيف تعطي المسافات العميقة مظهراً سينمائياً للتصفح.
-                </p>
-            </div>
-        </section>
-
-        <section id="services" class="pt-12">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-5xl font-black mb-4 gradient-text">خدماتنا القابلة والتعديل</h2>
-                <p class="text-slate-400 text-lg">يمكنك التعديل على هذه الخدمات بسهولة داخل ملف الـ HTML</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Card 1 -->
-                <div class="glass-card p-8 rounded-3xl flex flex-col justify-between">
-                    <div>
-                        <div class="w-12 h-12 bg-green-500/20 text-green-400 rounded-2xl flex items-center justify-center font-bold text-xl mb-6">01</div>
-                        <h3 class="text-2xl font-bold mb-4">تصميم المواقع</h3>
-                        <p class="text-slate-300 leading-relaxed mb-6">بناء واجهات مستخدم متجاوبة مع كافة الشاشات مع دعم كامل للغة العربية والتصفح السلس.</p>
-                    </div>
-                    <a href="#" class="text-green-400 font-bold hover:underline inline-flex items-center gap-2">تعرف على المزيد &larr;</a>
-                </div>
-
-                <!-- Card 2 -->
-                <div class="glass-card p-8 rounded-3xl flex flex-col justify-between">
-                    <div>
-                        <div class="w-12 h-12 bg-blue-500/20 text-blue-400 rounded-2xl flex items-center justify-center font-bold text-xl mb-6">02</div>
-                        <h3 class="text-2xl font-bold mb-4">تأثيرات البارالاكس</h3>
-                        <p class="text-slate-300 leading-relaxed mb-6">إضافة حركات تفاعلية بين المحتوى والخلفية لربط حركة المستخدم برؤية جمالية ممتازة.</p>
-                    </div>
-                    <a href="#" class="text-blue-400 font-bold hover:underline inline-flex items-center gap-2">تعرف على المزيد &larr;</a>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="glass-card p-8 rounded-3xl flex flex-col justify-between">
-                    <div>
-                        <div class="w-12 h-12 bg-purple-500/20 text-purple-400 rounded-2xl flex items-center justify-center font-bold text-xl mb-6">03</div>
-                        <h3 class="text-2xl font-bold mb-4">تطوير البرمجيات</h3>
-                        <p class="text-slate-300 leading-relaxed mb-6">أكواد نظيفة ومنظمة وسريعة التحميل جاهزة للتعديل المباشر إضافةً لسهولة التطوير مستقبلاً.</p>
-                    </div>
-                    <a href="#" class="text-purple-400 font-bold hover:underline inline-flex items-center gap-2">تعرف على المزيد &larr;</a>
-                </div>
-            </div>
-        </section>
-
-        <section id="stats" class="pt-12">
-            <div class="glass-card p-10 md:p-16 rounded-3xl">
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-                    <div class="space-y-2">
-                        <div class="text-4xl md:text-5xl font-black text-green-400">+100%</div>
-                        <div class="text-slate-400 font-medium">تفاعل مع التصفح</div>
-                    </div>
-                    <div class="space-y-2">
-                        <div class="text-4xl md:text-5xl font-black text-blue-400">60FPS</div>
-                        <div class="text-slate-400 font-medium">سلاسة الحركة</div>
-                    </div>
-                    <div class="space-y-2">
-                        <div class="text-4xl md:text-5xl font-black text-purple-400">عميق جداً</div>
-                        <div class="text-slate-400 font-medium">مستوى السكرول</div>
-                    </div>
-                    <div class="space-y-2">
-                        <div class="text-4xl md:text-5xl font-black text-amber-400">100%</div>
-                        <div class="text-slate-400 font-medium">قابل للتعديل</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="contact" class="pt-12 pb-24">
-            <div class="glass-card p-8 md:p-14 rounded-3xl">
-                <div class="max-w-2xl mx-auto">
-                    <h2 class="text-3xl md:text-4xl font-black mb-4 text-center gradient-text">تواصل معنا</h2>
-                    <p class="text-slate-400 text-center mb-8">يمكنك إضافة نموذج التواصل أو كتابة بريدك الإلكتروني هنا</p>
-
-                    <form onsubmit="event.preventDefault();" class="space-y-6">
-                        <div>
-                            <label class="block text-slate-300 font-semibold mb-2">الاسم الكامل</label>
-                            <input type="text" placeholder="اكتب اسمك هنا..." class="w-full px-5 py-3.5 rounded-xl bg-slate-900/80 border border-slate-700 text-white focus:outline-none focus:border-green-500 transition-colors">
-                        </div>
-                        <div>
-                            <label class="block text-slate-300 font-semibold mb-2">البريد الإلكتروني</label>
-                            <input type="email" placeholder="example@domain.com" class="w-full px-5 py-3.5 rounded-xl bg-slate-900/80 border border-slate-700 text-white focus:outline-none focus:border-green-500 transition-colors">
-                        </div>
-                        <div>
-                            <label class="block text-slate-300 font-semibold mb-2">الرسالة</label>
-                            <textarea rows="4" placeholder="اكتب نص رسالتك هنا..." class="w-full px-5 py-3.5 rounded-xl bg-slate-900/80 border border-slate-700 text-white focus:outline-none focus:border-green-500 transition-colors"></textarea>
-                        </div>
-                        <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-slate-950 font-bold text-lg shadow-xl shadow-green-500/20 transition-all">
-                            إرسال الرسالة
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </section>
 
     </main>
 
-    <footer class="bg-slate-950/90 border-t border-slate-800/80 py-12 text-center text-slate-400 relative z-10">
-        <div class="max-w-5xl mx-auto px-4 space-y-4">
-            <p class="font-bold text-slate-200">موقعي الإلكتروني - تأثير حركة الخلفية التفاعلية</p>
-            <p class="text-sm">جميع الحقوق محفوظة &copy; 2026</p>
-            <div class="pt-4">
-                <a href="#home" class="text-green-400 hover:underline text-sm font-semibold">العودة إلى أعلى الصفحة ↑</a>
-            </div>
-        </div>
-    </footer>
-
     <script>
-        // إعداد متغيرات البارالاكس مع الحفاظ على الأداء العالي للسكرول
+        // دالة التفاعل عند النقر على الحرف أو الدائرة المربوطة به
+        function selectLetter(element) {
+            // إلغاء التحديد عن جميع الحروف الأخرى
+            const allGroups = document.querySelectorAll('.letter-group');
+            allGroups.forEach(group => {
+                if (group !== element) {
+                    group.classList.remove('active');
+                }
+            });
+
+            // تبديل حالة التحديد للحرف المنقور عليه
+            element.classList.toggle('active');
+        }
+
+        // إعداد حركة البارالاكس للخلفية عند التصفح
         let ticking = false;
-        
         function updateParallax() {
             const scrollPosition = window.pageYOffset;
-            
-            // ربط سكرول الصفحة بموقع الخلفية بنسبة 0.25 لتعطي التأثير البطيء والتفاعلي العميق
-            // يمكنك ضبط المعامل (0.25) لجعل الخلفية أسرع (مثلاً 0.4) أو أبطأ (مثلاً 0.15)
             const bgOffset = -(scrollPosition * 0.25);
-            
             document.body.style.backgroundPositionY = bgOffset + 'px';
             ticking = false;
         }
@@ -283,7 +159,6 @@
             }
         });
 
-        // تشغيل التحديث لأول مرة عند تحميل الصفحة
         window.addEventListener('DOMContentLoaded', updateParallax);
     </script>
 </body>
