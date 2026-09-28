@@ -1,165 +1,269 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مخطوطة رتاج التفاعلية</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Cairo', sans-serif;
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
-            background-color: #0d1117;
-            background-image: url('https://raw.githubusercontent.com/workmemo2007-gif/R1/c4c2ac757d6fb303ea96a912e78dc58c420103f4/IMG_2572.png');
-            background-size: cover;
-            background-position: center 0px;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            will-change: background-position;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0d1117">
+  <title>مخطوطة رتاج التفاعلية</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+      --blue: #60a5fa;
+      --blue-bright: #93c5fd;
+      --gold: #ffd700;
+    }
 
-        /* أنماط النص والتوهج الأساسية */
-        .letter-group {
-            cursor: pointer;
-            transition: all 0.4s ease;
-        }
+    * { box-sizing: border-box; }
 
-        .main-letter {
-            fill: #ffffff;
-            filter: drop-shadow(0px 0px 8px #3b82f6) drop-shadow(0px 0px 18px #1d4ed8);
-            transition: all 0.3s ease;
-        }
+    body {
+      min-height: 100vh;
+      margin: 0;
+      overflow-x: hidden;
+      display: grid;
+      place-items: center;
+      background-color: #0d1117;
+      background-image:
+        linear-gradient(180deg, rgba(5, 10, 20, .22), rgba(5, 10, 20, .40)),
+        url('https://raw.githubusercontent.com/workmemo2007-gif/R1/c4c2ac757d6fb303ea96a912e78dc58c420103f4/IMG_2572.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      font-family: 'Amiri', serif;
+    }
 
-        .connector-line {
-            stroke: rgba(255, 255, 255, 0.4);
-            stroke-width: 1.5;
-            stroke-dasharray: 4 2;
-            transition: all 0.3s ease;
-        }
+    main {
+      width: min(100%, 1080px);
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 32px 20px;
+    }
 
-        .circle-node {
-            fill: rgba(13, 17, 23, 0.85);
-            stroke: #3b82f6;
-            stroke-width: 2;
-            filter: drop-shadow(0px 0px 6px #3b82f6);
-            transition: all 0.3s ease;
-        }
+    .stage {
+      position: relative;
+      width: min(100%, 900px);
+      height: clamp(300px, 58vw, 430px);
+      min-height: 300px;
+      overflow: visible;
+      isolation: isolate;
+    }
 
-        .circle-text {
-            fill: #ffffff;
-            font-weight: bold;
-            font-size: 18px;
-            text-anchor: middle;
-            dominant-baseline: central;
-            transition: all 0.3s ease;
-        }
+    .name {
+      position: absolute;
+      z-index: 2;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      direction: rtl;
+      white-space: nowrap;
+      font-size: clamp(100px, 20vw, 190px);
+      font-weight: 700;
+      line-height: 1.15;
+      color: #fff;
+      text-shadow: 0 0 8px rgba(96, 165, 250, .95),
+                   0 0 22px rgba(59, 130, 246, .85),
+                   0 0 48px rgba(29, 78, 216, .65);
+      user-select: none;
+    }
 
-        /* تأثير التوهج الذهبي عند التحديد */
-        .letter-group.active .main-letter {
-            fill: #ffd700;
-            filter: drop-shadow(0px 0px 12px #ffd700) drop-shadow(0px 0px 25px #ffaa00);
-        }
+    .letter {
+      display: inline;
+      color: #fff;
+      cursor: pointer;
+      transition: color .28s ease, text-shadow .28s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-        .letter-group.active .connector-line {
-            stroke: #ffd700;
-            stroke-width: 2.5;
-            stroke-dasharray: none;
-            filter: drop-shadow(0px 0px 6px #ffd700);
-        }
+    .letter:hover,
+    .letter:focus-visible {
+      outline: none;
+      text-shadow: 0 0 10px #bfdbfe, 0 0 28px #3b82f6, 0 0 55px #2563eb;
+    }
 
-        .letter-group.active .circle-node {
-            stroke: #ffd700;
-            fill: rgba(255, 215, 0, 0.15);
-            filter: drop-shadow(0px 0px 10px #ffd700);
-        }
+    .letter.active {
+      color: var(--gold);
+      text-shadow: 0 0 9px var(--gold), 0 0 24px #ffaa00, 0 0 48px rgba(255, 170, 0, .85);
+    }
 
-        .letter-group.active .circle-text {
-            fill: #ffd700;
-        }
+    .callouts {
+      position: absolute;
+      z-index: 3;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+      pointer-events: none;
+    }
 
-        .letter-group:hover .main-letter {
-            filter: drop-shadow(0px 0px 12px #60a5fa) drop-shadow(0px 0px 22px #2563eb);
-        }
-    </style>
+    .callout {
+      pointer-events: auto;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .connector-line {
+      fill: none;
+      stroke: rgba(191, 219, 254, .88);
+      stroke-width: 1.35;
+      vector-effect: non-scaling-stroke;
+      transition: stroke .25s ease, stroke-width .25s ease, filter .25s ease;
+    }
+
+    .circle-node {
+      fill: rgba(255, 255, 255, .035);
+      stroke: var(--blue);
+      stroke-width: 1.6;
+      vector-effect: non-scaling-stroke;
+      filter: drop-shadow(0 0 6px rgba(59, 130, 246, .95));
+      transition: fill .25s ease, stroke .25s ease, filter .25s ease;
+    }
+
+    .circle-text {
+      fill: #fff;
+      font-family: 'Amiri', serif;
+      font-size: 22px;
+      font-weight: 700;
+      text-anchor: middle;
+      dominant-baseline: central;
+      pointer-events: none;
+      transition: fill .25s ease;
+    }
+
+    .callout:hover .circle-node,
+    .callout:focus-visible .circle-node {
+      stroke: #bfdbfe;
+      filter: drop-shadow(0 0 9px #60a5fa);
+    }
+
+    .callout.active .connector-line {
+      stroke: var(--gold);
+      stroke-width: 2;
+      filter: drop-shadow(0 0 5px var(--gold));
+    }
+
+    .callout.active .circle-node {
+      stroke: var(--gold);
+      fill: rgba(255, 215, 0, .08);
+      filter: drop-shadow(0 0 9px var(--gold));
+    }
+
+    .callout.active .circle-text { fill: var(--gold); }
+
+    @media (max-width: 520px) {
+      main { padding-inline: 12px; }
+      .stage { height: 310px; }
+      .name { font-size: clamp(92px, 23vw, 122px); }
+      .circle-node { stroke-width: 1.4; }
+      .circle-text { font-size: 20px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition-duration: .01ms !important; }
+    }
+  </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between items-center justify-center">
+<body>
+  <main>
+    <section class="stage" aria-label="مخطوطة رتاج التفاعلية">
+      <div class="name" id="name" aria-label="رتاج">
+        <span class="letter" data-letter="ر" role="button" tabindex="0" aria-label="حرف الراء">ر</span><span class="letter" data-letter="ت" role="button" tabindex="0" aria-label="حرف التاء">ت</span><span class="letter" data-letter="ا" role="button" tabindex="0" aria-label="حرف الألف">ا</span><span class="letter" data-letter="ج" role="button" tabindex="0" aria-label="حرف الجيم">ج</span>
+      </div>
+      <svg class="callouts" id="callouts" aria-label="دوائر الحروف" role="group"></svg>
+    </section>
+  </main>
 
-    <main class="w-full max-w-5xl px-4 py-12 flex flex-col items-center justify-center min-h-screen">
-        
-        <div class="w-full max-w-3xl aspect-[16/9] flex items-center justify-center">
-            <svg viewBox="0 0 900 450" class="w-full h-full overflow-visible">
-                
-                <g class="letter-group" onclick="selectLetter(this)">
-                    <line x1="680" y1="210" x2="770" y2="100" class="connector-line" />
-                    <circle cx="770" cy="100" r="24" class="circle-node" />
-                    <text x="770" y="100" class="circle-text">ر</text>
-                    <path d="M 660 200 C 670 205, 680 215, 675 235 C 665 270, 630 300, 600 310 C 590 313, 585 305, 595 298 C 620 280, 645 255, 650 220 Z" class="main-letter" />
-                </g>
+  <script>
+    (() => {
+      const stage = document.querySelector('.stage');
+      const svg = document.getElementById('callouts');
+      const letters = [...document.querySelectorAll('.letter')];
+      const svgNS = 'http://www.w3.org/2000/svg';
+      const callouts = new Map();
 
-                <g class="letter-group" onclick="selectLetter(this)">
-                    <line x1="530" y1="200" x2="550" y2="70" class="connector-line" />
-                    <circle cx="550" cy="70" r="24" class="circle-node" />
-                    <text x="550" y="70" class="circle-text">ت</text>
-                    <circle cx="520" cy="165" r="5" class="main-letter" />
-                    <circle cx="538" cy="165" r="5" class="main-letter" />
-                    <path d="M 580 205 L 580 215 C 580 230, 560 230, 480 230 L 470 205 L 485 205 C 530 205, 560 205, 565 205 Z" class="main-letter" />
-                </g>
+      function svgElement(tag, attributes = {}) {
+        const element = document.createElementNS(svgNS, tag);
+        for (const [key, value] of Object.entries(attributes)) element.setAttribute(key, value);
+        return element;
+      }
 
-                <g class="letter-group" onclick="selectLetter(this)">
-                    <line x1="435" y1="120" x2="380" y2="50" class="connector-line" />
-                    <circle cx="380" cy="50" r="24" class="circle-node" />
-                    <text x="380" y="50" class="circle-text">ا</text>
-                    <path d="M 430 230 L 430 110 C 430 100, 442 100, 442 110 L 442 230 Z" class="main-letter" />
-                </g>
-
-                <g class="letter-group" onclick="selectLetter(this)">
-                    <line x1="300" y1="210" x2="160" y2="120" class="connector-line" />
-                    <circle cx="160" cy="120" r="24" class="circle-node" />
-                    <text x="160" y="120" class="circle-text">ج</text>
-                    <circle cx="270" cy="285" r="6" class="main-letter" />
-                    <path d="M 410 230 L 320 230 C 280 230, 240 250, 240 280 C 240 320, 290 330, 330 310 C 345 302, 350 312, 338 322 C 280 350, 215 325, 215 270 C 215 225, 260 205, 310 205 L 360 205 C 375 190, 390 190, 370 205 Z" class="main-letter" />
-                </g>
-
-            </svg>
-        </div>
-
-    </main>
-
-    <script>
-        // دالة التفاعل عند النقر على الحرف أو الدائرة المربوطة به
-        function selectLetter(element) {
-            // إلغاء التحديد عن جميع الحروف الأخرى
-            const allGroups = document.querySelectorAll('.letter-group');
-            allGroups.forEach(group => {
-                if (group !== element) {
-                    group.classList.remove('active');
-                }
-            });
-
-            // تبديل حالة التحديد للحرف المنقور عليه
-            element.classList.toggle('active');
-        }
-
-        // إعداد حركة البارالاكس للخلفية عند التصفح
-        let ticking = false;
-        function updateParallax() {
-            const scrollPosition = window.pageYOffset;
-            const bgOffset = -(scrollPosition * 0.25);
-            document.body.style.backgroundPositionY = bgOffset + 'px';
-            ticking = false;
-        }
-
-        window.addEventListener('scroll', function() {
-            if (!ticking) {
-                window.requestAnimationFrame(updateParallax);
-                ticking = true;
-            }
+      letters.forEach((letter, index) => {
+        const group = svgElement('g', {
+          class: 'callout',
+          tabindex: '0',
+          role: 'button',
+          'aria-label': `تحديد حرف ${letter.dataset.letter}`,
+          'data-index': index
         });
+        const line = svgElement('line', { class: 'connector-line' });
+        const circle = svgElement('circle', { class: 'circle-node', r: '23' });
+        const text = svgElement('text', { class: 'circle-text' });
+        text.textContent = letter.dataset.letter;
+        group.append(line, circle, text);
+        group.addEventListener('click', () => selectLetter(index));
+        group.addEventListener('keydown', event => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            selectLetter(index);
+          }
+        });
+        svg.appendChild(group);
+        callouts.set(index, { group, line, circle, text });
 
-        window.addEventListener('DOMContentLoaded', updateParallax);
-    </script>
+        letter.addEventListener('click', () => selectLetter(index));
+        letter.addEventListener('keydown', event => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            selectLetter(index);
+          }
+        });
+      });
+
+      function selectLetter(selectedIndex) {
+        letters.forEach((letter, index) => {
+          const active = index === selectedIndex && !letter.classList.contains('active');
+          letter.classList.toggle('active', active);
+          callouts.get(index).group.classList.toggle('active', active);
+          callouts.get(index).group.setAttribute('aria-pressed', String(active));
+        });
+      }
+
+      function positionCallouts() {
+        const stageRect = stage.getBoundingClientRect();
+        const width = stage.clientWidth;
+        const height = stage.clientHeight;
+        svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+        svg.setAttribute('preserveAspectRatio', 'none');
+
+        letters.forEach((letter, index) => {
+          const rect = letter.getBoundingClientRect();
+          const x = rect.left - stageRect.left + rect.width / 2;
+          const startY = rect.top - stageRect.top + Math.max(4, rect.height * .22);
+          const radius = 23;
+          const nodeY = Math.max(radius + 9, Math.min(58, height * .17));
+          const endY = nodeY + radius;
+          const { line, circle, text } = callouts.get(index);
+          line.setAttribute('x1', x);
+          line.setAttribute('y1', startY);
+          line.setAttribute('x2', x);
+          line.setAttribute('y2', endY);
+          circle.setAttribute('cx', x);
+          circle.setAttribute('cy', nodeY);
+          text.setAttribute('x', x);
+          text.setAttribute('y', nodeY + 1);
+        });
+      }
+
+      const resizeObserver = new ResizeObserver(positionCallouts);
+      resizeObserver.observe(stage);
+      window.addEventListener('load', positionCallouts);
+      window.addEventListener('resize', positionCallouts);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(positionCallouts);
+      requestAnimationFrame(positionCallouts);
+    })();
+  </script>
 </body>
 </html>
