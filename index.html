@@ -12,14 +12,15 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: #ffffff;
             
-            /* رابط الصورة التي طلبتها */
+            /* رابط الصورة */
             background-image: url('https://raw.githubusercontent.com/workmemo2007-gif/R1/c4c2ac757d6fb303ea96a912e78dc58c420103f4/IMG_2572.png');
             
-            /* إعدادات التصفح والصعود والنزول للخلفية */
-            background-size: cover;          /* تغطية الشاشة بالكامل */
-            background-position: center;      /* توسيط الصورة */
-            background-repeat: no-repeat;    /* عدم تكرار الصورة */
-            background-attachment: fixed;    /* جعل الخلفية ثابتة أثناء التصفح (Fixed Parallax Effect) */
+            /* إعدادات الخلفية المتحركة مع التصفح */
+            background-size: cover;          
+            background-position: center 0px; 
+            background-repeat: no-repeat;    
+            background-attachment: fixed;    
+            will-change: background-position; /* تحسين أداء الحركة */
         }
 
         /* شريط التنقل العلوي */
@@ -69,9 +70,9 @@
 
         /* بطاقات المحتوى الشفافة لسهولة القراءة */
         .card {
-            background: rgba(0, 0, 0, 0.7); /* خلفية سوداء شفافة لتوضيح النصوص فوق الصورة */
+            background: rgba(0, 0, 0, 0.7);
             padding: 30px;
-            margin-bottom: 40px;
+            margin-bottom: 80px; /* زيادة المسافة لإعطاء مساحة أطول للتصفح */
             border-radius: 15px;
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -130,7 +131,7 @@
 
         <div class="card" id="about">
             <h2>عن الموقع</h2>
-            <p>يمكنك كتابة نبذة عنك أو عن مشروعك في هذا القسم. لاحظ كيف تظل خلفية الموقع ثابته ومريحة للعين أثناء الصعود والنزول والتصفح.</p>
+            <p>يمكنك كتابة نبذة عنك أو عن مشروعك في هذا القسم. عند الصعود والنزول الآن، ستتحرك الخلفية بسلاسة متناسبة مع حركة الصفحة.</p>
         </div>
 
         <div class="card" id="services">
@@ -154,6 +155,14 @@
     <footer>
         <p>جميع الحقوق محفوظة &copy; 2026 - موقعي الإلكتروني</p>
     </footer>
+
+    <script>
+        window.addEventListener('scroll', function() {
+            const scrollPosition = window.pageYOffset;
+            // يمكنك تغيير المعامل (0.3) للتحكم في سرعة حركة الخلفية مقارنة بالسكرول
+            document.body.style.backgroundPositionY = -(scrollPosition * 0.3) + 'px';
+        });
+    </script>
 
 </body>
 </html>
