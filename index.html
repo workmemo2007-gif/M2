@@ -90,27 +90,39 @@
       filter: drop-shadow(0 0 22px rgba(28, 69, 255, .2));
     }
 
-    /* تصميم عرض الصورة الثانية أسفل الأولى بحجم كبير بدون ضبابية */
+    /* تصميم عرض الصورة الجديدة عائمة مباشرة أسفل الأولى وأنيميشن انزلاق */
     .second-artwork-container {
       position: relative;
       z-index: 1;
-      min-height: 100vh;
+      min-height: 80vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 40px 20px;
+      padding: 20px 10px 60px 10px;
       box-sizing: border-box;
     }
 
     .second-artwork {
-      width: min(95vw, 90vh, 1000px);
-      max-width: 98%;
+      width: min(98vw, 95vh, 1100px);
+      max-width: 100%;
       height: auto;
-      border-radius: 20px;
-      filter: none;
+      border: none;
+      background: transparent;
+      box-shadow: none;
+      filter: drop-shadow(0 15px 30px rgba(0,0,0,0.6));
+      /* أنيميشن انزلاق وسحب */
+      opacity: 0;
+      transform: translateY(120px) scale(0.92);
+      transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    /* حالة الظهور عند التمرير */
+    .second-artwork.slide-in {
       opacity: 1;
-      box-shadow: 0 0 45px rgba(255, 214, 107, 0.4), 0 15px 40px rgba(0, 0, 0, 0.7);
+      transform: translateY(0) scale(1);
     }
 
     .letter-button {
@@ -143,7 +155,7 @@
         background .2s ease,
         border-color .2s ease,
         box-shadow .25s ease,
-        transform .2s ease;
+        transform .4s ease;
       -webkit-tap-highlight-color: transparent;
       overflow: hidden;
     }
@@ -271,23 +283,23 @@
       }
     }
 
-    /* مواضع الأزرار وتعديل اتجاه الفتح لحرفي التاء والجيم */
+    /* مواضع الأزرار وتوجيه التوسع عند النقر */
     .letter-ra { left: 82%; top: 87%; }
     
-    /* حرف التاء: عند الفتح يتوسع باتجاه اليسار */
+    /* حرف التاء: عند الفتح يتوسع باتجاه اليسار العلوي */
     .letter-ta { left: 85%; top: 16%; }
     .letter-ta[aria-pressed="true"] {
-      transform: translate(-100%, 0);
-      transform-origin: top right;
+      transform: translate(-100%, -100%);
+      transform-origin: bottom right;
     }
 
     .letter-alif { left: 47%; top: 14%; }
 
-    /* حرف الجيم: عند الفتح يتوسع باتجاه اليمين */
+    /* حرف الجيم: عند الفتح يتوسع باتجاه اليمين السفلي */
     .letter-jeem { left: 13%; top: 88%; }
     .letter-jeem[aria-pressed="true"] {
-      transform: translate(0, -100%);
-      transform-origin: bottom left;
+      transform: translate(0, 0);
+      transform-origin: top left;
     }
 
     @media (max-width: 520px) {
@@ -300,7 +312,7 @@
       }
 
       .second-artwork {
-        width: 98vw;
+        width: 100vw;
       }
 
       .letter-button.letter-expandable[aria-pressed="true"] {
@@ -398,13 +410,13 @@
       </div>
     </div>
 
-    <!-- القسم الثاني: الصورة الجديدة أسفل الأولى كلياً وبحجم كبير وواضح -->
+    <!-- القسم الثاني: الصورة الجديدة عائمة مباشرة أسفل الأولى وأنيميشن سحب وانزلاق -->
     <div class="second-artwork-container">
       <img
         id="second-img"
         class="second-artwork"
-        src="https://raw.githubusercontent.com/workmemo2007-gif/M2/8c3faee0e7ea2dd90fbddbb0132338eb2cddf8df/IMG_2579.png"
-        alt="صورة إضافية جديدة"
+        src="https://raw.githubusercontent.com/workmemo2007-gif/M2/adadf85a0ca189e75ecac30f00924564fbb59352/IMG_2577.png"
+        alt="صورة عائمة جديدة"
         draggable="false"
       >
     </div>
@@ -529,7 +541,18 @@
         }
       });
     });
+
+    // تفعيل أنيميشن السحب والانزلاق للصورة عند الوصول إليها بالتمرير
+    const secondImg = document.getElementById("second-img");
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          secondImg.classList.add("slide-in");
+        }
+      });
+    }, { threshold: 0.15 });
+
+    observer.observe(secondImg);
   </script>
 </body>
 </html>
-
