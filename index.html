@@ -44,7 +44,8 @@
       background-color: #080b16;
       background-image: url("https://raw.githubusercontent.com/workmemo2007-gif/R1/c4c2ac757d6fb303ea96a912e78dc58c420103f4/IMG_2572.png");
       background-size: cover;
-      background-position: center center;
+      /* البداية التلقائية من أعلى الصورة */
+      background-position: center top;
       background-repeat: no-repeat;
       background-attachment: fixed;
       will-change: background-position;
@@ -111,7 +112,6 @@
       background: transparent;
       box-shadow: none;
       filter: drop-shadow(0 15px 30px rgba(0,0,0,0.6));
-      /* أنيميشن انزلاق وسحب */
       opacity: 0;
       transform: translateY(120px) scale(0.92);
       transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
@@ -119,7 +119,6 @@
       -webkit-user-drag: none;
     }
 
-    /* حالة الظهور عند التمرير */
     .second-artwork.slide-in {
       opacity: 1;
       transform: translateY(0) scale(1);
@@ -171,7 +170,6 @@
       transform: translate(-50%, -50%) scale(1.05);
     }
 
-    /* تغيير المربع بعد النقر: أوف وايت شفاف مع إطار ذهبي */
     .letter-button[aria-pressed="true"] {
       border: 2px solid var(--gold-bright);
       background: rgba(252, 249, 240, 0.16);
@@ -274,7 +272,6 @@
           0 0 28px 8px rgba(255, 194, 54, .3),
           inset 0 0 14px rgba(255, 255, 255, .2);
       }
-
       to {
         box-shadow:
           0 0 22px 8px rgba(255, 231, 153, .8),
@@ -283,10 +280,8 @@
       }
     }
 
-    /* مواضع الأزرار وتوجيه التوسع عند النقر */
     .letter-ra { left: 82%; top: 87%; }
     
-    /* حرف التاء: يتوسع باتجاه اليسار العلوي */
     .letter-ta { left: 85%; top: 16%; }
     .letter-ta[aria-pressed="true"] {
       transform: translate(-100%, -100%);
@@ -295,7 +290,6 @@
 
     .letter-alif { left: 47%; top: 14%; }
 
-    /* حرف الجيم: يتوسع باتجاه اليمين السفلي */
     .letter-jeem { left: 13%; top: 88%; }
     .letter-jeem[aria-pressed="true"] {
       transform: translate(0, 0);
@@ -306,15 +300,12 @@
       :root {
         --circle-size: 42px;
       }
-
       .artwork {
         width: min(82vw, 64vh, 420px);
       }
-
       .second-artwork {
         width: 100vw;
       }
-
       .letter-button.letter-expandable[aria-pressed="true"] {
         width: 200px;
         min-height: 85px;
@@ -410,7 +401,7 @@
       </div>
     </div>
 
-    <!-- القسم الثاني: الصورة الجديدة عائمة مباشرة أسفل الأولى وأنيميشن سحب وانزلاق -->
+    <!-- القسم الثاني: الصورة الجديدة -->
     <div class="second-artwork-container">
       <img
         id="second-img"
@@ -441,12 +432,21 @@
   </audio>
 
   <script>
-    // حركة الخلفية العكسية المقاومة (Reverse Scroll Move)
-    window.addEventListener("scroll", () => {
+    // ربط حركة خلفية الصورة بين أعلى الصورة (0%) وأسفل الصورة (100%)
+    function updateBackgroundOnScroll() {
       const scrollY = window.scrollY;
-      // التمرير لأسفل يرفع الخلفية للأعلى بخفة وبسلاسة
-      document.body.style.backgroundPositionY = `calc(50% - ${scrollY * 0.25}px)`;
-    });
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      
+      if (maxScroll > 0) {
+        // حساب نسبة التمرير الحالية من 0 إلى 100
+        const scrollPercent = (scrollY / maxScroll) * 100;
+        // تطبيق النسبة المئوية على موقّع الخلفية العمودي
+        document.body.style.backgroundPositionY = `${scrollPercent}%`;
+      }
+    }
+
+    window.addEventListener("scroll", updateBackgroundOnScroll);
+    window.addEventListener("resize", updateBackgroundOnScroll);
 
     const buttons = document.querySelectorAll(".letter-button");
 
@@ -543,7 +543,7 @@
       });
     });
 
-    // تفعيل أنيميشن السحب والانزلاق للصورة عند الوصول إليها بالتمرير
+    // انيميشن ظهور الصورة الثانية
     const secondImg = document.getElementById("second-img");
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
