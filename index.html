@@ -138,8 +138,8 @@
       animation: golden-glow 1.5s ease-in-out infinite alternate;
     }
 
-    /* التوسع الأفقي لحرف الراء عند الضغط عليه */
-    .letter-button.letter-ra[aria-pressed="true"] {
+    /* التوسع الأفقي لحرفي الراء والتاء عند الضغط عليهما */
+    .letter-button.letter-expandable[aria-pressed="true"] {
       width: clamp(260px, 60vw, 340px);
       height: auto;
       min-height: 140px;
@@ -150,7 +150,7 @@
       justify-content: flex-start;
     }
 
-    .letter-button.letter-ra[aria-pressed="true"] .letter-text {
+    .letter-button.letter-expandable[aria-pressed="true"] .letter-text {
       display: none;
     }
 
@@ -161,7 +161,7 @@
       direction: rtl;
     }
 
-    .letter-button.letter-ra[aria-pressed="true"] .typed-container {
+    .letter-button.letter-expandable[aria-pressed="true"] .typed-container {
       display: block;
     }
 
@@ -174,7 +174,7 @@
       text-shadow: 0 0 8px rgba(255, 214, 107, 0.5);
     }
 
-    /* مؤشر الكيبورد المؤشر النابض */
+    /* مؤشر الكيبورد النابض */
     .cursor {
       display: inline-block;
       width: 2px;
@@ -235,7 +235,7 @@
         width: min(82vw, 64vh, 420px);
       }
 
-      .letter-button.letter-ra[aria-pressed="true"] {
+      .letter-button.letter-expandable[aria-pressed="true"] {
         width: 240px;
         min-height: 120px;
       }
@@ -263,27 +263,37 @@
         draggable="false"
       >
 
+      <!-- حرف الراء -->
       <button
-        class="letter-button letter-ra"
+        class="letter-button letter-ra letter-expandable"
         type="button"
         aria-label="حرف الراء"
         aria-pressed="false"
         title="راء"
+        data-letter="ra"
       >
         <span class="letter-text">ر</span>
         <div class="typed-container">
-          <p class="typed-text" id="typed-text"></p><span class="cursor" id="cursor" style="display:none;"></span>
+          <p class="typed-text" id="typed-text-ra"></p><span class="cursor" id="cursor-ra" style="display:none;"></span>
         </div>
       </button>
 
+      <!-- حرف التاء -->
       <button
-        class="letter-button letter-ta"
+        class="letter-button letter-ta letter-expandable"
         type="button"
         aria-label="حرف التاء"
         aria-pressed="false"
         title="تاء"
-      >ت</button>
+        data-letter="ta"
+      >
+        <span class="letter-text">ت</span>
+        <div class="typed-container">
+          <p class="typed-text" id="typed-text-ta"></p><span class="cursor" id="cursor-ta" style="display:none;"></span>
+        </div>
+      </button>
 
+      <!-- حرف الألف -->
       <button
         class="letter-button letter-alif"
         type="button"
@@ -292,6 +302,7 @@
         title="ألف"
       >ا</button>
 
+      <!-- حرف الجيم -->
       <button
         class="letter-button letter-jeem"
         type="button"
@@ -302,34 +313,48 @@
     </div>
   </main>
 
-  <!-- الصوت الخفي الذي يعمل عند التوسيع -->
+  <!-- الأصوات الخفية التي تعمل عند التوسيع -->
   <audio id="audio-ra" preload="metadata">
     <source src="https://raw.githubusercontent.com/workmemo2007-gif/M2/43ae8c0dcba605028e4de75ff57d79451060c899/%E2%80%8E%E2%81%A8%D8%AD%D8%B1%D9%81%20%D8%B1%E2%81%A9.mp3" type="audio/mpeg">
   </audio>
 
+  <audio id="audio-ta" preload="metadata">
+    <source src="https://raw.githubusercontent.com/workmemo2007-gif/J/3170a08c4916f27102b32cdacaca86335bb27383/%E2%80%8E%E2%81%A8%D8%AD%D8%B1%D9%81%20%D8%AA%E2%81%A9.mp3" type="audio/mpeg">
+  </audio>
+
   <script>
     const buttons = document.querySelectorAll(".letter-button");
-    const audioRa = document.getElementById("audio-ra");
-    const typedTextEl = document.getElementById("typed-text");
-    const cursorEl = document.getElementById("cursor");
 
-    const poemText = `رسمتك بالخيال والله جابك
+    const audioMap = {
+      ra: document.getElementById("audio-ra"),
+      ta: document.getElementById("audio-ta")
+    };
+
+    const textMap = {
+      ra: `رسمتك بالخيال والله جابك
 وصلت لمرحلة أرتاح بعذابك
 هو العنده مثلك يزعل شبيك
 ومنو غيرك يسوى بقلبي أخليه
 منو يزعل بشر يسوى لـ مية
-يلوموني وقلبهم مو عليك`;
+يلوموني وقلبهم مو عليك`,
+
+      ta: `تعرف غلاتك لو بعد؟
+محتاج أبينها أكثر؟
+يل بيك لهاني العمر.. ما ركزت بيه من مر
+يمكن إذا قتلي شكثر تهواني راح أتحير
+الليلة أعد محبتك.. بس باجر تزود أكثر`
+    };
 
     let typingTimeout;
 
-    function startTyping(text, element, speed = 70) {
-      element.textContent = "";
-      cursorEl.style.display = "inline-block";
+    function startTyping(text, textElement, cursorElement, speed = 80) {
+      textElement.textContent = "";
+      cursorElement.style.display = "inline-block";
       let index = 0;
 
       function type() {
         if (index < text.length) {
-          element.textContent += text.charAt(index);
+          textElement.textContent += text.charAt(index);
           index++;
           typingTimeout = setTimeout(type, speed);
         }
@@ -337,33 +362,48 @@
       type();
     }
 
-    function stopTyping() {
+    function stopAllEffects() {
       clearTimeout(typingTimeout);
-      typedTextEl.textContent = "";
-      cursorEl.style.display = "none";
+
+      // إيقاف جميع الأصوات وإعادتها للبداية
+      Object.values(audioMap).forEach(audio => {
+        if (audio) {
+          audio.pause();
+          audio.currentTime = 0;
+        }
+      });
+
+      // تفريغ أسطر الكتابة وإخفاء المؤشرات
+      ['ra', 'ta'].forEach(key => {
+        const txt = document.getElementById(`typed-text-${key}`);
+        const cur = document.getElementById(`cursor-${key}`);
+        if (txt) txt.textContent = "";
+        if (cur) cur.style.display = "none";
+      });
     }
 
     buttons.forEach((button) => {
       button.addEventListener("click", () => {
         const isCurrentlyActive = button.getAttribute("aria-pressed") === "true";
+        const letterKey = button.getAttribute("data-letter");
 
-        // إطفاء جميع الحروف وإيقاف الصوت والكتابة
+        // إيقاف تأثير الحروف وإعادة الضبط
         buttons.forEach((btn) => btn.setAttribute("aria-pressed", "false"));
-        if (audioRa) {
-          audioRa.pause();
-          audioRa.currentTime = 0;
-        }
-        stopTyping();
+        stopAllEffects();
 
         // تفعيل الحرف المُنقر عليه
         if (!isCurrentlyActive) {
           button.setAttribute("aria-pressed", "true");
 
-          if (button.classList.contains("letter-ra")) {
-            if (audioRa) {
-              audioRa.play().catch(() => {});
+          if (letterKey && textMap[letterKey]) {
+            const audioObj = audioMap[letterKey];
+            if (audioObj) {
+              audioObj.play().catch(() => {});
             }
-            startTyping(poemText, typedTextEl, 80);
+
+            const textEl = document.getElementById(`typed-text-${letterKey}`);
+            const cursorEl = document.getElementById(`cursor-${letterKey}`);
+            startTyping(textMap[letterKey], textEl, cursorEl, 80);
           }
         }
       });
