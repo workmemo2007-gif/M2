@@ -138,7 +138,7 @@
       animation: golden-glow 1.5s ease-in-out infinite alternate;
     }
 
-    /* التوسع الأفقي لحرفي الراء والتاء عند الضغط عليهما */
+    /* التوسع الأفقي للحروف المفعلة عند الضغط عليها */
     .letter-button.letter-expandable[aria-pressed="true"] {
       width: clamp(260px, 60vw, 340px);
       height: auto;
@@ -295,12 +295,18 @@
 
       <!-- حرف الألف -->
       <button
-        class="letter-button letter-alif"
+        class="letter-button letter-alif letter-expandable"
         type="button"
         aria-label="حرف الألف"
         aria-pressed="false"
         title="ألف"
-      >ا</button>
+        data-letter="alif"
+      >
+        <span class="letter-text">ا</span>
+        <div class="typed-container">
+          <p class="typed-text" id="typed-text-alif"></p><span class="cursor" id="cursor-alif" style="display:none;"></span>
+        </div>
+      </button>
 
       <!-- حرف الجيم -->
       <button
@@ -322,12 +328,17 @@
     <source src="https://raw.githubusercontent.com/workmemo2007-gif/J/3170a08c4916f27102b32cdacaca86335bb27383/%E2%80%8E%E2%81%A8%D8%AD%D8%B1%D9%81%20%D8%AA%E2%81%A9.mp3" type="audio/mpeg">
   </audio>
 
+  <audio id="audio-alif" preload="metadata">
+    <source src="https://raw.githubusercontent.com/workmemo2007-gif/M2/72ad2bf2d4691e866f88413a9f1bd6a809c2c125/%E2%80%8E%E2%81%A8%D8%AD%D8%B1%D9%81%20%D8%A7%E2%81%A9.mp3" type="audio/mpeg">
+  </audio>
+
   <script>
     const buttons = document.querySelectorAll(".letter-button");
 
     const audioMap = {
       ra: document.getElementById("audio-ra"),
-      ta: document.getElementById("audio-ta")
+      ta: document.getElementById("audio-ta"),
+      alif: document.getElementById("audio-alif")
     };
 
     const textMap = {
@@ -342,7 +353,13 @@
 محتاج أبينها أكثر؟
 يل بيك لهاني العمر.. ما ركزت بيه من مر
 يمكن إذا قتلي شكثر تهواني راح أتحير
-الليلة أعد محبتك.. بس باجر تزود أكثر`
+الليلة أعد محبتك.. بس باجر تزود أكثر`,
+
+      alif: `أنتِ.. أنتِ روحي
+أنتِ روحي وراحتي
+وآخر ندى على الورد ينزل
+أنتِ ليلي ولادتي ودفاي
+اللي جمع حلاوة الشمس والظل`
     };
 
     let typingTimeout;
@@ -374,7 +391,7 @@
       });
 
       // تفريغ أسطر الكتابة وإخفاء المؤشرات
-      ['ra', 'ta'].forEach(key => {
+      ['ra', 'ta', 'alif'].forEach(key => {
         const txt = document.getElementById(`typed-text-${key}`);
         const cur = document.getElementById(`cursor-${key}`);
         if (txt) txt.textContent = "";
