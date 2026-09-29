@@ -6,6 +6,14 @@
   <meta name="theme-color" content="#080b16">
   <title>الصورة التفاعلية</title>
 
+  <!-- خط الرقعة -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&display=swap"
+    rel="stylesheet"
+  >
+
   <style>
     :root {
       color-scheme: dark;
@@ -28,13 +36,8 @@
       min-height: 300vh;
       margin: 0;
       overflow-x: hidden;
-      background-color: #080b16;
-      background-image: url("https://raw.githubusercontent.com/workmemo2007-gif/R1/c4c2ac757d6fb303ea96a912e78dc58c420103f4/IMG_2572.png");
-      background-size: cover;
-      background-position: center 0;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      background: #080b16;
+      font-family: "Aref Ruqaa", serif;
     }
 
     .scroll-space {
@@ -49,7 +52,8 @@
       left: 50%;
       width: min(88vw, 82vh, 760px);
       aspect-ratio: 1;
-      transform: translate(-50%, -50%);
+      /* تثبيت الصورة بمنتصف الشاشة مع ميل خفيف للأسفل */
+      transform: translate(-50%, -50%) rotate(5deg);
       pointer-events: none;
       isolation: isolate;
     }
@@ -64,26 +68,6 @@
       filter: drop-shadow(0 0 22px rgba(28, 69, 255, .2));
     }
 
-    .connectors {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      overflow: visible;
-      pointer-events: none;
-    }
-
-    .connector {
-      fill: none;
-      stroke: var(--gold);
-      stroke-width: 4;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      opacity: .92;
-      filter: drop-shadow(0 0 5px rgba(255, 214, 107, .62));
-      marker-end: url(#gold-arrow);
-    }
-
     .letter-button {
       position: absolute;
       z-index: 2;
@@ -91,17 +75,18 @@
       place-items: center;
       width: var(--circle-size);
       height: var(--circle-size);
-      padding: 0;
-      border: 2px solid rgba(255, 230, 158, .92);
+      padding: 0 0 3px;
+      border: 2px solid #fff;
       border-radius: 50%;
-      background: rgba(12, 15, 29, .9);
-      color: #fff8dc;
-      font: 700 clamp(22px, 3vw, 32px)/1 system-ui, sans-serif;
+      background: #fff;
+      color: #101a35;
+      font: 700 clamp(22px, 3vw, 32px)/1 "Aref Ruqaa", serif;
       cursor: pointer;
       pointer-events: auto;
       box-shadow:
-        0 0 12px rgba(255, 198, 74, .38),
-        inset 0 0 10px rgba(255, 214, 107, .12);
+        0 0 13px 3px rgba(48, 126, 255, .78),
+        0 0 30px 8px rgba(34, 94, 255, .38),
+        inset 0 0 9px rgba(255, 255, 255, .95);
       transform: translate(-50%, -50%);
       transition:
         color .2s ease,
@@ -115,11 +100,11 @@
     .letter-button:hover,
     .letter-button:focus-visible {
       outline: none;
-      border-color: var(--gold-bright);
-      color: var(--gold-bright);
+      border-color: #dbeaff;
       box-shadow:
-        0 0 20px rgba(255, 214, 107, .72),
-        inset 0 0 12px rgba(255, 214, 107, .2);
+        0 0 20px 5px rgba(67, 145, 255, .95),
+        0 0 38px 12px rgba(34, 94, 255, .52),
+        inset 0 0 10px rgba(255, 255, 255, .98);
       scale: 1.08;
     }
 
@@ -127,14 +112,15 @@
       border-color: var(--gold-bright);
       background: radial-gradient(
         circle,
-        rgba(255, 218, 118, .95),
-        rgba(188, 119, 14, .9)
+        #fff1b8 0%,
+        #ffd66b 52%,
+        #d18a18 100%
       );
       color: #241600;
       box-shadow:
-        0 0 12px 4px rgba(255, 211, 94, .8),
-        0 0 34px 12px rgba(255, 194, 54, .56),
-        inset 0 0 14px rgba(255, 255, 225, .85);
+        0 0 12px 4px rgba(255, 211, 94, .85),
+        0 0 34px 12px rgba(255, 194, 54, .62),
+        inset 0 0 14px rgba(255, 255, 225, .9);
       animation: golden-glow 1.5s ease-in-out infinite alternate;
     }
 
@@ -154,7 +140,7 @@
       }
     }
 
-    /* مواقع دوائر الحروف قرب نهايات الأسهم في الصورة */
+    /* مواقع الدوائر حول الصورة */
     .letter-ra {
       left: 81%;
       top: 88%;
@@ -183,10 +169,6 @@
       .artwork {
         width: min(94vw, 72vh);
       }
-
-      .connector {
-        stroke-width: 5;
-      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -207,47 +189,13 @@
 
 <body>
   <main class="scroll-space" aria-label="مساحة للتصفح صعوداً ونزولاً">
-    <div class="artwork" aria-label="الصورة التفاعلية والحروف المرتبطة بها">
-
+    <div class="artwork" aria-label="الصورة التفاعلية وحروفها">
       <img
         class="artwork-image"
         src="https://raw.githubusercontent.com/workmemo2007-gif/M2/93d760cc9f33a21f2c0867fa02795531fd73a040/IMG_2573.png"
-        alt="رسم عربي مزخرف تتصل به أربعة أسهم"
+        alt="رسم عربي مزخرف"
         draggable="false"
       >
-
-      <svg
-        class="connectors"
-        viewBox="0 0 1000 1000"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <defs>
-          <marker
-            id="gold-arrow"
-            markerWidth="9"
-            markerHeight="9"
-            refX="7"
-            refY="4.5"
-            orient="auto"
-            markerUnits="strokeWidth"
-          >
-            <path d="M0,0 L9,4.5 L0,9 Z" fill="#ffd66b"></path>
-          </marker>
-        </defs>
-
-        <!-- الراء -->
-        <path class="connector" d="M700 710 Q755 770 790 850"></path>
-
-        <!-- التاء -->
-        <path class="connector" d="M700 420 Q770 330 830 175"></path>
-
-        <!-- الألف -->
-        <path class="connector" d="M540 390 Q495 265 465 110"></path>
-
-        <!-- الجيم -->
-        <path class="connector" d="M335 600 Q250 700 160 850"></path>
-      </svg>
 
       <button
         class="letter-button letter-ra"
@@ -284,25 +232,7 @@
   </main>
 
   <script>
-    // تحريك الخلفية عند الصعود والنزول مع الحفاظ على سلاسة الأداء.
-    let framePending = false;
-
-    function updateParallax() {
-      const offset = -(window.scrollY * 0.22);
-      document.body.style.backgroundPosition = `center ${offset}px`;
-      framePending = false;
-    }
-
-    window.addEventListener("scroll", () => {
-      if (!framePending) {
-        window.requestAnimationFrame(updateParallax);
-        framePending = true;
-      }
-    }, { passive: true });
-
-    updateParallax();
-
-    // النقر على أي حرف يشغّل الوهج الذهبي للدائرة.
+    // النقر يبدّل الدائرة بين الأبيض المتوهج بالأزرق والذهبي المتوهج.
     document.querySelectorAll(".letter-button").forEach((button) => {
       button.addEventListener("click", () => {
         const isActive = button.getAttribute("aria-pressed") === "true";
