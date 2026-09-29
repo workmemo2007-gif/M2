@@ -85,13 +85,14 @@
     .letter-button {
       position: absolute;
       z-index: 2;
-      display: grid;
-      place-items: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       width: var(--circle-size);
       height: var(--circle-size);
-      padding: 0 0 3px;
+      padding: 0;
       border: 2px solid #fff;
-      border-radius: 50%;
+      border-radius: 50px; /* للتحول لـ pill عند التوسع الأفقـي */
       background: #fff;
       color: #101a35;
       font: 700 clamp(22px, 3vw, 32px)/1 "Aref Ruqaa", serif;
@@ -103,12 +104,14 @@
         inset 0 0 9px rgba(255, 255, 255, .95);
       transform: translate(-50%, -50%);
       transition:
+        width 0.4s cubic-bezier(0.4, 0, 0.2, 1),
         color .2s ease,
         background .2s ease,
         border-color .2s ease,
         box-shadow .25s ease,
         scale .2s ease;
       -webkit-tap-highlight-color: transparent;
+      overflow: hidden;
     }
 
     .letter-button:hover,
@@ -119,7 +122,7 @@
         0 0 20px 5px rgba(67, 145, 255, .95),
         0 0 38px 12px rgba(34, 94, 255, .52),
         inset 0 0 10px rgba(255, 255, 255, .98);
-      scale: 1.08;
+      scale: 1.05;
     }
 
     .letter-button[aria-pressed="true"] {
@@ -136,6 +139,31 @@
         0 0 34px 12px rgba(255, 194, 54, .62),
         inset 0 0 14px rgba(255, 255, 225, .9);
       animation: golden-glow 1.5s ease-in-out infinite alternate;
+    }
+
+    /* التوسع الأفقي لحرف الراء عند الضغط عليه */
+    .letter-button.letter-ra[aria-pressed="true"] {
+      width: clamp(200px, 40vw, 280px);
+      padding: 0 10px;
+      justify-content: space-around;
+    }
+
+    .audio-container {
+      display: none;
+      align-items: center;
+      gap: 5px;
+      width: 100%;
+    }
+
+    .letter-button.letter-ra[aria-pressed="true"] .audio-container {
+      display: flex;
+    }
+
+    .audio-container audio {
+      height: 30px;
+      width: 100%;
+      max-width: 220px;
+      outline: none;
     }
 
     @keyframes golden-glow {
@@ -183,6 +211,10 @@
       .artwork {
         width: min(82vw, 64vh, 420px);
       }
+
+      .letter-button.letter-ra[aria-pressed="true"] {
+        width: 180px;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -213,7 +245,15 @@
         aria-label="حرف الراء"
         aria-pressed="false"
         title="راء"
-      >ر</button>
+      >
+        <span class="letter-text">ر</span>
+        <div class="audio-container">
+          <audio id="audio-ra" controls preload="metadata">
+            <source src="https://raw.githubusercontent.com/workmemo2007-gif/M2/43ae8c0dcba605028e4de75ff57d79451060c899/%E2%80%8E%E2%81%A8%D8%AD%D8%B1%D9%81%20%D8%B1%E2%81%A9.mp3" type="audio/mpeg">
+            متصفحك لا يدعم تشغيل الصوت.
+          </audio>
+        </div>
+      </button>
 
       <button
         class="letter-button letter-ta"
@@ -243,17 +283,32 @@
 
   <script>
     const buttons = document.querySelectorAll(".letter-button");
+    const audioRa = document.getElementById("audio-ra");
 
     buttons.forEach((button) => {
-      button.addEventListener("click", () => {
+      button.addEventListener("click", (e) => {
+        // إذا تم النقر داخل عنصر مشغل الصوت نفسه لا تقم بإغلاق الدائرة
+        if (e.target.closest("audio")) return;
+
         const isCurrentlyActive = button.getAttribute("aria-pressed") === "true";
 
-        // إطفاء جميع الحروف
+        // إطفاء جميع الحروف وإيقاف الصوت
         buttons.forEach((btn) => btn.setAttribute("aria-pressed", "false"));
+        if (audioRa) {
+          audioRa.pause();
+          audioRa.currentTime = 0;
+        }
 
-        // إذا لم يكن الحرف متوهجًا سابقًا، نقوم بتوهجه، وإن كان متوهجًا فسيتم إطفائه
+        // إذا لم يكن الحرف متوهجًا سابقًا، نقوم بتوهجه وتوسيعه
         if (!isCurrentlyActive) {
           button.setAttribute("aria-pressed", "true");
+          
+          // تشغيل الصوت تلقائياً عند فتح حرف الراء
+          if (button.classList.contains("letter-ra") && audioRa) {
+            audioRa.play().catch(() => {
+              // تجنب أخطاء المنع التلقائي للتشغيل في بعض المتصفحات
+            });
+          }
         }
       });
     });
