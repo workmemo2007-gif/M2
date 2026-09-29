@@ -90,7 +90,7 @@
       filter: drop-shadow(0 0 22px rgba(28, 69, 255, .2));
     }
 
-    /* تصميم أنيميشن ظهور الصورة الثانية بحجم كبير جداً متناسق مع الشاشة */
+    /* تصميم عرض الصورة الثانية أسفل الأولى بحجم كبير بدون ضبابية */
     .second-artwork-container {
       position: relative;
       z-index: 1;
@@ -104,34 +104,13 @@
     }
 
     .second-artwork {
-      width: min(92vw, 85vh, 900px);
-      max-width: 95%;
+      width: min(95vw, 90vh, 1000px);
+      max-width: 98%;
       height: auto;
       border-radius: 20px;
-      cursor: pointer;
-      filter: blur(14px) opacity(0.5);
-      transform: translateY(60px) scale(0.95);
-      transition: filter 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.9s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.5s ease;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.6);
-    }
-
-    .second-artwork.in-view {
-      transform: translateY(0) scale(1);
-      filter: blur(10px) opacity(0.85);
-    }
-
-    .second-artwork.unblurred {
-      filter: blur(0px) opacity(1);
-      box-shadow: 0 0 45px rgba(255, 214, 107, 0.5), 0 0 15px rgba(255, 255, 255, 0.3);
-    }
-
-    .click-hint {
-      color: var(--gold-bright);
-      margin-top: 20px;
-      font-size: 1.2rem;
-      text-shadow: 0 0 10px rgba(255, 214, 107, 0.8);
-      transition: opacity 0.5s ease;
-      pointer-events: none;
+      filter: none;
+      opacity: 1;
+      box-shadow: 0 0 45px rgba(255, 214, 107, 0.4), 0 15px 40px rgba(0, 0, 0, 0.7);
     }
 
     .letter-button {
@@ -155,6 +134,7 @@
         0 0 30px 8px rgba(34, 94, 255, .38),
         inset 0 0 9px rgba(255, 255, 255, .95);
       transform: translate(-50%, -50%);
+      transform-origin: center center;
       transition:
         width 0.4s cubic-bezier(0.4, 0, 0.2, 1),
         height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
@@ -163,7 +143,7 @@
         background .2s ease,
         border-color .2s ease,
         box-shadow .25s ease,
-        scale .2s ease;
+        transform .2s ease;
       -webkit-tap-highlight-color: transparent;
       overflow: hidden;
     }
@@ -176,7 +156,7 @@
         0 0 20px 5px rgba(67, 145, 255, .95),
         0 0 38px 12px rgba(34, 94, 255, .52),
         inset 0 0 10px rgba(255, 255, 255, .98);
-      scale: 1.05;
+      transform: translate(-50%, -50%) scale(1.05);
     }
 
     /* تغيير المربع بعد النقر: أوف وايت شفاف مع إطار ذهبي */
@@ -291,10 +271,24 @@
       }
     }
 
+    /* مواضع الأزرار وتعديل اتجاه الفتح لحرفي التاء والجيم */
     .letter-ra { left: 82%; top: 87%; }
+    
+    /* حرف التاء: عند الفتح يتوسع باتجاه اليسار */
     .letter-ta { left: 85%; top: 16%; }
+    .letter-ta[aria-pressed="true"] {
+      transform: translate(-100%, 0);
+      transform-origin: top right;
+    }
+
     .letter-alif { left: 47%; top: 14%; }
+
+    /* حرف الجيم: عند الفتح يتوسع باتجاه اليمين */
     .letter-jeem { left: 13%; top: 88%; }
+    .letter-jeem[aria-pressed="true"] {
+      transform: translate(0, -100%);
+      transform-origin: bottom left;
+    }
 
     @media (max-width: 520px) {
       :root {
@@ -306,7 +300,7 @@
       }
 
       .second-artwork {
-        width: 95vw;
+        width: 98vw;
       }
 
       .letter-button.letter-expandable[aria-pressed="true"] {
@@ -404,16 +398,15 @@
       </div>
     </div>
 
-    <!-- القسم الثاني: الصورة الجديدة أسفل الأولى (كبيرة الحجم ومجسمة) -->
+    <!-- القسم الثاني: الصورة الجديدة أسفل الأولى كلياً وبحجم كبير وواضح -->
     <div class="second-artwork-container">
       <img
         id="second-img"
         class="second-artwork"
-        src="https://raw.githubusercontent.com/workmemo2007-gif/M2/b9925077ebb16aeeb6ec9fd1c7efad5b9d683e2b/IMG_2576.png"
-        alt="صورة إضافية"
+        src="https://raw.githubusercontent.com/workmemo2007-gif/M2/8c3faee0e7ea2dd90fbddbb0132338eb2cddf8df/IMG_2579.png"
+        alt="صورة إضافية جديدة"
         draggable="false"
       >
-      <span class="click-hint" id="hint-text">اضغط على الصورة لإظهار تفاصيلها ✨</span>
     </div>
 
   </main>
@@ -536,29 +529,7 @@
         }
       });
     });
-
-    // مراقبة الوصول للصورة الثانية وتفعيل تأثير الظهور عند التمرير قليلا
-    const secondImg = document.getElementById("second-img");
-    const hintText = document.getElementById("hint-text");
-
-    secondImg.addEventListener("click", () => {
-      secondImg.classList.toggle("unblurred");
-      if(secondImg.classList.contains("unblurred")) {
-        hintText.style.opacity = "0";
-      } else {
-        hintText.style.opacity = "1";
-      }
-    });
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          secondImg.classList.add("in-view");
-        }
-      });
-    }, { threshold: 0.1 });
-
-    observer.observe(secondImg);
   </script>
 </body>
 </html>
+
