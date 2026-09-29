@@ -19,7 +19,7 @@
       color-scheme: dark;
       --gold: #ffd66b;
       --gold-bright: #fff1b8;
-      --circle-size: clamp(42px, 7.2vw, 62px);
+      --circle-size: clamp(40px, 5.8vw, 52px);
     }
 
     * {
@@ -58,10 +58,10 @@
       z-index: 1;
       top: 50%;
       left: 50%;
-      width: min(88vw, 82vh, 760px);
+      width: min(72vw, 68vh, 560px);
       aspect-ratio: 1;
 
-      /* تثبيت الصورة بمنتصف الشاشة مع ميل خفيف للأسفل */
+      /* صورة أصغر، ثابتة بمنتصف الشاشة ومائلة قليلًا للأسفل */
       transform: translate(-50%, -50%) rotate(5deg);
 
       pointer-events: none;
@@ -150,20 +150,20 @@
       }
     }
 
-    /* مواقع الدوائر حول الصورة */
+    /* مواقع الدوائر عند نهايات الأسهم في الصورة */
     .letter-ra {
-      left: 81%;
-      top: 88%;
+      left: 82%;
+      top: 87%;
     }
 
     .letter-ta {
-      left: 86%;
-      top: 14%;
+      left: 85%;
+      top: 16%;
     }
 
     .letter-alif {
-      left: 46%;
-      top: 8%;
+      left: 47%;
+      top: 14%;
     }
 
     .letter-jeem {
@@ -173,11 +173,11 @@
 
     @media (max-width: 520px) {
       :root {
-        --circle-size: 44px;
+        --circle-size: 42px;
       }
 
       .artwork {
-        width: min(94vw, 72vh);
+        width: min(82vw, 64vh, 420px);
       }
     }
 
@@ -242,7 +242,7 @@
   </main>
 
   <script>
-    // تحريك خلفية الموقع عند التمرير مع بقاء الصورة الأمامية ثابتة.
+    // تحريك خلفية الموقع عند التمرير، مع بقاء صورة PNG الأمامية ثابتة.
     let framePending = false;
 
     function updateParallax() {
