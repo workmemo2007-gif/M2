@@ -36,7 +36,15 @@
       min-height: 300vh;
       margin: 0;
       overflow-x: hidden;
-      background: #080b16;
+
+      /* خلفية الموقع الأصلية */
+      background-color: #080b16;
+      background-image: url("https://raw.githubusercontent.com/workmemo2007-gif/R1/c4c2ac757d6fb303ea96a912e78dc58c420103f4/IMG_2572.png");
+      background-size: cover;
+      background-position: center 0;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+
       font-family: "Aref Ruqaa", serif;
     }
 
@@ -52,8 +60,10 @@
       left: 50%;
       width: min(88vw, 82vh, 760px);
       aspect-ratio: 1;
+
       /* تثبيت الصورة بمنتصف الشاشة مع ميل خفيف للأسفل */
       transform: translate(-50%, -50%) rotate(5deg);
+
       pointer-events: none;
       isolation: isolate;
     }
@@ -232,6 +242,24 @@
   </main>
 
   <script>
+    // تحريك خلفية الموقع عند التمرير مع بقاء الصورة الأمامية ثابتة.
+    let framePending = false;
+
+    function updateParallax() {
+      const offset = -(window.scrollY * 0.22);
+      document.body.style.backgroundPosition = `center ${offset}px`;
+      framePending = false;
+    }
+
+    window.addEventListener("scroll", () => {
+      if (!framePending) {
+        window.requestAnimationFrame(updateParallax);
+        framePending = true;
+      }
+    }, { passive: true });
+
+    updateParallax();
+
     // النقر يبدّل الدائرة بين الأبيض المتوهج بالأزرق والذهبي المتوهج.
     document.querySelectorAll(".letter-button").forEach((button) => {
       button.addEventListener("click", () => {
