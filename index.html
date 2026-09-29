@@ -20,6 +20,9 @@
       --gold: #ffd66b;
       --gold-bright: #fff1b8;
       --gold-dark-bg: rgba(30, 22, 10, 0.92);
+      --off-white-translucent: rgba(250, 248, 242, 0.18);
+      --off-white-glow: rgba(255, 253, 245, 0.95);
+      --gold-border: rgba(255, 214, 107, 0.85);
       --circle-size: clamp(40px, 5.8vw, 52px);
     }
 
@@ -30,8 +33,8 @@
     html, body {
       margin: 0;
       padding: 0;
-      overflow-x: hidden; /* منع التمرير الأفقي فقط والسماح بالرأسي */
-      overflow-y: auto;   /* التمرير لأسفل */
+      overflow-x: hidden;
+      overflow-y: auto;
       font-family: "Aref Ruqaa", serif;
       scroll-behavior: smooth;
     }
@@ -41,9 +44,10 @@
       background-color: #080b16;
       background-image: url("https://raw.githubusercontent.com/workmemo2007-gif/R1/c4c2ac757d6fb303ea96a912e78dc58c420103f4/IMG_2572.png");
       background-size: cover;
-      background-position: center;
+      background-position: center top;
       background-repeat: no-repeat;
       background-attachment: fixed;
+      transition: background-position 0.1s ease-out;
     }
 
     /* غشاء أسود شفاف لإبراز الكتابات والنصوص */
@@ -59,7 +63,6 @@
       pointer-events: none;
     }
 
-    /* حاوية تضمن عرض كل قسم بكامل الشاشة */
     .section-container {
       position: relative;
       z-index: 1;
@@ -87,7 +90,7 @@
       filter: drop-shadow(0 0 22px rgba(28, 69, 255, .2));
     }
 
-    /* تصميم أنيميشن ظهور الصورة الثانية وتغبيشها */
+    /* تصميم أنيميشن ظهور الصورة الثانية بحجم كبير جداً متناسق مع الشاشة */
     .second-artwork-container {
       position: relative;
       z-index: 1;
@@ -97,37 +100,36 @@
       align-items: center;
       justify-content: center;
       padding: 40px 20px;
+      box-sizing: border-box;
     }
 
     .second-artwork {
-      width: min(72vw, 68vh, 560px);
-      max-width: 100%;
+      width: min(92vw, 85vh, 900px);
+      max-width: 95%;
       height: auto;
-      border-radius: 16px;
+      border-radius: 20px;
       cursor: pointer;
-      /* أنيميشن التغبيش */
-      filter: blur(12px) opacity(0.7);
-      transform: translateY(40px);
-      transition: filter 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.5s ease;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      filter: blur(14px) opacity(0.5);
+      transform: translateY(60px) scale(0.95);
+      transition: filter 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.9s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.5s ease;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.6);
     }
 
-    /* ظهور الصورة حركة (Fade/Slide Up) عند التمرير إليها */
     .second-artwork.in-view {
-      transform: translateY(0);
+      transform: translateY(0) scale(1);
+      filter: blur(10px) opacity(0.85);
     }
 
-    /* عند النقر لإزالة التغبيش */
     .second-artwork.unblurred {
       filter: blur(0px) opacity(1);
-      box-shadow: 0 0 35px rgba(255, 214, 107, 0.4);
+      box-shadow: 0 0 45px rgba(255, 214, 107, 0.5), 0 0 15px rgba(255, 255, 255, 0.3);
     }
 
     .click-hint {
       color: var(--gold-bright);
-      margin-top: 15px;
-      font-size: 1.1rem;
-      text-shadow: 0 0 8px rgba(255, 214, 107, 0.6);
+      margin-top: 20px;
+      font-size: 1.2rem;
+      text-shadow: 0 0 10px rgba(255, 214, 107, 0.8);
       transition: opacity 0.5s ease;
       pointer-events: none;
     }
@@ -177,24 +179,26 @@
       scale: 1.05;
     }
 
+    /* تغيير المربع بعد النقر: أوف وايت شفاف مع إطار ذهبي */
     .letter-button[aria-pressed="true"] {
-      border-color: var(--gold-bright);
-      background: var(--gold-dark-bg);
+      border: 2px solid var(--gold-bright);
+      background: rgba(252, 249, 240, 0.16);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       color: var(--gold-bright);
       box-shadow:
-        0 0 15px 4px rgba(255, 211, 94, .85),
-        0 0 34px 12px rgba(255, 194, 54, .62),
-        inset 0 0 14px rgba(255, 214, 107, .3);
-      animation: golden-glow 1.5s ease-in-out infinite alternate;
+        0 0 20px 6px rgba(255, 214, 107, 0.45),
+        0 0 40px 14px rgba(255, 194, 54, 0.3),
+        inset 0 0 20px rgba(255, 255, 255, 0.25);
+      animation: golden-glow 1.8s ease-in-out infinite alternate;
     }
 
-    /* التوسع الأفقي للحروف المفعلة عند الضغط عليها (حجم مصغر) */
     .letter-button.letter-expandable[aria-pressed="true"] {
-      width: clamp(190px, 45vw, 240px);
+      width: clamp(210px, 48vw, 260px);
       height: auto;
-      min-height: 90px;
-      padding: 8px 12px 12px 12px;
-      border-radius: 14px;
+      min-height: 100px;
+      padding: 10px 14px 14px 14px;
+      border-radius: 16px;
       flex-direction: column;
       align-items: flex-start;
       justify-content: flex-start;
@@ -216,24 +220,24 @@
     }
 
     .typed-text {
-      color: var(--gold-bright);
-      font-size: clamp(12px, 1.8vw, 15px);
-      line-height: 1.5;
+      color: var(--off-white-glow);
+      font-size: clamp(13px, 1.9vw, 16px);
+      line-height: 1.6;
       white-space: pre-line;
       margin: 0;
-      text-shadow: 0 0 6px rgba(255, 214, 107, 0.6);
+      text-shadow: 0 0 8px rgba(0, 0, 0, 0.9), 0 0 12px rgba(255, 214, 107, 0.7);
+      font-weight: 700;
     }
 
-    /* مؤشر ذبذبات الصوت بطول المربع */
     .audio-waves {
       display: flex;
       align-items: flex-end;
       justify-content: space-between;
       width: 100%;
-      height: 16px;
+      height: 18px;
       margin-top: 10px;
       padding-top: 4px;
-      border-top: 1px solid rgba(255, 214, 107, 0.2);
+      border-top: 1px solid rgba(255, 214, 107, 0.35);
     }
 
     .audio-wave-bar {
@@ -244,7 +248,7 @@
       border-radius: 2px;
       transform-origin: bottom;
       animation: wave-bounce 0.8s ease-in-out infinite alternate;
-      box-shadow: 0 0 4px rgba(255, 214, 107, 0.5);
+      box-shadow: 0 0 6px rgba(255, 214, 107, 0.7);
     }
 
     .audio-wave-bar:nth-child(2n) { animation-delay: 0.15s; }
@@ -274,39 +278,23 @@
     @keyframes golden-glow {
       from {
         box-shadow:
-          0 0 10px 3px rgba(255, 211, 94, .72),
-          0 0 25px 8px rgba(255, 194, 54, .42),
-          inset 0 0 12px rgba(255, 214, 107, .25);
+          0 0 14px 4px rgba(255, 211, 94, .5),
+          0 0 28px 8px rgba(255, 194, 54, .3),
+          inset 0 0 14px rgba(255, 255, 255, .2);
       }
 
       to {
         box-shadow:
-          0 0 17px 6px rgba(255, 231, 153, .96),
-          0 0 40px 16px rgba(255, 194, 54, .68),
-          inset 0 0 18px rgba(255, 214, 107, .45);
+          0 0 22px 8px rgba(255, 231, 153, .8),
+          0 0 45px 18px rgba(255, 194, 54, .5),
+          inset 0 0 22px rgba(255, 255, 255, .35);
       }
     }
 
-    /* مواقع الدوائر عند نهايات الأسهم في الصورة الأولى */
-    .letter-ra {
-      left: 82%;
-      top: 87%;
-    }
-
-    .letter-ta {
-      left: 85%;
-      top: 16%;
-    }
-
-    .letter-alif {
-      left: 47%;
-      top: 14%;
-    }
-
-    .letter-jeem {
-      left: 13%;
-      top: 88%;
-    }
+    .letter-ra { left: 82%; top: 87%; }
+    .letter-ta { left: 85%; top: 16%; }
+    .letter-alif { left: 47%; top: 14%; }
+    .letter-jeem { left: 13%; top: 88%; }
 
     @media (max-width: 520px) {
       :root {
@@ -317,20 +305,14 @@
         width: min(82vw, 64vh, 420px);
       }
 
-      .letter-button.letter-expandable[aria-pressed="true"] {
-        width: 180px;
-        min-height: 80px;
-        padding: 6px 10px 10px 10px;
+      .second-artwork {
+        width: 95vw;
       }
-    }
 
-    @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        animation-duration: .01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: .01ms !important;
+      .letter-button.letter-expandable[aria-pressed="true"] {
+        width: 200px;
+        min-height: 85px;
+        padding: 8px 10px 10px 10px;
       }
     }
   </style>
@@ -339,7 +321,6 @@
 <body>
   <main aria-label="مساحة عرض الصورة الحرفية">
     
-    <!-- القسم الأول: الصورة الأولى الحرفية والتفاعلية -->
     <div class="section-container">
       <div class="artwork" aria-label="الصورة التفاعلية وحروفها">
         <img
@@ -423,7 +404,7 @@
       </div>
     </div>
 
-    <!-- القسم الثاني: الصورة الجديدة أسفل الأولى -->
+    <!-- القسم الثاني: الصورة الجديدة أسفل الأولى (كبيرة الحجم ومجسمة) -->
     <div class="second-artwork-container">
       <img
         id="second-img"
@@ -455,6 +436,12 @@
   </audio>
 
   <script>
+    // حركة خلفية الموقع لتتحرك بسلاسة مع التمرير من الأعلى
+    window.addEventListener("scroll", () => {
+      const scrollY = window.scrollY;
+      document.body.style.backgroundPositionY = `${scrollY * 0.3}px`;
+    });
+
     const buttons = document.querySelectorAll(".letter-button");
 
     const audioMap = {
@@ -550,13 +537,10 @@
       });
     });
 
-    // ----------------------------------------------------
-    // تأثير التمرير والنقر للصورة الثانية
-    // ----------------------------------------------------
+    // مراقبة الوصول للصورة الثانية وتفعيل تأثير الظهور عند التمرير قليلا
     const secondImg = document.getElementById("second-img");
     const hintText = document.getElementById("hint-text");
 
-    // إزالة التغبيش عند النقر
     secondImg.addEventListener("click", () => {
       secondImg.classList.toggle("unblurred");
       if(secondImg.classList.contains("unblurred")) {
@@ -566,14 +550,13 @@
       }
     });
 
-    // مراقبة الوصول للصورة الثانية لتفعيل أنيميشن الحركة (Slide Up) عند التمرير
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           secondImg.classList.add("in-view");
         }
       });
-    }, { threshold: 0.2 });
+    }, { threshold: 0.1 });
 
     observer.observe(secondImg);
   </script>
