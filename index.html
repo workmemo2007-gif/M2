@@ -92,7 +92,7 @@
       height: var(--circle-size);
       padding: 0;
       border: 2px solid #fff;
-      border-radius: 50px; /* للتحول لـ pill عند التوسع الأفقـي */
+      border-radius: 50px;
       background: #fff;
       color: #101a35;
       font: 700 clamp(22px, 3vw, 32px)/1 "Aref Ruqaa", serif;
@@ -105,6 +105,8 @@
       transform: translate(-50%, -50%);
       transition:
         width 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        border-radius 0.4s ease,
         color .2s ease,
         background .2s ease,
         border-color .2s ease,
@@ -127,43 +129,64 @@
 
     .letter-button[aria-pressed="true"] {
       border-color: var(--gold-bright);
-      background: radial-gradient(
-        circle,
-        #fff1b8 0%,
-        #ffd66b 52%,
-        #d18a18 100%
-      );
-      color: #241600;
+      background: rgba(16, 26, 53, 0.92);
+      color: #fff;
       box-shadow:
-        0 0 12px 4px rgba(255, 211, 94, .85),
+        0 0 15px 4px rgba(255, 211, 94, .85),
         0 0 34px 12px rgba(255, 194, 54, .62),
-        inset 0 0 14px rgba(255, 255, 225, .9);
+        inset 0 0 14px rgba(255, 255, 225, .4);
       animation: golden-glow 1.5s ease-in-out infinite alternate;
     }
 
     /* التوسع الأفقي لحرف الراء عند الضغط عليه */
     .letter-button.letter-ra[aria-pressed="true"] {
-      width: clamp(200px, 40vw, 280px);
-      padding: 0 10px;
-      justify-content: space-around;
+      width: clamp(260px, 60vw, 340px);
+      height: auto;
+      min-height: 140px;
+      padding: 12px 16px;
+      border-radius: 20px;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
     }
 
-    .audio-container {
+    .letter-button.letter-ra[aria-pressed="true"] .letter-text {
       display: none;
-      align-items: center;
-      gap: 5px;
-      width: 100%;
     }
 
-    .letter-button.letter-ra[aria-pressed="true"] .audio-container {
-      display: flex;
+    .typed-container {
+      display: none;
+      width: 100%;
+      text-align: right;
+      direction: rtl;
     }
 
-    .audio-container audio {
-      height: 30px;
-      width: 100%;
-      max-width: 220px;
-      outline: none;
+    .letter-button.letter-ra[aria-pressed="true"] .typed-container {
+      display: block;
+    }
+
+    .typed-text {
+      color: var(--gold-bright);
+      font-size: clamp(14px, 2.2vw, 18px);
+      line-height: 1.6;
+      white-space: pre-line;
+      margin: 0;
+      text-shadow: 0 0 8px rgba(255, 214, 107, 0.5);
+    }
+
+    /* مؤشر الكيبورد المؤشر النابض */
+    .cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1em;
+      background-color: var(--gold);
+      vertical-align: middle;
+      animation: blink 0.7s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
     }
 
     @keyframes golden-glow {
@@ -171,14 +194,14 @@
         box-shadow:
           0 0 10px 3px rgba(255, 211, 94, .72),
           0 0 25px 8px rgba(255, 194, 54, .42),
-          inset 0 0 12px rgba(255, 255, 225, .7);
+          inset 0 0 12px rgba(255, 255, 225, .3);
       }
 
       to {
         box-shadow:
           0 0 17px 6px rgba(255, 231, 153, .96),
           0 0 40px 16px rgba(255, 194, 54, .68),
-          inset 0 0 18px rgba(255, 255, 225, .95);
+          inset 0 0 18px rgba(255, 255, 225, .5);
       }
     }
 
@@ -213,7 +236,8 @@
       }
 
       .letter-button.letter-ra[aria-pressed="true"] {
-        width: 180px;
+        width: 240px;
+        min-height: 120px;
       }
     }
 
@@ -247,11 +271,8 @@
         title="راء"
       >
         <span class="letter-text">ر</span>
-        <div class="audio-container">
-          <audio id="audio-ra" controls preload="metadata">
-            <source src="https://raw.githubusercontent.com/workmemo2007-gif/M2/43ae8c0dcba605028e4de75ff57d79451060c899/%E2%80%8E%E2%81%A8%D8%AD%D8%B1%D9%81%20%D8%B1%E2%81%A9.mp3" type="audio/mpeg">
-            متصفحك لا يدعم تشغيل الصوت.
-          </audio>
+        <div class="typed-container">
+          <p class="typed-text" id="typed-text"></p><span class="cursor" id="cursor" style="display:none;"></span>
         </div>
       </button>
 
@@ -281,33 +302,68 @@
     </div>
   </main>
 
+  <!-- الصوت الخفي الذي يعمل عند التوسيع -->
+  <audio id="audio-ra" preload="metadata">
+    <source src="https://raw.githubusercontent.com/workmemo2007-gif/M2/43ae8c0dcba605028e4de75ff57d79451060c899/%E2%80%8E%E2%81%A8%D8%AD%D8%B1%D9%81%20%D8%B1%E2%81%A9.mp3" type="audio/mpeg">
+  </audio>
+
   <script>
     const buttons = document.querySelectorAll(".letter-button");
     const audioRa = document.getElementById("audio-ra");
+    const typedTextEl = document.getElementById("typed-text");
+    const cursorEl = document.getElementById("cursor");
+
+    const poemText = `رسمتك بالخيال والله جابك
+وصلت لمرحلة أرتاح بعذابك
+هو العنده مثلك يزعل شبيك
+ومنو غيرك يسوى بقلبي أخليه
+منو يزعل بشر يسوى لـ مية
+يلوموني وقلبهم مو عليك`;
+
+    let typingTimeout;
+
+    function startTyping(text, element, speed = 70) {
+      element.textContent = "";
+      cursorEl.style.display = "inline-block";
+      let index = 0;
+
+      function type() {
+        if (index < text.length) {
+          element.textContent += text.charAt(index);
+          index++;
+          typingTimeout = setTimeout(type, speed);
+        }
+      }
+      type();
+    }
+
+    function stopTyping() {
+      clearTimeout(typingTimeout);
+      typedTextEl.textContent = "";
+      cursorEl.style.display = "none";
+    }
 
     buttons.forEach((button) => {
-      button.addEventListener("click", (e) => {
-        // إذا تم النقر داخل عنصر مشغل الصوت نفسه لا تقم بإغلاق الدائرة
-        if (e.target.closest("audio")) return;
-
+      button.addEventListener("click", () => {
         const isCurrentlyActive = button.getAttribute("aria-pressed") === "true";
 
-        // إطفاء جميع الحروف وإيقاف الصوت
+        // إطفاء جميع الحروف وإيقاف الصوت والكتابة
         buttons.forEach((btn) => btn.setAttribute("aria-pressed", "false"));
         if (audioRa) {
           audioRa.pause();
           audioRa.currentTime = 0;
         }
+        stopTyping();
 
-        // إذا لم يكن الحرف متوهجًا سابقًا، نقوم بتوهجه وتوسيعه
+        // تفعيل الحرف المُنقر عليه
         if (!isCurrentlyActive) {
           button.setAttribute("aria-pressed", "true");
-          
-          // تشغيل الصوت تلقائياً عند فتح حرف الراء
-          if (button.classList.contains("letter-ra") && audioRa) {
-            audioRa.play().catch(() => {
-              // تجنب أخطاء المنع التلقائي للتشغيل في بعض المتصفحات
-            });
+
+          if (button.classList.contains("letter-ra")) {
+            if (audioRa) {
+              audioRa.play().catch(() => {});
+            }
+            startTyping(poemText, typedTextEl, 80);
           }
         }
       });
