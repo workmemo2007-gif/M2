@@ -24,6 +24,7 @@
       --off-white-glow: rgba(255, 253, 245, 0.95);
       --gold-border: rgba(255, 214, 107, 0.85);
       --circle-size: clamp(40px, 5.8vw, 52px);
+      --red-love: #ff2a5f;
     }
 
     * {
@@ -44,7 +45,6 @@
       background-color: #080b16;
       background-image: url("https://raw.githubusercontent.com/workmemo2007-gif/R1/c4c2ac757d6fb303ea96a912e78dc58c420103f4/IMG_2572.png");
       background-size: cover;
-      /* البداية التلقائية من أعلى الصورة */
       background-position: center top;
       background-repeat: no-repeat;
       background-attachment: fixed;
@@ -62,6 +62,39 @@
       background-color: rgba(0, 0, 0, 0.55);
       z-index: 0;
       pointer-events: none;
+    }
+
+    /* 1. شريط التقدم بشكل خيط الحب الأحمر */
+    .love-thread-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 12px;
+      z-index: 9999;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+    }
+
+    .love-thread-line {
+      height: 4px;
+      background: linear-gradient(90deg, #ff2a5f, #ff758c, #ff2a5f);
+      width: 0%;
+      box-shadow: 0 0 10px #ff2a5f, 0 0 18px rgba(255, 42, 95, 0.8);
+      transition: width 0.1s linear;
+      border-radius: 0 4px 4px 0;
+      position: relative;
+    }
+
+    .love-thread-heart {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--red-love);
+      font-size: 16px;
+      text-shadow: 0 0 8px #ff2a5f;
     }
 
     .section-container {
@@ -91,7 +124,7 @@
       filter: drop-shadow(0 0 22px rgba(28, 69, 255, .2));
     }
 
-    /* تصميم عرض الصورة الجديدة عائمة مباشرة أسفل الأولى وأنيميشن انزلاق */
+    /* 2. تصميم بطاقة الكشط السهلة Scratch Card */
     .second-artwork-container {
       position: relative;
       z-index: 1;
@@ -104,24 +137,148 @@
       box-sizing: border-box;
     }
 
-    .second-artwork {
+    .scratch-card-wrapper {
+      position: relative;
       width: min(98vw, 95vh, 1100px);
       max-width: 100%;
-      height: auto;
-      border: none;
-      background: transparent;
-      box-shadow: none;
-      filter: drop-shadow(0 15px 30px rgba(0,0,0,0.6));
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
       opacity: 0;
       transform: translateY(120px) scale(0.92);
       transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .scratch-card-wrapper.slide-in {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .second-artwork {
+      width: 100%;
+      height: auto;
+      display: block;
       user-select: none;
       -webkit-user-drag: none;
     }
 
-    .second-artwork.slide-in {
-      opacity: 1;
-      transform: translateY(0) scale(1);
+    .scratch-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      touch-action: none;
+    }
+
+    .scratch-hint {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: rgba(0, 0, 0, 0.65);
+      color: var(--gold-bright);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 14px;
+      pointer-events: none;
+      z-index: 2;
+      border: 1px solid var(--gold-border);
+      backdrop-filter: blur(5px);
+    }
+
+    /* 3. دفتر/ألبوم الصور الكلاسيكي (Flipbook) */
+    .flipbook-section {
+      position: relative;
+      z-index: 1;
+      padding: 60px 15px 100px 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .flipbook-title {
+      color: var(--gold-bright);
+      font-size: clamp(22px, 4vw, 32px);
+      margin-bottom: 25px;
+      text-shadow: 0 0 10px rgba(255, 214, 107, 0.5);
+    }
+
+    .flipbook-container {
+      position: relative;
+      width: min(90vw, 550px);
+      height: min(120vw, 680px);
+      perspective: 1500px;
+    }
+
+    .flipbook-page {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      border-radius: 12px;
+      background: #151b2e;
+      border: 2px solid var(--gold-border);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.8);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      transform-origin: right center;
+      transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+      backface-visibility: hidden;
+      user-select: none;
+    }
+
+    .flipbook-page.flipped {
+      transform: rotateY(-180deg);
+    }
+
+    .flipbook-img-container {
+      width: 100%;
+      height: 75%;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .flipbook-img-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .flipbook-caption {
+      color: var(--off-white-glow);
+      font-size: clamp(15px, 2.2vw, 18px);
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .flipbook-controls {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .flipbook-btn {
+      background: rgba(255, 214, 107, 0.15);
+      border: 1px solid var(--gold-border);
+      color: var(--gold-bright);
+      padding: 8px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 16px;
+      backdrop-filter: blur(5px);
+      transition: all 0.3s ease;
+    }
+
+    .flipbook-btn:hover {
+      background: var(--gold);
+      color: #080b16;
     }
 
     .letter-button {
@@ -303,9 +460,6 @@
       .artwork {
         width: min(82vw, 64vh, 420px);
       }
-      .second-artwork {
-        width: 100vw;
-      }
       .letter-button.letter-expandable[aria-pressed="true"] {
         width: 200px;
         min-height: 85px;
@@ -316,6 +470,13 @@
 </head>
 
 <body>
+
+  <!-- شريط تقدم خيط الحب -->
+  <div class="love-thread-container">
+    <div style="color: var(--red-love); font-size: 14px; margin-right: 5px;">❤️</div>
+    <div class="love-thread-line" id="loveThread"></div>
+  </div>
+
   <main aria-label="مساحة عرض الصورة الحرفية">
     
     <div class="section-container">
@@ -401,15 +562,56 @@
       </div>
     </div>
 
-    <!-- القسم الثاني: الصورة الجديدة -->
+    <!-- القسم الثاني: بطاقة الكشط Scratch Card -->
     <div class="second-artwork-container">
-      <img
-        id="second-img"
-        class="second-artwork"
-        src="https://raw.githubusercontent.com/workmemo2007-gif/M2/adadf85a0ca189e75ecac30f00924564fbb59352/IMG_2577.png"
-        alt="صورة عائمة جديدة"
-        draggable="false"
-      >
+      <div id="scratch-wrapper" class="scratch-card-wrapper">
+        <div class="scratch-hint">✨ اكشط الشاشة بلطف لتكتشف السر</div>
+        <img
+          id="second-img"
+          class="second-artwork"
+          src="https://raw.githubusercontent.com/workmemo2007-gif/M2/adadf85a0ca189e75ecac30f00924564fbb59352/IMG_2577.png"
+          alt="صورة عائمة جديدة"
+          draggable="false"
+        >
+        <canvas id="scratchCanvas" class="scratch-canvas"></canvas>
+      </div>
+    </div>
+
+    <!-- القسم الثالث: ألبوم الذكريات التفاعلي Flipbook -->
+    <div class="flipbook-section">
+      <div class="flipbook-title">📖 ألبوم الخاطرات والذكريات</div>
+      <div class="flipbook-container" id="flipbook">
+        
+        <!-- صفحة 3 -->
+        <div class="flipbook-page" style="z-index: 1;">
+          <div class="flipbook-img-container">
+            <img src="https://raw.githubusercontent.com/workmemo2007-gif/R1/c4c2ac757d6fb303ea96a912e78dc58c420103f4/IMG_2572.png" alt="ذكرى 3">
+          </div>
+          <div class="flipbook-caption">"أنظر إليك وكأنك العالم بأسره"</div>
+        </div>
+
+        <!-- صفحة 2 -->
+        <div class="flipbook-page" style="z-index: 2;">
+          <div class="flipbook-img-container">
+            <img src="https://raw.githubusercontent.com/workmemo2007-gif/M2/adadf85a0ca189e75ecac30f00924564fbb59352/IMG_2577.png" alt="ذكرى 2">
+          </div>
+          <div class="flipbook-caption">"في كل تفاصيلك أجد حبًا جديدًا"</div>
+        </div>
+
+        <!-- صفحة 1 -->
+        <div class="flipbook-page" style="z-index: 3;">
+          <div class="flipbook-img-container">
+            <img src="https://raw.githubusercontent.com/workmemo2007-gif/M2/93d760cc9f33a21f2c0867fa02795531fd73a040/IMG_2573.png" alt="ذكرى 1">
+          </div>
+          <div class="flipbook-caption">"بداية اللحظات الساحرة والجميلة"</div>
+        </div>
+
+      </div>
+
+      <div class="flipbook-controls">
+        <button class="flipbook-btn" onclick="prevPage()">الصفحة السابقة ➔</button>
+        <button class="flipbook-btn" onclick="nextPage()">⬅ الصفحة التالية</button>
+      </div>
     </div>
 
   </main>
@@ -432,22 +634,88 @@
   </audio>
 
   <script>
-    // ربط حركة خلفية الصورة بين أعلى الصورة (0%) وأسفل الصورة (100%)
-    function updateBackgroundOnScroll() {
+    // 1. تحديث شريط التقدم بخيط الحب وحركة الخلفية مع التمرير
+    function updateOnScroll() {
       const scrollY = window.scrollY;
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
       
       if (maxScroll > 0) {
-        // حساب نسبة التمرير الحالية من 0 إلى 100
         const scrollPercent = (scrollY / maxScroll) * 100;
-        // تطبيق النسبة المئوية على موقّع الخلفية العمودي
         document.body.style.backgroundPositionY = `${scrollPercent}%`;
+        
+        // شريط خيط الحب
+        const thread = document.getElementById("loveThread");
+        if (thread) {
+          thread.style.width = `${scrollPercent}%`;
+        }
       }
     }
 
-    window.addEventListener("scroll", updateBackgroundOnScroll);
-    window.addEventListener("resize", updateBackgroundOnScroll);
+    window.addEventListener("scroll", updateOnScroll);
+    window.addEventListener("resize", updateOnScroll);
 
+    // 2. منطق بطاقة الكشط (Scratch Card Logic)
+    const canvas = document.getElementById("scratchCanvas");
+    const ctx = canvas.getContext("2d");
+    const imgContainer = document.getElementById("scratch-wrapper");
+    let isDrawing = false;
+
+    function initScratchCard() {
+      canvas.width = imgContainer.clientWidth;
+      canvas.height = imgContainer.clientHeight;
+
+      // إنشاء خلفية الطبقة التي سيتم كشطها (ذهبية فاخرة مع نقش ناعم)
+      ctx.fillStyle = "#2a1f10";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = "#ffd66b";
+      ctx.font = "20px 'Aref Ruqaa', serif";
+      ctx.textAlign = "center";
+      ctx.fillText("✨ امسح هنا لتكشف الصورة ✨", canvas.width / 2, canvas.height / 2);
+    }
+
+    function scratch(e) {
+      if (!isDrawing) return;
+      const rect = canvas.getBoundingClientRect();
+      const x = (e.clientX || e.touches[0].clientX) - rect.left;
+      const y = (e.clientY || e.touches[0].clientY) - rect.top;
+
+      ctx.globalCompositeOperation = "destination-out";
+      ctx.beginPath();
+      ctx.arc(x, y, 35, 0, Math.PI * 2); // نصف قطر واسع للكشط السريع والسهل
+      ctx.fill();
+    }
+
+    canvas.addEventListener("mousedown", (e) => { isDrawing = true; scratch(e); });
+    canvas.addEventListener("mousemove", scratch);
+    window.addEventListener("mouseup", () => isDrawing = false);
+
+    canvas.addEventListener("touchstart", (e) => { isDrawing = true; scratch(e); });
+    canvas.addEventListener("touchmove", scratch);
+    window.addEventListener("touchend", () => isDrawing = false);
+
+    window.addEventListener("load", initScratchCard);
+    window.addEventListener("resize", initScratchCard);
+
+    // 3. ألبوم الصفحات (Flipbook Logic)
+    const pages = document.querySelectorAll(".flipbook-page");
+    let currentPage = pages.length - 1;
+
+    function nextPage() {
+      if (currentPage >= 0) {
+        pages[currentPage].classList.add("flipped");
+        currentPage--;
+      }
+    }
+
+    function prevPage() {
+      if (currentPage < pages.length - 1) {
+        currentPage++;
+        pages[currentPage].classList.remove("flipped");
+      }
+    }
+
+    // منطق الحروف والصوتيات الأساسي
     const buttons = document.querySelectorAll(".letter-button");
 
     const audioMap = {
@@ -543,17 +811,17 @@
       });
     });
 
-    // انيميشن ظهور الصورة الثانية
-    const secondImg = document.getElementById("second-img");
+    // انيميشن ظهور بطاقة الكشط
+    const scratchWrapper = document.getElementById("scratch-wrapper");
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          secondImg.classList.add("slide-in");
+          scratchWrapper.classList.add("slide-in");
         }
       });
     }, { threshold: 0.15 });
 
-    observer.observe(secondImg);
+    observer.observe(scratchWrapper);
   </script>
 </body>
 </html>
