@@ -19,7 +19,7 @@
       color-scheme: dark;
       --gold: #ffd66b;
       --gold-bright: #fff1b8;
-      --gold-dark-bg: rgba(30, 22, 10, 0.94);
+      --gold-dark-bg: rgba(30, 22, 10, 0.92);
       --circle-size: clamp(40px, 5.8vw, 52px);
     }
 
@@ -139,13 +139,13 @@
       animation: golden-glow 1.5s ease-in-out infinite alternate;
     }
 
-    /* التوسع الأفقي للحروف المفعلة عند الضغط عليها */
+    /* التوسع الأفقي للحروف المفعلة عند الضغط عليها (حجم مصغر) */
     .letter-button.letter-expandable[aria-pressed="true"] {
-      width: clamp(210px, 48vw, 260px);
+      width: clamp(190px, 45vw, 240px);
       height: auto;
-      min-height: 110px;
-      padding: 10px 14px;
-      border-radius: 16px;
+      min-height: 90px;
+      padding: 8px 12px 12px 12px;
+      border-radius: 14px;
       flex-direction: column;
       align-items: flex-start;
       justify-content: flex-start;
@@ -171,74 +171,42 @@
       font-size: clamp(12px, 1.8vw, 15px);
       line-height: 1.5;
       white-space: pre-line;
-      margin: 0 0 8px 0;
+      margin: 0;
       text-shadow: 0 0 6px rgba(255, 214, 107, 0.6);
     }
 
-    /* شريط التحكم في الصوت والذبذبات */
-    .audio-controls {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-      margin-top: 6px;
-      padding-top: 6px;
-      border-top: 1px solid rgba(255, 214, 107, 0.25);
-    }
-
-    .audio-toggle-btn {
-      background: rgba(255, 214, 107, 0.15);
-      border: 1px solid var(--gold);
-      color: var(--gold-bright);
-      border-radius: 50%;
-      width: 28px;
-      height: 28px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 11px;
-      transition: background 0.2s ease, transform 0.2s ease;
-      padding: 0;
-    }
-
-    .audio-toggle-btn:hover {
-      background: rgba(255, 214, 107, 0.35);
-      transform: scale(1.08);
-    }
-
-    /* مؤشر ذبذبات الصوت */
+    /* مؤشر ذبذبات الصوت بطول المربع */
     .audio-waves {
       display: flex;
       align-items: flex-end;
-      gap: 3px;
+      justify-content: space-between;
+      width: 100%;
       height: 16px;
+      margin-top: 10px;
+      padding-top: 4px;
+      border-top: 1px solid rgba(255, 214, 107, 0.2);
     }
 
     .audio-wave-bar {
-      width: 3px;
+      flex: 1;
+      margin: 0 1px;
       height: 100%;
       background-color: var(--gold-bright);
       border-radius: 2px;
-      opacity: 0.4;
       transform-origin: bottom;
-    }
-
-    /* أنيميشن الذبذبات أثناء عمل الصوت */
-    .audio-waves.playing .audio-wave-bar {
-      opacity: 1;
       animation: wave-bounce 0.8s ease-in-out infinite alternate;
+      box-shadow: 0 0 4px rgba(255, 214, 107, 0.5);
     }
 
-    .audio-waves.playing .audio-wave-bar:nth-child(1) { animation-delay: 0.1s; }
-    .audio-waves.playing .audio-wave-bar:nth-child(2) { animation-delay: 0.3s; }
-    .audio-waves.playing .audio-wave-bar:nth-child(3) { animation-delay: 0.2s; }
-    .audio-waves.playing .audio-wave-bar:nth-child(4) { animation-delay: 0.5s; }
-    .audio-waves.playing .audio-wave-bar:nth-child(5) { animation-delay: 0.4s; }
+    /* تأخيرات زمنيّة مختلفة لكل أعمدة الذبذبات لإعطاء تأثر احترافي */
+    .audio-wave-bar:nth-child(2n) { animation-delay: 0.15s; }
+    .audio-wave-bar:nth-child(3n) { animation-delay: 0.3s; }
+    .audio-wave-bar:nth-child(4n) { animation-delay: 0.45s; }
+    .audio-wave-bar:nth-child(5n) { animation-delay: 0.2s; }
 
     @keyframes wave-bounce {
-      0% { transform: scaleY(0.2); }
-      100% { transform: scaleY(1); }
+      0% { transform: scaleY(0.15); opacity: 0.4; }
+      100% { transform: scaleY(1); opacity: 1; }
     }
 
     /* مؤشر الكيبورد النابض الذهبي */
@@ -303,9 +271,9 @@
       }
 
       .letter-button.letter-expandable[aria-pressed="true"] {
-        width: 190px;
-        min-height: 90px;
-        padding: 8px 10px;
+        width: 180px;
+        min-height: 80px;
+        padding: 6px 10px 10px 10px;
       }
     }
 
@@ -343,16 +311,8 @@
         <span class="letter-text">ر</span>
         <div class="typed-container">
           <p class="typed-text" id="typed-text-ra"></p><span class="cursor" id="cursor-ra" style="display:none;"></span>
-          
-          <div class="audio-controls">
-            <button type="button" class="audio-toggle-btn" id="btn-audio-ra" title="إيقاف/تشغيل الصوت">⏸</button>
-            <div class="audio-waves" id="waves-ra">
-              <div class="audio-wave-bar"></div>
-              <div class="audio-wave-bar"></div>
-              <div class="audio-wave-bar"></div>
-              <div class="audio-wave-bar"></div>
-              <div class="audio-wave-bar"></div>
-            </div>
+          <div class="audio-waves">
+            <div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div>
           </div>
         </div>
       </button>
@@ -369,16 +329,8 @@
         <span class="letter-text">ت</span>
         <div class="typed-container">
           <p class="typed-text" id="typed-text-ta"></p><span class="cursor" id="cursor-ta" style="display:none;"></span>
-          
-          <div class="audio-controls">
-            <button type="button" class="audio-toggle-btn" id="btn-audio-ta" title="إيقاف/تشغيل الصوت">⏸</button>
-            <div class="audio-waves" id="waves-ta">
-              <div class="audio-wave-bar"></div>
-              <div class="audio-wave-bar"></div>
-              <div class="audio-wave-bar"></div>
-              <div class="audio-wave-bar"></div>
-              <div class="audio-wave-bar"></div>
-            </div>
+          <div class="audio-waves">
+            <div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div>
           </div>
         </div>
       </button>
@@ -395,16 +347,8 @@
         <span class="letter-text">ا</span>
         <div class="typed-container">
           <p class="typed-text" id="typed-text-alif"></p><span class="cursor" id="cursor-alif" style="display:none;"></span>
-          
-          <div class="audio-controls">
-            <button type="button" class="audio-toggle-btn" id="btn-audio-alif" title="إيقاف/تشغيل الصوت">⏸</button>
-            <div class="audio-waves" id="waves-alif">
-              <div class="audio-wave-bar"></div>
-              <div class="audio-wave-bar"></div>
-              <div class="audio-wave-bar"></div>
-              <div class="audio-wave-bar"></div>
-              <div class="audio-wave-bar"></div>
-            </div>
+          <div class="audio-waves">
+            <div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div>
           </div>
         </div>
       </button>
@@ -421,23 +365,15 @@
         <span class="letter-text">ج</span>
         <div class="typed-container">
           <p class="typed-text" id="typed-text-jeem"></p><span class="cursor" id="cursor-jeem" style="display:none;"></span>
-          
-          <div class="audio-controls">
-            <button type="button" class="audio-toggle-btn" id="btn-audio-jeem" title="إيقاف/تشغيل الصوت">⏸</button>
-            <div class="audio-waves" id="waves-jeem">
-              <div class="audio-wave-bar"></div>
-              <div class="audio-wave-bar"></div>
-              <div class="audio-wave-bar"></div>
-              <div class="audio-wave-bar"></div>
-              <div class="audio-wave-bar"></div>
-            </div>
+          <div class="audio-waves">
+            <div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div>
           </div>
         </div>
       </button>
     </div>
   </main>
 
-  <!-- الأصوات الخفية -->
+  <!-- الأصوات الخفية التي تعمل عند التوسيع -->
   <audio id="audio-ra" preload="metadata">
     <source src="https://raw.githubusercontent.com/workmemo2007-gif/M2/43ae8c0dcba605028e4de75ff57d79451060c899/%E2%80%8E%E2%81%A8%D8%AD%D8%B1%D9%81%20%D8%B1%E2%81%A9.mp3" type="audio/mpeg">
   </audio>
@@ -492,6 +428,7 @@
 
     let typingTimeout;
 
+    // السرعة 130ms لجعل الكتابة أبطأ
     function startTyping(text, textElement, cursorElement, speed = 130) {
       textElement.textContent = "";
       cursorElement.style.display = "inline-block";
@@ -507,27 +444,15 @@
       type();
     }
 
-    function setAudioState(key, isPlaying) {
-      const btn = document.getElementById(`btn-audio-${key}`);
-      const waves = document.getElementById(`waves-${key}`);
-      if (btn) btn.textContent = isPlaying ? "⏸" : "▶";
-      if (waves) {
-        if (isPlaying) waves.classList.add("playing");
-        else waves.classList.remove("playing");
-      }
-    }
-
     function stopAllEffects() {
       clearTimeout(typingTimeout);
 
-      // إيقاف جميع الأصوات ومؤشر الذبذبات
-      Object.keys(audioMap).forEach(key => {
-        const audio = audioMap[key];
+      // إيقاف جميع الأصوات وإعادتها للبداية
+      Object.values(audioMap).forEach(audio => {
         if (audio) {
           audio.pause();
           audio.currentTime = 0;
         }
-        setAudioState(key, false);
       });
 
       // تفريغ أسطر الكتابة وإخفاء المؤشرات
@@ -538,31 +463,6 @@
         if (cur) cur.style.display = "none";
       });
     }
-
-    // ربط إحداثيات الصوت بالأزرار
-    Object.keys(audioMap).forEach(key => {
-      const audio = audioMap[key];
-      const btn = document.getElementById(`btn-audio-${key}`);
-
-      if (audio) {
-        audio.addEventListener("ended", () => setAudioState(key, false));
-        audio.addEventListener("pause", () => setAudioState(key, false));
-        audio.addEventListener("play", () => setAudioState(key, true));
-      }
-
-      if (btn) {
-        btn.addEventListener("click", (e) => {
-          e.stopPropagation(); // لمنع إغلاق المربع عند الضغط على زر الصوت
-          if (audio) {
-            if (audio.paused) {
-              audio.play().catch(() => {});
-            } else {
-              audio.pause();
-            }
-          }
-        });
-      }
-    });
 
     buttons.forEach((button) => {
       button.addEventListener("click", () => {
@@ -580,11 +480,7 @@
           if (letterKey && textMap[letterKey]) {
             const audioObj = audioMap[letterKey];
             if (audioObj) {
-              audioObj.play().then(() => {
-                setAudioState(letterKey, true);
-              }).catch(() => {
-                setAudioState(letterKey, false);
-              });
+              audioObj.play().catch(() => {});
             }
 
             const textEl = document.getElementById(`typed-text-${letterKey}`);
