@@ -26,31 +26,35 @@
       box-sizing: border-box;
     }
 
-    html {
-      min-height: 100%;
-      scroll-behavior: smooth;
-      scrollbar-color: rgba(255, 214, 107, .55) rgba(8, 11, 22, .5);
+    html, body {
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      overflow: hidden; /* إلغاء التمرير نهائياً */
+      font-family: "Aref Ruqaa", serif;
     }
 
     body {
-      min-height: 300vh;
-      margin: 0;
-      overflow-x: hidden;
-
+      position: relative;
       /* خلفية الموقع الأصلية */
       background-color: #080b16;
       background-image: url("https://raw.githubusercontent.com/workmemo2007-gif/R1/c4c2ac757d6fb303ea96a912e78dc58c420103f4/IMG_2572.png");
       background-size: cover;
-      background-position: center 0;
+      background-position: center;
       background-repeat: no-repeat;
-      background-attachment: fixed;
-
-      font-family: "Aref Ruqaa", serif;
     }
 
-    .scroll-space {
-      min-height: 300vh;
+    /* غشاء أسود شفاف لإبراز الكتابات والنصوص */
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.55);
+      z-index: 0;
+      pointer-events: none;
     }
 
     .artwork {
@@ -61,7 +65,7 @@
       width: min(72vw, 68vh, 560px);
       aspect-ratio: 1;
 
-      /* صورة أصغر، ثابتة بمنتصف الشاشة ومائلة قليلًا للأسفل */
+      /* صورة أصلية بمنتصف الشاشة */
       transform: translate(-50%, -50%) rotate(5deg);
 
       pointer-events: none;
@@ -182,10 +186,6 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-      html {
-        scroll-behavior: auto;
-      }
-
       *,
       *::before,
       *::after {
@@ -198,7 +198,7 @@
 </head>
 
 <body>
-  <main class="scroll-space" aria-label="مساحة للتصفح صعوداً ونزولاً">
+  <main aria-label="مساحة عرض الصورة الحرفية">
     <div class="artwork" aria-label="الصورة التفاعلية وحروفها">
       <img
         class="artwork-image"
@@ -242,29 +242,19 @@
   </main>
 
   <script>
-    // تحريك خلفية الموقع عند التمرير، مع بقاء صورة PNG الأمامية ثابتة.
-    let framePending = false;
+    const buttons = document.querySelectorAll(".letter-button");
 
-    function updateParallax() {
-      const offset = -(window.scrollY * 0.22);
-      document.body.style.backgroundPosition = `center ${offset}px`;
-      framePending = false;
-    }
-
-    window.addEventListener("scroll", () => {
-      if (!framePending) {
-        window.requestAnimationFrame(updateParallax);
-        framePending = true;
-      }
-    }, { passive: true });
-
-    updateParallax();
-
-    // النقر يبدّل الدائرة بين الأبيض المتوهج بالأزرق والذهبي المتوهج.
-    document.querySelectorAll(".letter-button").forEach((button) => {
+    buttons.forEach((button) => {
       button.addEventListener("click", () => {
-        const isActive = button.getAttribute("aria-pressed") === "true";
-        button.setAttribute("aria-pressed", String(!isActive));
+        const isCurrentlyActive = button.getAttribute("aria-pressed") === "true";
+
+        // إطفاء جميع الحروف
+        buttons.forEach((btn) => btn.setAttribute("aria-pressed", "false"));
+
+        // إذا لم يكن الحرف متوهجًا سابقًا، نقوم بتوهجه، وإن كان متوهجًا فسيتم إطفائه
+        if (!isCurrentlyActive) {
+          button.setAttribute("aria-pressed", "true");
+        }
       });
     });
   </script>
