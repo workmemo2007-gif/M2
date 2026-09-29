@@ -44,10 +44,10 @@
       background-color: #080b16;
       background-image: url("https://raw.githubusercontent.com/workmemo2007-gif/R1/c4c2ac757d6fb303ea96a912e78dc58c420103f4/IMG_2572.png");
       background-size: cover;
-      background-position: center top;
+      background-position: center center;
       background-repeat: no-repeat;
       background-attachment: fixed;
-      transition: background-position 0.1s ease-out;
+      will-change: background-position;
     }
 
     /* غشاء أسود شفاف لإبراز الكتابات والنصوص */
@@ -286,7 +286,7 @@
     /* مواضع الأزرار وتوجيه التوسع عند النقر */
     .letter-ra { left: 82%; top: 87%; }
     
-    /* حرف التاء: عند الفتح يتوسع باتجاه اليسار العلوي */
+    /* حرف التاء: يتوسع باتجاه اليسار العلوي */
     .letter-ta { left: 85%; top: 16%; }
     .letter-ta[aria-pressed="true"] {
       transform: translate(-100%, -100%);
@@ -295,7 +295,7 @@
 
     .letter-alif { left: 47%; top: 14%; }
 
-    /* حرف الجيم: عند الفتح يتوسع باتجاه اليمين السفلي */
+    /* حرف الجيم: يتوسع باتجاه اليمين السفلي */
     .letter-jeem { left: 13%; top: 88%; }
     .letter-jeem[aria-pressed="true"] {
       transform: translate(0, 0);
@@ -441,10 +441,11 @@
   </audio>
 
   <script>
-    // حركة خلفية الموقع لتتحرك بسلاسة مع التمرير من الأعلى
+    // حركة الخلفية العكسية المقاومة (Reverse Scroll Move)
     window.addEventListener("scroll", () => {
       const scrollY = window.scrollY;
-      document.body.style.backgroundPositionY = `${scrollY * 0.3}px`;
+      // التمرير لأسفل يرفع الخلفية للأعلى بخفة وبسلاسة
+      document.body.style.backgroundPositionY = `calc(50% - ${scrollY * 0.25}px)`;
     });
 
     const buttons = document.querySelectorAll(".letter-button");
