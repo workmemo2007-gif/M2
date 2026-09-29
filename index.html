@@ -2,9 +2,9 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#080b16">
-  <title>الصورة التفاعلية - التجربة السينمائية</title>
+  <title>الصورة التفاعلية</title>
 
   <!-- خط الرقعة -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,9 +19,11 @@
       color-scheme: dark;
       --gold: #ffd66b;
       --gold-bright: #fff1b8;
+      --gold-dark-bg: rgba(30, 22, 10, 0.92);
+      --off-white-translucent: rgba(250, 248, 242, 0.18);
+      --off-white-glow: rgba(255, 253, 245, 0.95);
       --gold-border: rgba(255, 214, 107, 0.85);
-      --gold-dark-bg: rgba(250, 247, 240, 0.88);
-      --circle-size: clamp(42px, 6vw, 54px);
+      --circle-size: clamp(40px, 5.8vw, 52px);
     }
 
     * {
@@ -35,55 +37,32 @@
       overflow-y: auto;
       font-family: "Aref Ruqaa", serif;
       scroll-behavior: smooth;
-      background-color: #080b16;
     }
 
-    /* خلفية سينمائية ثابتة بطبقة زوم وحركة متناسقة */
-    .bg-layer {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 120%;
+    body {
+      position: relative;
+      background-color: #080b16;
       background-image: url("https://raw.githubusercontent.com/workmemo2007-gif/R1/c4c2ac757d6fb303ea96a912e78dc58c420103f4/IMG_2572.png");
       background-size: cover;
       background-position: center top;
       background-repeat: no-repeat;
-      z-index: -2;
-      will-change: transform;
-      transition: transform 0.1s cubic-bezier(0.1, 0, 0.1, 1);
+      background-attachment: fixed;
+      transition: background-position 0.1s ease-out;
     }
 
-    /* غشاء أسود سينمائي شفاف مع تأثير توهج ليلى */
-    .bg-overlay {
+    /* غشاء أسود شفاف لإبراز الكتابات والنصوص */
+    body::before {
+      content: "";
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: radial-gradient(circle at 50% 30%, rgba(16, 26, 53, 0.4), rgba(8, 11, 22, 0.82));
-      z-index: -1;
-      pointer-events: none;
-    }
-
-    /* كانفاس الجزيئات الذهبية المتلألئة (Gold Dust) */
-    #particles-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      background-color: rgba(0, 0, 0, 0.55);
       z-index: 0;
       pointer-events: none;
     }
 
-    main {
-      position: relative;
-      z-index: 1;
-      perspective: 1000px;
-    }
-
-    /* حاوية الأقسام */
     .section-container {
       position: relative;
       z-index: 1;
@@ -91,25 +70,14 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 20px;
-    }
-
-    /* اللوحة الأولى وحركة الـ 3D Perspective Floating */
-    .artwork-wrapper {
-      position: relative;
-      perspective: 1000px;
-      transform-style: preserve-3d;
-      will-change: transform;
-      transition: transform 0.2s ease-out;
     }
 
     .artwork {
       position: relative;
-      width: min(75vw, 70vh, 580px);
+      width: min(72vw, 68vh, 560px);
       aspect-ratio: 1;
-      transform: rotate(4deg) translateZ(20px);
+      transform: rotate(5deg);
       isolation: isolate;
-      transform-style: preserve-3d;
     }
 
     .artwork-image {
@@ -119,10 +87,10 @@
       object-fit: contain;
       user-select: none;
       -webkit-user-drag: none;
-      filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 25px rgba(28, 69, 255, .25));
+      filter: drop-shadow(0 0 22px rgba(28, 69, 255, .2));
     }
 
-    /* القسم الثاني والصورة السفلى السينمائية */
+    /* تصميم أنيميشن ظهور الصورة الثانية بحجم كبير جداً متناسق مع الشاشة */
     .second-artwork-container {
       position: relative;
       z-index: 1;
@@ -131,32 +99,41 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 60px 20px;
-      perspective: 1200px;
+      padding: 40px 20px;
+      box-sizing: border-box;
     }
 
     .second-artwork {
-      width: min(92vw, 88vh, 920px);
-      max-width: 100%;
+      width: min(92vw, 85vh, 900px);
+      max-width: 95%;
       height: auto;
       border-radius: 20px;
-      opacity: 0;
-      transform: translateY(-100px) rotateX(12deg) scale(0.92);
-      transform-origin: top center;
-      transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
-                  transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
-                  box-shadow 0.8s ease;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.85), 0 0 30px rgba(255, 214, 107, 0.15);
-      border: 1px solid rgba(255, 214, 107, 0.2);
-      will-change: transform, opacity;
+      cursor: pointer;
+      filter: blur(14px) opacity(0.5);
+      transform: translateY(60px) scale(0.95);
+      transition: filter 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.9s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.5s ease;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.6);
     }
 
     .second-artwork.in-view {
-      opacity: 1;
-      transform: translateY(0) rotateX(0deg) scale(1);
+      transform: translateY(0) scale(1);
+      filter: blur(10px) opacity(0.85);
     }
 
-    /* أزرار الحروف والتصميم التفاعلي */
+    .second-artwork.unblurred {
+      filter: blur(0px) opacity(1);
+      box-shadow: 0 0 45px rgba(255, 214, 107, 0.5), 0 0 15px rgba(255, 255, 255, 0.3);
+    }
+
+    .click-hint {
+      color: var(--gold-bright);
+      margin-top: 20px;
+      font-size: 1.2rem;
+      text-shadow: 0 0 10px rgba(255, 214, 107, 0.8);
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+    }
+
     .letter-button {
       position: absolute;
       z-index: 2;
@@ -177,7 +154,7 @@
         0 0 13px 3px rgba(48, 126, 255, .78),
         0 0 30px 8px rgba(34, 94, 255, .38),
         inset 0 0 9px rgba(255, 255, 255, .95);
-      transform: translate(-50%, -50%) translateZ(40px);
+      transform: translate(-50%, -50%);
       transition:
         width 0.4s cubic-bezier(0.4, 0, 0.2, 1),
         height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
@@ -199,28 +176,28 @@
         0 0 20px 5px rgba(67, 145, 255, .95),
         0 0 38px 12px rgba(34, 94, 255, .52),
         inset 0 0 10px rgba(255, 255, 255, .98);
-      scale: 1.08;
+      scale: 1.05;
     }
 
-    /* مربع النص الشفاف بالأوف وايت والإطار الذهبي */
+    /* تغيير المربع بعد النقر: أوف وايت شفاف مع إطار ذهبي */
     .letter-button[aria-pressed="true"] {
-      border: 2px solid var(--gold-border);
-      background: var(--gold-dark-bg);
+      border: 2px solid var(--gold-bright);
+      background: rgba(252, 249, 240, 0.16);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      color: #1a1608;
+      color: var(--gold-bright);
       box-shadow:
-        0 10px 30px rgba(0, 0, 0, 0.4),
-        0 0 25px 8px rgba(255, 214, 107, 0.5),
-        inset 0 0 15px rgba(255, 255, 255, 0.9);
+        0 0 20px 6px rgba(255, 214, 107, 0.45),
+        0 0 40px 14px rgba(255, 194, 54, 0.3),
+        inset 0 0 20px rgba(255, 255, 255, 0.25);
       animation: golden-glow 1.8s ease-in-out infinite alternate;
     }
 
     .letter-button.letter-expandable[aria-pressed="true"] {
-      width: clamp(210px, 50vw, 270px);
+      width: clamp(210px, 48vw, 260px);
       height: auto;
       min-height: 100px;
-      padding: 12px 16px 16px 16px;
+      padding: 10px 14px 14px 14px;
       border-radius: 16px;
       flex-direction: column;
       align-items: flex-start;
@@ -243,13 +220,13 @@
     }
 
     .typed-text {
-      color: #261c02;
-      font-weight: 700;
-      font-size: clamp(13px, 2vw, 16.5px);
-      line-height: 1.55;
+      color: var(--off-white-glow);
+      font-size: clamp(13px, 1.9vw, 16px);
+      line-height: 1.6;
       white-space: pre-line;
       margin: 0;
-      text-shadow: 0 0 1px rgba(255, 214, 107, 0.3);
+      text-shadow: 0 0 8px rgba(0, 0, 0, 0.9), 0 0 12px rgba(255, 214, 107, 0.7);
+      font-weight: 700;
     }
 
     .audio-waves {
@@ -258,20 +235,20 @@
       justify-content: space-between;
       width: 100%;
       height: 18px;
-      margin-top: 12px;
+      margin-top: 10px;
       padding-top: 4px;
-      border-top: 1px solid rgba(180, 135, 25, 0.35);
+      border-top: 1px solid rgba(255, 214, 107, 0.35);
     }
 
     .audio-wave-bar {
       flex: 1;
-      margin: 0 1.5px;
+      margin: 0 1px;
       height: 100%;
-      background-color: #a37913;
+      background-color: var(--gold-bright);
       border-radius: 2px;
       transform-origin: bottom;
       animation: wave-bounce 0.8s ease-in-out infinite alternate;
-      box-shadow: 0 0 4px rgba(212, 160, 23, 0.4);
+      box-shadow: 0 0 6px rgba(255, 214, 107, 0.7);
     }
 
     .audio-wave-bar:nth-child(2n) { animation-delay: 0.15s; }
@@ -280,7 +257,7 @@
     .audio-wave-bar:nth-child(5n) { animation-delay: 0.2s; }
 
     @keyframes wave-bounce {
-      0% { transform: scaleY(0.15); opacity: 0.35; }
+      0% { transform: scaleY(0.15); opacity: 0.4; }
       100% { transform: scaleY(1); opacity: 1; }
     }
 
@@ -288,7 +265,7 @@
       display: inline-block;
       width: 2px;
       height: 1em;
-      background-color: #261c02;
+      background-color: var(--gold-bright);
       vertical-align: middle;
       animation: blink 0.7s infinite;
     }
@@ -301,19 +278,19 @@
     @keyframes golden-glow {
       from {
         box-shadow:
-          0 10px 25px rgba(0, 0, 0, 0.3),
-          0 0 18px 5px rgba(255, 214, 107, .45),
-          inset 0 0 12px rgba(255, 255, 255, .8);
+          0 0 14px 4px rgba(255, 211, 94, .5),
+          0 0 28px 8px rgba(255, 194, 54, .3),
+          inset 0 0 14px rgba(255, 255, 255, .2);
       }
+
       to {
         box-shadow:
-          0 12px 30px rgba(0, 0, 0, 0.4),
-          0 0 32px 12px rgba(255, 220, 120, .85),
-          inset 0 0 20px rgba(255, 255, 255, .95);
+          0 0 22px 8px rgba(255, 231, 153, .8),
+          0 0 45px 18px rgba(255, 194, 54, .5),
+          inset 0 0 22px rgba(255, 255, 255, .35);
       }
     }
 
-    /* مواقع أزرار الحروف الدقيقة */
     .letter-ra { left: 82%; top: 87%; }
     .letter-ta { left: 85%; top: 16%; }
     .letter-alif { left: 47%; top: 14%; }
@@ -325,133 +302,123 @@
       }
 
       .artwork {
-        width: min(84vw, 62vh, 420px);
+        width: min(82vw, 64vh, 420px);
       }
 
       .second-artwork {
-        width: 96vw;
-        border-radius: 14px;
+        width: 95vw;
       }
 
       .letter-button.letter-expandable[aria-pressed="true"] {
-        width: 195px;
-        min-height: 88px;
-        padding: 8px 12px 12px 12px;
+        width: 200px;
+        min-height: 85px;
+        padding: 8px 10px 10px 10px;
       }
     }
   </style>
 </head>
 
 <body>
-  <!-- خلفية سينمائية متفاعلة مع التمرير -->
-  <div class="bg-layer" id="bg-layer"></div>
-  <div class="bg-overlay"></div>
-
-  <!-- كانفاس ذرات الغبار الذهبي التفاعلي -->
-  <canvas id="particles-canvas"></canvas>
-
-  <main aria-label="مساحة عرض الصورة الحرفية السينمائية">
+  <main aria-label="مساحة عرض الصورة الحرفية">
     
-    <!-- القسم الأول: اللوحة الحرفية الأولى -->
     <div class="section-container">
-      <div class="artwork-wrapper" id="artwork-wrapper">
-        <div class="artwork" aria-label="الصورة التفاعلية وحروفها">
-          <img
-            class="artwork-image"
-            src="https://raw.githubusercontent.com/workmemo2007-gif/M2/93d760cc9f33a21f2c0867fa02795531fd73a040/IMG_2573.png"
-            alt="رسم عربي مزخرف"
-            draggable="false"
-          >
+      <div class="artwork" aria-label="الصورة التفاعلية وحروفها">
+        <img
+          class="artwork-image"
+          src="https://raw.githubusercontent.com/workmemo2007-gif/M2/93d760cc9f33a21f2c0867fa02795531fd73a040/IMG_2573.png"
+          alt="رسم عربي مزخرف"
+          draggable="false"
+        >
 
-          <!-- حرف الراء -->
-          <button
-            class="letter-button letter-ra letter-expandable"
-            type="button"
-            aria-label="حرف الراء"
-            aria-pressed="false"
-            title="راء"
-            data-letter="ra"
-          >
-            <span class="letter-text">ر</span>
-            <div class="typed-container">
-              <p class="typed-text" id="typed-text-ra"></p><span class="cursor" id="cursor-ra" style="display:none;"></span>
-              <div class="audio-waves">
-                <div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div>
-              </div>
+        <!-- حرف الراء -->
+        <button
+          class="letter-button letter-ra letter-expandable"
+          type="button"
+          aria-label="حرف الراء"
+          aria-pressed="false"
+          title="راء"
+          data-letter="ra"
+        >
+          <span class="letter-text">ر</span>
+          <div class="typed-container">
+            <p class="typed-text" id="typed-text-ra"></p><span class="cursor" id="cursor-ra" style="display:none;"></span>
+            <div class="audio-waves">
+              <div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div>
             </div>
-          </button>
+          </div>
+        </button>
 
-          <!-- حرف التاء -->
-          <button
-            class="letter-button letter-ta letter-expandable"
-            type="button"
-            aria-label="حرف التاء"
-            aria-pressed="false"
-            title="تاء"
-            data-letter="ta"
-          >
-            <span class="letter-text">ت</span>
-            <div class="typed-container">
-              <p class="typed-text" id="typed-text-ta"></p><span class="cursor" id="cursor-ta" style="display:none;"></span>
-              <div class="audio-waves">
-                <div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div>
-              </div>
+        <!-- حرف التاء -->
+        <button
+          class="letter-button letter-ta letter-expandable"
+          type="button"
+          aria-label="حرف التاء"
+          aria-pressed="false"
+          title="تاء"
+          data-letter="ta"
+        >
+          <span class="letter-text">ت</span>
+          <div class="typed-container">
+            <p class="typed-text" id="typed-text-ta"></p><span class="cursor" id="cursor-ta" style="display:none;"></span>
+            <div class="audio-waves">
+              <div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div>
             </div>
-          </button>
+          </div>
+        </button>
 
-          <!-- حرف الألف -->
-          <button
-            class="letter-button letter-alif letter-expandable"
-            type="button"
-            aria-label="حرف الألف"
-            aria-pressed="false"
-            title="ألف"
-            data-letter="alif"
-          >
-            <span class="letter-text">ا</span>
-            <div class="typed-container">
-              <p class="typed-text" id="typed-text-alif"></p><span class="cursor" id="cursor-alif" style="display:none;"></span>
-              <div class="audio-waves">
-                <div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div>
-              </div>
+        <!-- حرف الألف -->
+        <button
+          class="letter-button letter-alif letter-expandable"
+          type="button"
+          aria-label="حرف الألف"
+          aria-pressed="false"
+          title="ألف"
+          data-letter="alif"
+        >
+          <span class="letter-text">ا</span>
+          <div class="typed-container">
+            <p class="typed-text" id="typed-text-alif"></p><span class="cursor" id="cursor-alif" style="display:none;"></span>
+            <div class="audio-waves">
+              <div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div>
             </div>
-          </button>
+          </div>
+        </button>
 
-          <!-- حرف الجيم -->
-          <button
-            class="letter-button letter-jeem letter-expandable"
-            type="button"
-            aria-label="حرف الجيم"
-            aria-pressed="false"
-            title="جيم"
-            data-letter="jeem"
-          >
-            <span class="letter-text">ج</span>
-            <div class="typed-container">
-              <p class="typed-text" id="typed-text-jeem"></p><span class="cursor" id="cursor-jeem" style="display:none;"></span>
-              <div class="audio-waves">
-                <div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div>
-              </div>
+        <!-- حرف الجيم -->
+        <button
+          class="letter-button letter-jeem letter-expandable"
+          type="button"
+          aria-label="حرف الجيم"
+          aria-pressed="false"
+          title="جيم"
+          data-letter="jeem"
+        >
+          <span class="letter-text">ج</span>
+          <div class="typed-container">
+            <p class="typed-text" id="typed-text-jeem"></p><span class="cursor" id="cursor-jeem" style="display:none;"></span>
+            <div class="audio-waves">
+              <div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div>
             </div>
-          </button>
-        </div>
+          </div>
+        </button>
       </div>
     </div>
 
-    <!-- القسم الثاني: الصورة السفلى مع ظهور وانزلاق سينمائي من الأعلى -->
+    <!-- القسم الثاني: الصورة الجديدة أسفل الأولى (كبيرة الحجم ومجسمة) -->
     <div class="second-artwork-container">
       <img
         id="second-img"
         class="second-artwork"
-        src="https://raw.githubusercontent.com/workmemo2007-gif/M2/0149a0188b038d7e73aaf2206e6f9246c21be553/IMG_2577.png"
+        src="https://raw.githubusercontent.com/workmemo2007-gif/M2/b9925077ebb16aeeb6ec9fd1c7efad5b9d683e2b/IMG_2576.png"
         alt="صورة إضافية"
         draggable="false"
       >
+      <span class="click-hint" id="hint-text">اضغط على الصورة لإظهار تفاصيلها ✨</span>
     </div>
 
   </main>
 
-  <!-- الأصوات الموسيقية والشعرية -->
+  <!-- الأصوات -->
   <audio id="audio-ra" preload="metadata">
     <source src="https://raw.githubusercontent.com/workmemo2007-gif/M2/43ae8c0dcba605028e4de75ff57d79451060c899/%E2%80%8E%E2%81%A8%D8%AD%D8%B1%D9%81%20%D8%B1%E2%81%A9.mp3" type="audio/mpeg">
   </audio>
@@ -469,104 +436,12 @@
   </audio>
 
   <script>
-    /* =========================================
-       1. الجزيئات الذهبية الشفافة (Gold Particles)
-       ========================================= */
-    const canvas = document.getElementById("particles-canvas");
-    const ctx = canvas.getContext("2d");
-    let particles = [];
-    const numParticles = 45;
-
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    window.addEventListener("resize", resizeCanvas);
-    resizeCanvas();
-
-    class Particle {
-      constructor() {
-        this.reset();
-      }
-      reset() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 2.5 + 0.5;
-        this.speedY = Math.random() * -0.6 - 0.2;
-        this.speedX = (Math.random() - 0.5) * 0.3;
-        this.alpha = Math.random() * 0.6 + 0.2;
-        this.pulse = Math.random() * 0.02 + 0.005;
-      }
-      update() {
-        this.y += this.speedY;
-        this.x += this.speedX;
-        this.alpha += Math.sin(Date.now() * this.pulse) * 0.01;
-
-        if (this.y < 0) this.y = canvas.height;
-        if (this.x < 0 || this.x > canvas.width) this.x = Math.random() * canvas.width;
-      }
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 220, 130, ${Math.max(0.1, Math.min(1, this.alpha))})`;
-        ctx.shadowBlur = 8;
-        ctx.shadowColor = "rgba(255, 214, 107, 0.8)";
-        ctx.fill();
-      }
-    }
-
-    for (let i = 0; i < numParticles; i++) {
-      particles.push(new Particle());
-    }
-
-    function animateParticles() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach(p => {
-        p.update();
-        p.draw();
-      });
-      requestAnimationFrame(animateParticles);
-    }
-    animateParticles();
-
-    /* =========================================
-       2. الحركة السينمائية الموحدة للجميع (Parallax & Tilt)
-       ========================================= */
-    const bgLayer = document.getElementById("bg-layer");
-    const artworkWrapper = document.getElementById("artwork-wrapper");
-    const secondImg = document.getElementById("second-img");
-
+    // حركة خلفية الموقع لتتحرك بسلاسة مع التمرير من الأعلى
     window.addEventListener("scroll", () => {
-      const scrollY = window.pageYOffset;
-      const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
-      const scrollProgress = Math.min(1, Math.max(0, scrollY / (totalScroll || 1)));
-
-      // 1. حركة الخلفية: تكبير طفيف ونزول تدريجي
-      const bgY = scrollY * 0.25;
-      const bgScale = 1 + scrollProgress * 0.08;
-      bgLayer.style.transform = `translate3d(0, ${bgY}px, 0) scale(${bgScale})`;
-
-      // 2. حركة اللوحة الأولى: دوران 3D خفيف مع ابتعاد تدريجي عند النزول
-      const artworkY = scrollY * 0.12;
-      const artworkRotateX = scrollProgress * 8;
-      const artworkScale = Math.max(0.88, 1 - scrollProgress * 0.2);
-      artworkWrapper.style.transform = `translate3d(0, ${artworkY}px, 0) rotateX(${artworkRotateX}deg) scale(${artworkScale})`;
+      const scrollY = window.scrollY;
+      document.body.style.backgroundPositionY = `${scrollY * 0.3}px`;
     });
 
-    // مراقبة الصورة الثانية لتفعيل أنيميشن السحب التلقائي
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          secondImg.classList.add("in-view");
-        }
-      });
-    }, { threshold: 0.12 });
-
-    observer.observe(secondImg);
-
-    /* =========================================
-       3. أزرار الحروف والتكست والكتابة الصوتية
-       ========================================= */
     const buttons = document.querySelectorAll(".letter-button");
 
     const audioMap = {
@@ -604,7 +479,7 @@
 
     let typingTimeout;
 
-    function startTyping(text, textElement, cursorElement, speed = 120) {
+    function startTyping(text, textElement, cursorElement, speed = 130) {
       textElement.textContent = "";
       cursorElement.style.display = "inline-block";
       let index = 0;
@@ -638,8 +513,7 @@
     }
 
     buttons.forEach((button) => {
-      button.addEventListener("click", (e) => {
-        e.stopPropagation();
+      button.addEventListener("click", () => {
         const isCurrentlyActive = button.getAttribute("aria-pressed") === "true";
         const letterKey = button.getAttribute("data-letter");
 
@@ -657,11 +531,34 @@
 
             const textEl = document.getElementById(`typed-text-${letterKey}`);
             const cursorEl = document.getElementById(`cursor-${letterKey}`);
-            startTyping(textMap[letterKey], textEl, cursorEl, 120);
+            startTyping(textMap[letterKey], textEl, cursorEl, 130);
           }
         }
       });
     });
+
+    // مراقبة الوصول للصورة الثانية وتفعيل تأثير الظهور عند التمرير قليلا
+    const secondImg = document.getElementById("second-img");
+    const hintText = document.getElementById("hint-text");
+
+    secondImg.addEventListener("click", () => {
+      secondImg.classList.toggle("unblurred");
+      if(secondImg.classList.contains("unblurred")) {
+        hintText.style.opacity = "0";
+      } else {
+        hintText.style.opacity = "1";
+      }
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          secondImg.classList.add("in-view");
+        }
+      });
+    }, { threshold: 0.1 });
+
+    observer.observe(secondImg);
   </script>
 </body>
 </html>
