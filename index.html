@@ -1,1097 +1,182 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#080b16">
-  <title>الصورة التفاعلية</title>
-
-  <!-- خط الرقعة و Montserrat -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تصميم التلفاز</title>
   <style>
-    :root {
-      color-scheme: dark;
-      --gold: #ffd66b;
-      --gold-bright: #fff1b8;
-      --gold-dark-bg: rgba(30, 22, 10, 0.92);
-      --off-white-translucent: rgba(250, 248, 242, 0.18);
-      --off-white-glow: rgba(255, 253, 245, 0.95);
-      --gold-border: rgba(255, 214, 107, 0.85);
-      --circle-size: clamp(40px, 5.8vw, 52px);
-    }
-
     * {
       box-sizing: border-box;
-    }
-
-    html, body {
       margin: 0;
       padding: 0;
-      overflow-x: hidden;
-      overflow-y: auto;
-      font-family: "Aref Ruqaa", serif;
-      scroll-behavior: smooth;
     }
 
     body {
-      position: relative;
-      background-color: #080b16;
-      background-image: url("https://raw.githubusercontent.com/workmemo2007-gif/R1/c4c2ac757d6fb303ea96a912e78dc58c420103f4/IMG_2572.png");
-      background-size: cover;
-      background-position: center top;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      will-change: background-position;
+      background-color: #121212;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, sans-serif;
     }
 
-    /* غشاء أسود شفاف لإبراز الكتابات والنصوص */
-    body::before {
-      content: "";
-      position: fixed;
+    /* 1. تكبير حجم هيكل التلفاز */
+    .tv-frame {
+      width: 750px;
+      max-width: 95vw;
+      background: linear-gradient(145deg, #2d2d2d, #1a1a1a);
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6),
+                  inset 0 2px 3px rgba(255, 255, 255, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    /* 3. الشاشة في أعلى التلفاز بالوضع الأفقي */
+    .tv-screen {
+      width: 100%;
+      height: 420px; /* العرض والأرتفاع بالوضع الأفقي */
+      background: #050505;
+      border-radius: 10px;
+      border: 4px solid #111;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.9);
+    }
+
+    /* محتوى الشاشة (تم إزالة النص المطلوب) */
+    .screen-content {
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, #1b2838 0%, #0d1117 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+    }
+
+    /* انعكاس إضاءة الشاشة */
+    .screen-glow {
+      position: absolute;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.55);
-      z-index: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, transparent 60%);
       pointer-events: none;
     }
 
-    .section-container {
-      position: relative;
-      z-index: 1;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .artwork {
-      position: relative;
-      width: min(72vw, 68vh, 560px);
-      aspect-ratio: 1;
-      transform: rotate(5deg);
-      isolation: isolate;
-    }
-
-    .artwork-image {
-      display: block;
+    /* 4. شريط الأزرار أسفل الشاشة بالوضع الأفقي */
+    .tv-controls-bar {
       width: 100%;
-      height: 100%;
-      object-fit: contain;
-      user-select: none;
-      -webkit-user-drag: none;
-      filter: drop-shadow(0 0 22px rgba(28, 69, 255, .2));
-    }
-
-    /* تصميم عرض الصورة الثانية */
-    .second-artwork-container {
-      position: relative;
-      z-index: 1;
+      margin-top: 20px;
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 20px 10px 10px 10px;
-      box-sizing: border-box;
-    }
-
-    .second-artwork {
-      width: min(95vw, 90vh, 1000px);
-      max-width: 100%;
-      height: auto;
-      border: none;
-      background: transparent;
-      box-shadow: none;
-      filter: drop-shadow(0 15px 30px rgba(0,0,0,0.6));
-      opacity: 0;
-      transform: translateY(120px) scale(0.92);
-      transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-      user-select: none;
-      -webkit-user-drag: none;
-    }
-
-    .second-artwork.slide-in {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-
-    /* تصميم قسم التلفاز القديم أسفل الصورة الثانية */
-    .broken-screen-container {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 10px 15px 120px 15px;
-      margin-top: -10px;
-    }
-
-    .broken-screen-wrapper {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-    }
-
-    /* === تصميم الـ Retro TV === */
-    .main_wrapper {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: min(92vw, 32em);
-      font-size: clamp(11px, 2.8vw, 17px);
-      position: relative;
-      cursor: pointer;
-      user-select: none;
-      direction: ltr;
-    }
-
-    .main {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      margin-top: 3em;
-      position: relative;
-      width: 100%;
-    }
-
-    .antenna {
-      width: 5em;
-      height: 5em;
-      border-radius: 50%;
-      border: 2px solid black;
-      background-color: #f27405;
-      margin-bottom: -6em;
-      margin-left: 0em;
-      z-index: 1;
-      position: relative;
-    }
-
-    .antenna_shadow {
-      position: absolute;
-      background-color: transparent;
-      width: 50px;
-      height: 56px;
-      margin-left: 1.68em;
-      border-radius: 45%;
-      transform: rotate(140deg);
-      border: 4px solid transparent;
-      box-shadow:
-        inset 0px 16px #a85103,
-        inset 0px 16px 1px 1px #a85103;
-    }
-
-    .antenna::after {
-      content: "";
-      position: absolute;
-      margin-top: -9.4em;
-      margin-left: 0.4em;
-      transform: rotate(-25deg);
-      width: 1em;
-      height: 0.5em;
-      border-radius: 50%;
-      background-color: #f69e50;
-    }
-
-    .antenna::before {
-      content: "";
-      position: absolute;
-      margin-top: 0.2em;
-      margin-left: 1.25em;
-      transform: rotate(-20deg);
-      width: 1.5em;
-      height: 0.8em;
-      border-radius: 50%;
-      background-color: #f69e50;
-    }
-
-    .a1 {
-      position: relative;
-      top: -102%;
-      left: -130%;
-      width: 12em;
-      height: 5.5em;
-      border-radius: 50px;
-      background-image: linear-gradient(#171717, #171717, #353535, #353535, #171717);
-      transform: rotate(-29deg);
-      clip-path: polygon(50% 0%, 49% 100%, 52% 100%);
-    }
-
-    .a1d {
-      position: relative;
-      top: -211%;
-      left: -35%;
-      transform: rotate(45deg);
-      width: 0.5em;
-      height: 0.5em;
-      border-radius: 50%;
-      border: 2px solid black;
-      background-color: #979797;
-      z-index: 99;
-    }
-
-    .a2 {
-      position: relative;
-      top: -210%;
-      left: -10%;
-      width: 12em;
-      height: 4em;
-      border-radius: 50px;
-      background-color: #171717;
-      background-image: linear-gradient(#171717, #171717, #353535, #353535, #171717);
-      margin-right: 5em;
-      clip-path: polygon(47% 0, 47% 0, 34% 34%, 54% 25%, 32% 100%, 29% 96%, 49% 32%, 30% 38%);
-      transform: rotate(-8deg);
-    }
-
-    .a2d {
-      position: relative;
-      top: -294%;
-      left: 94%;
-      width: 0.5em;
-      height: 0.5em;
-      border-radius: 50%;
-      border: 2px solid black;
-      background-color: #979797;
-      z-index: 99;
-    }
-
-    .tv {
-      width: 22em;
-      height: 13.5em;
-      margin-top: 3em;
-      border-radius: 20px;
-      background-color: #d36604;
-      display: flex;
-      justify-content: center;
-      border: 3px solid #1d0e01;
-      box-shadow: inset 0.3em 0.3em #e69635, 0 15px 40px rgba(0,0,0,0.8);
-      position: relative;
-      z-index: 2;
-      transition: transform 0.3s ease;
-    }
-
-    .main_wrapper:hover .tv {
-      transform: scale(1.02);
-    }
-
-    .tv::after {
-      content: "";
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 20px;
-      background:
-        repeating-radial-gradient(#d36604 0 0.0001%, #00000070 0 0.0002%) 50% 0/2500px 2500px,
-        repeating-conic-gradient(#d36604 0 0.0001%, #00000070 0 0.0002%) 60% 60%/2500px 2500px;
-      background-blend-mode: difference;
-      opacity: 0.09;
-      pointer-events: none;
-    }
-
-    .curve_svg {
-      position: absolute;
-      margin-top: 0.25em;
-      margin-left: -0.25em;
-      height: 12px;
-      width: 12px;
-      fill: #1d0e01;
-    }
-
-    .display_div {
-      display: flex;
-      align-items: center;
-      align-self: center;
-      justify-content: center;
-      border-radius: 15px;
-      box-shadow: 3.5px 3.5px 0px #e69635;
-    }
-
-    .screen_out {
-      width: auto;
-      height: auto;
-      border-radius: 10px;
-    }
-
-    .screen_out1 {
-      width: 14.5em;
-      height: 11.2em;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 10px;
-    }
-
-    .screen {
-      position: relative;
-      width: 14.5em;
-      height: 11.2em;
-      font-family: 'Montserrat', sans-serif;
-      border: 3px solid #1d0e01;
-      background-color: #000;
-      border-radius: 12px;
-      z-index: 99;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      letter-spacing: 0.15em;
-      text-align: center;
-      overflow: hidden;
-    }
-
-    /* الشاشة قبل وبعد الكشف */
-    .broken-screen-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      filter: blur(20px) contrast(200%) brightness(50%);
-      transition: filter 0.8s cubic-bezier(0.25, 1, 0.5, 1);
-      user-select: none;
-      -webkit-user-drag: none;
-    }
-
-    .screen-noise-overlay {
-      position: absolute;
-      inset: 0;
-      background:
-        repeating-radial-gradient(#000 0 0.0001%, #ffffff 0 0.0002%) 50% 0/2500px 2500px,
-        repeating-conic-gradient(#000 0 0.0001%, #ffffff 0 0.0002%) 60% 60%/2500px 2500px;
-      background-blend-mode: difference;
-      opacity: 0.75;
-      animation: noise 0.2s infinite alternate;
-      pointer-events: none;
-      transition: opacity 0.8s ease;
-      z-index: 2;
-    }
-
-    .notfound_text {
-      position: absolute;
-      background-color: rgba(0, 0, 0, 0.75);
-      padding: 0.4em 0.8em;
-      font-size: 0.85em;
-      color: var(--gold-bright);
-      font-family: 'Aref Ruqaa', serif;
-      letter-spacing: 0.05em;
-      border-radius: 8px;
-      z-index: 10;
-      border: 1px solid var(--gold);
-      text-shadow: 0 0 10px rgba(0,0,0,0.9), 0 0 12px var(--gold);
-      animation: pulse-hint 1.4s infinite alternate;
-      pointer-events: none;
-      transition: opacity 0.6s ease;
-    }
-
-    /* عند النقر وكشف الصورة */
-    .main_wrapper.revealed .broken-screen-img {
-      filter: blur(0px) contrast(100%) brightness(100%);
-    }
-
-    .main_wrapper.revealed .screen-noise-overlay,
-    .main_wrapper.revealed .notfound_text {
-      opacity: 0;
-    }
-
-    @keyframes noise {
-      100% {
-        background-position: 50% 0, 60% 50%;
-      }
-    }
-
-    .lines {
-      display: flex;
-      column-gap: 0.1em;
-      align-self: flex-end;
-      margin-bottom: 0.8em;
-    }
-
-    .line1, .line3 {
-      width: 2px;
-      height: 0.5em;
-      background-color: black;
-      border-radius: 25px 25px 0px 0px;
-    }
-
-    .line2 {
-      width: 2px;
-      height: 1em;
-      background-color: black;
-      border-radius: 25px 25px 0px 0px;
-    }
-
-    .buttons_div {
-      width: 4.2em;
-      align-self: center;
-      height: 10.8em;
-      background-color: #e69635;
-      border: 2px solid #1d0e01;
-      padding: 0.4em;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      row-gap: 0.7em;
-      box-shadow: 3px 3px 0px #e69635;
-      margin-left: 0.5em;
-    }
-
-    .b1, .b2 {
-      width: 1.8em;
-      height: 1.8em;
-      border-radius: 50%;
-      background-color: #7f5934;
-      border: 2px solid black;
-      position: relative;
-      box-shadow:
-        inset 2px 2px 1px #b49577,
-        -2px 0px #513721,
-        -2px 0px 0px 1px black;
-    }
-
-    .b1 div {
-      position: absolute;
-      top: 0.2em;
-      left: 0.75em;
-      transform: rotate(45deg);
-      width: 0.18em;
-      height: 1.2em;
-      background-color: #000000;
-    }
-
-    .speakers {
-      display: flex;
-      flex-direction: column;
-      row-gap: 0.3em;
-      width: 100%;
-    }
-
-    .speakers .g1 {
-      display: flex;
-      justify-content: space-around;
-    }
-
-    .speakers .g1 .g11, .g12, .g13 {
-      width: 0.45em;
-      height: 0.45em;
-      border-radius: 50%;
-      background-color: #7f5934;
-      border: 1px solid black;
-    }
-
-    .speakers .g {
-      width: 100%;
-      height: 2px;
-      background-color: #171717;
-    }
-
-    .bottom {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      column-gap: 12em;
-      position: relative;
-      z-index: 1;
-    }
-
-    .base1, .base2 {
-      height: 1.2em;
-      width: 2.5em;
-      border: 2px solid #171717;
-      background-color: #4d4d4d;
-      margin-top: -0.15em;
-      z-index: -1;
-    }
-
-    .base3 {
-      position: absolute;
-      height: 0.2em;
-      width: 22em;
-      background-color: #171717;
-      margin-top: 1.8em;
-    }
-
-    /* أسلاك التوصيل 3D التفاعلية أسفل التلفاز */
-    .cables-container {
-      position: relative;
-      width: min(90vw, 650px);
-      height: 120px;
-      margin-top: -20px;
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    .cables-svg {
-      width: 100%;
-      height: 100%;
-      overflow: visible;
-      filter: drop-shadow(0 12px 10px rgba(0,0,0,0.9));
-    }
-
-    .cable-path {
-      fill: none;
-      stroke-linecap: round;
-    }
-
-    .cable-1 { stroke: url(#cableGrad1); stroke-width: 12; }
-    .cable-2 { stroke: url(#cableGrad2); stroke-width: 16; }
-    .cable-3 { stroke: url(#cableGrad1); stroke-width: 13; }
-
-    .cable-pulse {
-      fill: none;
-      stroke-linecap: round;
-      stroke-dasharray: 40 220;
-      animation: flowPulse linear infinite;
-    }
-
-    .pulse-1 { stroke: #60a5fa; stroke-width: 6; filter: drop-shadow(0 0 8px #3b82f6); animation-duration: 1.8s; }
-    .pulse-2 { stroke: #ffd66b; stroke-width: 8; filter: drop-shadow(0 0 10px #ffd66b); animation-duration: 2.3s; animation-delay: 0.3s; }
-    .pulse-3 { stroke: #60a5fa; stroke-width: 6; filter: drop-shadow(0 0 8px #3b82f6); animation-duration: 2s; animation-delay: 0.7s; }
-
-    @keyframes flowPulse {
-      0% { stroke-dashoffset: 260; }
-      100% { stroke-dashoffset: 0; }
-    }
-
-    @keyframes pulse-hint {
-      0% { opacity: 0.6; transform: scale(0.96); }
-      100% { opacity: 1; transform: scale(1.04); }
-    }
-
-    /* أزرار الحروف التفاعلية */
-    .letter-button {
-      position: absolute;
-      z-index: 2;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: var(--circle-size);
-      height: var(--circle-size);
-      padding: 0;
-      border: 2px solid #fff;
-      border-radius: 50px;
-      background: #fff;
-      color: #101a35;
-      font: 700 clamp(22px, 3vw, 32px)/1 "Aref Ruqaa", serif;
-      cursor: pointer;
-      pointer-events: auto;
-      box-shadow:
-        0 0 13px 3px rgba(48, 126, 255, .78),
-        0 0 30px 8px rgba(34, 94, 255, .38),
-        inset 0 0 9px rgba(255, 255, 255, .95);
-      transform: translate(-50%, -50%);
-      transform-origin: center center;
-      transition:
-        width 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-        height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-        border-radius 0.4s ease,
-        color .2s ease,
-        background .2s ease,
-        border-color .2s ease,
-        box-shadow .25s ease,
-        transform .4s ease;
-      -webkit-tap-highlight-color: transparent;
-      overflow: hidden;
-    }
-
-    .letter-button:hover,
-    .letter-button:focus-visible {
-      outline: none;
-      border-color: #dbeaff;
-      box-shadow:
-        0 0 20px 5px rgba(67, 145, 255, .95),
-        0 0 38px 12px rgba(34, 94, 255, .52),
-        inset 0 0 10px rgba(255, 255, 255, .98);
-      transform: translate(-50%, -50%) scale(1.05);
-    }
-
-    .letter-button[aria-pressed="true"] {
-      border: 2px solid var(--gold-bright);
-      background: rgba(252, 249, 240, 0.16);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      color: var(--gold-bright);
-      box-shadow:
-        0 0 20px 6px rgba(255, 214, 107, 0.45),
-        0 0 40px 14px rgba(255, 194, 54, 0.3),
-        inset 0 0 20px rgba(255, 255, 255, 0.25);
-      animation: golden-glow 1.8s ease-in-out infinite alternate;
-    }
-
-    .letter-button.letter-expandable[aria-pressed="true"] {
-      width: clamp(210px, 48vw, 260px);
-      height: auto;
-      min-height: 100px;
-      padding: 10px 14px 14px 14px;
-      border-radius: 16px;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: flex-start;
-    }
-
-    .letter-button.letter-expandable[aria-pressed="true"] .letter-text {
-      display: none;
-    }
-
-    .typed-container {
-      display: none;
-      width: 100%;
-      text-align: right;
-      direction: rtl;
-    }
-
-    .letter-button.letter-expandable[aria-pressed="true"] .typed-container {
-      display: block;
-    }
-
-    .typed-text {
-      color: var(--off-white-glow);
-      font-size: clamp(13px, 1.9vw, 16px);
-      line-height: 1.6;
-      white-space: pre-line;
-      margin: 0;
-      text-shadow: 0 0 8px rgba(0, 0, 0, 0.9), 0 0 12px rgba(255, 214, 107, 0.7);
-      font-weight: 700;
-    }
-
-    .audio-waves {
-      display: flex;
-      align-items: flex-end;
+      flex-direction: row; /* وضع أفقي للأزرار */
       justify-content: space-between;
-      width: 100%;
-      height: 18px;
-      margin-top: 10px;
-      padding-top: 4px;
-      border-top: 1px solid rgba(255, 214, 107, 0.35);
+      align-items: center;
+      padding: 0 15px;
     }
 
-    .audio-wave-bar {
-      flex: 1;
-      margin: 0 1px;
-      height: 100%;
-      background-color: var(--gold-bright);
-      border-radius: 2px;
-      transform-origin: bottom;
-      animation: wave-bounce 0.8s ease-in-out infinite alternate;
-      box-shadow: 0 0 6px rgba(255, 214, 107, 0.7);
+    .brand-logo {
+      color: #666;
+      font-size: 13px;
+      font-weight: bold;
+      letter-spacing: 2px;
     }
 
-    .audio-wave-bar:nth-child(2n) { animation-delay: 0.15s; }
-    .audio-wave-bar:nth-child(3n) { animation-delay: 0.3s; }
-    .audio-wave-bar:nth-child(4n) { animation-delay: 0.45s; }
-    .audio-wave-bar:nth-child(5n) { animation-delay: 0.2s; }
-
-    @keyframes wave-bounce {
-      0% { transform: scaleY(0.15); opacity: 0.4; }
-      100% { transform: scaleY(1); opacity: 1; }
+    /* مجموعة الأزرار الأفقية */
+    .buttons-group {
+      display: flex;
+      flex-direction: row; /* أزرار مجتمعة أفقياً */
+      gap: 12px;
+      align-items: center;
     }
 
-    .cursor {
-      display: inline-block;
-      width: 2px;
-      height: 1em;
-      background-color: var(--gold-bright);
-      vertical-align: middle;
-      animation: blink 0.7s infinite;
+    .tv-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: none;
+      background: linear-gradient(145deg, #3a3a3a, #222);
+      color: #ccc;
+      font-size: 12px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.4),
+                  inset 0 1px 1px rgba(255,255,255,0.2);
+      transition: all 0.2s ease;
     }
 
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
+    .tv-btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.4);
     }
 
-    @keyframes golden-glow {
-      from {
-        box-shadow:
-          0 0 14px 4px rgba(255, 211, 94, .5),
-          0 0 28px 8px rgba(255, 194, 54, .3),
-          inset 0 0 14px rgba(255, 255, 255, .2);
-      }
-      to {
-        box-shadow:
-          0 0 22px 8px rgba(255, 231, 153, .8),
-          0 0 45px 18px rgba(255, 194, 54, .5),
-          inset 0 0 22px rgba(255, 255, 255, .35);
-      }
+    .tv-btn.power {
+      background: linear-gradient(145deg, #d32f2f, #9a0007);
+      color: white;
     }
 
-    .letter-ra { left: 82%; top: 87%; }
-    .letter-ta { left: 85%; top: 16%; }
-    .letter-ta[aria-pressed="true"] {
-      transform: translate(-100%, -100%);
-      transform-origin: bottom right;
-    }
-    .letter-alif { left: 47%; top: 14%; }
-    .letter-jeem { left: 13%; top: 88%; }
-    .letter-jeem[aria-pressed="true"] {
-      transform: translate(0, 0);
-      transform-origin: top left;
+    .power-led {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: #00ff66;
+      box-shadow: 0 0 8px #00ff66;
     }
 
-    @media (max-width: 520px) {
-      :root {
-        --circle-size: 42px;
-      }
-      .artwork {
-        width: min(82vw, 64vh, 420px);
-      }
-      .second-artwork {
-        width: 100vw;
-      }
-      .letter-button.letter-expandable[aria-pressed="true"] {
-        width: 200px;
-        min-height: 85px;
-        padding: 8px 10px 10px 10px;
-      }
+    /* قاعدة التلفاز السفلية */
+    .tv-stand {
+      width: 240px;
+      height: 12px;
+      background: #1a1a1a;
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.5);
     }
   </style>
 </head>
-
 <body>
-  <main aria-label="مساحة عرض الصورة الحرفية">
-    
-    <!-- القسم الأول: اللوحة التفاعلية والأزرار -->
-    <div class="section-container">
-      <div class="artwork" aria-label="الصورة التفاعلية وحروفها">
-        <img
-          class="artwork-image"
-          src="https://raw.githubusercontent.com/workmemo2007-gif/M2/93d760cc9f33a21f2c0867fa02795531fd73a040/IMG_2573.png"
-          alt="رسم عربي مزخرف"
-          draggable="false"
-        >
 
-        <!-- حرف الراء -->
-        <button
-          class="letter-button letter-ra letter-expandable"
-          type="button"
-          aria-label="حرف الراء"
-          aria-pressed="false"
-          title="راء"
-          data-letter="ra"
-        >
-          <span class="letter-text">ر</span>
-          <div class="typed-container">
-            <p class="typed-text" id="typed-text-ra"></p><span class="cursor" id="cursor-ra" style="display:none;"></span>
-            <div class="audio-waves">
-              <div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div>
-            </div>
-          </div>
-        </button>
-
-        <!-- حرف التاء -->
-        <button
-          class="letter-button letter-ta letter-expandable"
-          type="button"
-          aria-label="حرف التاء"
-          aria-pressed="false"
-          title="تاء"
-          data-letter="ta"
-        >
-          <span class="letter-text">ت</span>
-          <div class="typed-container">
-            <p class="typed-text" id="typed-text-ta"></p><span class="cursor" id="cursor-ta" style="display:none;"></span>
-            <div class="audio-waves">
-              <div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div>
-            </div>
-          </div>
-        </button>
-
-        <!-- حرف الألف -->
-        <button
-          class="letter-button letter-alif letter-expandable"
-          type="button"
-          aria-label="حرف الألف"
-          aria-pressed="false"
-          title="ألف"
-          data-letter="alif"
-        >
-          <span class="letter-text">ا</span>
-          <div class="typed-container">
-            <p class="typed-text" id="typed-text-alif"></p><span class="cursor" id="cursor-alif" style="display:none;"></span>
-            <div class="audio-waves">
-              <div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div>
-            </div>
-          </div>
-        </button>
-
-        <!-- حرف الجيم -->
-        <button
-          class="letter-button letter-jeem letter-expandable"
-          type="button"
-          aria-label="حرف الجيم"
-          aria-pressed="false"
-          title="جيم"
-          data-letter="jeem"
-        >
-          <span class="letter-text">ج</span>
-          <div class="typed-container">
-            <p class="typed-text" id="typed-text-jeem"></p><span class="cursor" id="cursor-jeem" style="display:none;"></span>
-            <div class="audio-waves">
-              <div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div>
-            </div>
-          </div>
-        </button>
-      </div>
-    </div>
-
-    <!-- القسم الثاني: الصورة العائمة -->
-    <div class="second-artwork-container">
-      <img
-        id="second-img"
-        class="second-artwork"
-        src="https://raw.githubusercontent.com/workmemo2007-gif/M2/adadf85a0ca189e75ecac30f00924564fbb59352/IMG_2577.png"
-        alt="صورة عائمة جديدة"
-        draggable="false"
-      >
-    </div>
-
-    <!-- القسم الثالث: التلفاز الكلاسيكي التفاعلي (Retro TV) -->
-    <div class="broken-screen-container">
-      <div class="broken-screen-wrapper">
-
-        <!-- مجسم التلفاز القديم -->
-        <div class="main_wrapper" id="retro-tv-box" title="انقر لإصلاح الشاشة / إلغاء التشويش">
-          <div class="main">
-            <div class="antenna">
-              <div class="antenna_shadow"></div>
-              <div class="a1"></div>
-              <div class="a1d"></div>
-              <div class="a2"></div>
-              <div class="a2d"></div>
-            </div>
-            <div class="tv">
-              <div class="curve">
-                <svg xml:space="preserve" viewBox="0 0 189.929 189.929" xmlns="http://www.w3.org/2000/svg" class="curve_svg">
-                  <path d="M70.343,70.343c-30.554,30.553-44.806,72.7-39.102,115.635l-29.738,3.951C-5.442,137.659,11.917,86.34,49.129,49.13 C86.34,11.918,137.664-5.445,189.928,1.502l-3.95,29.738C143.041,25.54,100.895,39.789,70.343,70.343z"></path>
-                </svg>
-              </div>
-              <div class="display_div">
-                <div class="screen_out">
-                  <div class="screen_out1">
-                    <div class="screen">
-                      <!-- الصورة المعروضة بالداخل -->
-                      <img class="broken-screen-img" src="https://raw.githubusercontent.com/workmemo2007-gif/M2/cf0d61006943027ac1c821b662336a6501d8641d/IMG_2592.jpeg" alt="الصورة المعروضة" draggable="false">
-                      <!-- غشاء تشويش التلفاز -->
-                      <div class="screen-noise-overlay"></div>
-                      <!-- نص التنبيه -->
-                      <span class="notfound_text">No Signal! ⚡<br>اضغط لإصلاح الشاشة</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="lines">
-                <div class="line1"></div>
-                <div class="line2"></div>
-                <div class="line3"></div>
-              </div>
-              <div class="buttons_div">
-                <div class="b1"><div></div></div>
-                <div class="b2"></div>
-                <div class="speakers">
-                  <div class="g1">
-                    <div class="g11"></div>
-                    <div class="g12"></div>
-                    <div class="g13"></div>
-                  </div>
-                  <div class="g"></div>
-                  <div class="g"></div>
-                </div>
-              </div>
-            </div>
-            <div class="bottom">
-              <div class="base1"></div>
-              <div class="base2"></div>
-              <div class="base3"></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- أسلاك التوصيل ثلاثية الأبعاد 3D المتصلة بالتلفاز من الأسفل -->
-        <div class="cables-container">
-          <svg class="cables-svg" viewBox="0 0 800 160" preserveAspectRatio="none">
-            <defs>
-              <linearGradient id="cableGrad1" x1="0%" y1="100%" x2="0%" y2="0%">
-                <stop offset="0%" stop-color="#090d1a"/>
-                <stop offset="45%" stop-color="#2563eb"/>
-                <stop offset="70%" stop-color="#60a5fa"/>
-                <stop offset="100%" stop-color="#0a1020"/>
-              </linearGradient>
-              <linearGradient id="cableGrad2" x1="0%" y1="100%" x2="0%" y2="0%">
-                <stop offset="0%" stop-color="#141005"/>
-                <stop offset="40%" stop-color="#d97706"/>
-                <stop offset="75%" stop-color="#ffd66b"/>
-                <stop offset="100%" stop-color="#120e03"/>
-              </linearGradient>
-            </defs>
-
-            <path class="cable-path cable-1" d="M 180 160 C 220 90, 310 50, 360 0" />
-            <path class="cable-path cable-2" d="M 400 160 C 400 100, 400 40, 400 0" />
-            <path class="cable-path cable-3" d="M 620 160 C 580 90, 490 50, 440 0" />
-
-            <path class="cable-pulse pulse-1" d="M 180 160 C 220 90, 310 50, 360 0" />
-            <path class="cable-pulse pulse-2" d="M 400 160 C 400 100, 400 40, 400 0" />
-            <path class="cable-pulse pulse-3" d="M 620 160 C 580 90, 490 50, 440 0" />
-          </svg>
-        </div>
-
-      </div>
-    </div>
-
-  </main>
-
-  <!-- الأصوات -->
-  <audio id="audio-ra" preload="metadata">
-    <source src="https://raw.githubusercontent.com/workmemo2007-gif/M2/43ae8c0dcba605028e4de75ff57d79451060c899/%E2%80%8E%E2%81%A8%D8%AD%D8%B1%D9%81%20%D8%B1%E2%81%A9.mp3" type="audio/mpeg">
-  </audio>
-
-  <audio id="audio-ta" preload="metadata">
-    <source src="https://raw.githubusercontent.com/workmemo2007-gif/J/3170a08c4916f27102b32cdacaca86335bb27383/%E2%80%8E%E2%81%A8%D8%AD%D8%B1%D9%81%20%D8%AA%E2%81%A9.mp3" type="audio/mpeg">
-  </audio>
-
-  <audio id="audio-alif" preload="metadata">
-    <source src="https://raw.githubusercontent.com/workmemo2007-gif/M2/72ad2bf2d4691e866f88413a9f1bd6a809c2c125/%E2%80%8E%E2%81%A8%D8%AD%D8%B1%D9%81%20%D8%A7%E2%81%A9.mp3" type="audio/mpeg">
-  </audio>
-
-  <audio id="audio-jeem" preload="metadata">
-    <source src="https://raw.githubusercontent.com/workmemo2007-gif/M2/8da0fced89cbc566d6cffe25fce5347ab6e10d22/telegram-cloud-document-2-5321499372058354999.mp4.mp3" type="audio/mpeg">
-  </audio>
-
-  <script>
-    function updateBackgroundOnScroll() {
-      const scrollY = window.scrollY;
-      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+  <div style="display: flex; flex-direction: column; align-items: center;">
+    <!-- هيكل التلفاز -->
+    <div class="tv-frame">
       
-      if (maxScroll > 0) {
-        const scrollPercent = (scrollY / maxScroll) * 100;
-        document.body.style.backgroundPositionY = `${scrollPercent}%`;
-      }
-    }
+      <!-- 3. الشاشة في أعلى التلفاز بالوضع الأفقي -->
+      <div class="tv-screen">
+        <div class="screen-content">
+          <!-- 2. تم حذف كتابة (اضغط للاصلاح) -->
+        </div>
+        <div class="screen-glow"></div>
+      </div>
 
-    window.addEventListener("scroll", updateBackgroundOnScroll);
-    window.addEventListener("resize", updateBackgroundOnScroll);
+      <!-- 4. الأزرار أسفل الشاشة مرتبة أفقياً -->
+      <div class="tv-controls-bar">
+        <div class="power-led" title="مؤشر التشغيل"></div>
+        <span class="brand-logo">SMART TV</span>
+        
+        <div class="buttons-group">
+          <button class="tv-btn" title="القناة التالية">▲</button>
+          <button class="tv-btn" title="القناة السابقة">▼</button>
+          <button class="tv-btn" title="رفع الصوت">+</button>
+          <button class="tv-btn" title="خفض الصوت">-</button>
+          <button class="tv-btn power" title="تشغيل / إيقاف">⏁</button>
+        </div>
+      </div>
 
-    const buttons = document.querySelectorAll(".letter-button");
+    </div>
 
-    const audioMap = {
-      ra: document.getElementById("audio-ra"),
-      ta: document.getElementById("audio-ta"),
-      alif: document.getElementById("audio-alif"),
-      jeem: document.getElementById("audio-jeem")
-    };
+    <!-- قاعدة التلفاز (5. بدون أسلاك توصيل) -->
+    <div class="tv-stand"></div>
+  </div>
 
-    const textMap = {
-      ra: `رسمتك بالخيال والله جابك
-وصلت لمرحلة أرتاح بعذابك
-هو العنده مثلك يزعل شبيك
-ومنو غيرك يسوى بقلبي أخليه
-منو يزعل بشر يسوى لـ مية
-يلوموني وقلبهم مو عليك`,
-
-      ta: `تعرف غلاتك لو بعد؟
-محتاج أبينها أكثر؟
-يل بيك لهاني العمر.. ما ركزت بيه من مر
-يمكن إذا قتلي شكثر تهواني راح أتحير
-الليلة أعد محبتك.. بس باجر تزود أكثر`,
-
-      alif: `أنتِ.. أنتِ روحي
-أنتِ روحي وراحتي
-وآخر ندى على الورد ينزل
-أنتِ ليلي ولادتي ودفاي
-اللي جمع حلاوة الشمس والظل`,
-
-      jeem: `جمالك جمال.. جمالك جمال مو عادي
-كلامك كلام.. كلامك كلام مو عادي
-شو بدك دلال.. على صوت الدلال غفيلي
-شو بدك غرام.. ليل الغرام هنيلي`
-    };
-
-    let typingTimeout;
-
-    function startTyping(text, textElement, cursorElement, speed = 130) {
-      textElement.textContent = "";
-      cursorElement.style.display = "inline-block";
-      let index = 0;
-
-      function type() {
-        if (index < text.length) {
-          textElement.textContent += text.charAt(index);
-          index++;
-          typingTimeout = setTimeout(type, speed);
-        }
-      }
-      type();
-    }
-
-    function stopAllEffects() {
-      clearTimeout(typingTimeout);
-
-      Object.values(audioMap).forEach(audio => {
-        if (audio) {
-          audio.pause();
-          audio.currentTime = 0;
-        }
-      });
-
-      ['ra', 'ta', 'alif', 'jeem'].forEach(key => {
-        const txt = document.getElementById(`typed-text-${key}`);
-        const cur = document.getElementById(`cursor-${key}`);
-        if (txt) txt.textContent = "";
-        if (cur) cur.style.display = "none";
-      });
-    }
-
-    buttons.forEach((button) => {
-      button.addEventListener("click", () => {
-        const isCurrentlyActive = button.getAttribute("aria-pressed") === "true";
-        const letterKey = button.getAttribute("data-letter");
-
-        buttons.forEach((btn) => btn.setAttribute("aria-pressed", "false"));
-        stopAllEffects();
-
-        if (!isCurrentlyActive) {
-          button.setAttribute("aria-pressed", "true");
-
-          if (letterKey && textMap[letterKey]) {
-            const audioObj = audioMap[letterKey];
-            if (audioObj) {
-              audioObj.play().catch(() => {});
-            }
-
-            const textEl = document.getElementById(`typed-text-${letterKey}`);
-            const cursorEl = document.getElementById(`cursor-${letterKey}`);
-            startTyping(textMap[letterKey], textEl, cursorEl, 130);
-          }
-        }
-      });
-    });
-
-    const secondImg = document.getElementById("second-img");
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          secondImg.classList.add("slide-in");
-        }
-      });
-    }, { threshold: 0.15 });
-
-    observer.observe(secondImg);
-
-    // التفاعل عند النقر على التلفاز (إصلاح الشاشة/كشف الصورة)
-    const retroTvBox = document.getElementById("retro-tv-box");
-    if (retroTvBox) {
-      retroTvBox.addEventListener("click", () => {
-        retroTvBox.classList.toggle("revealed");
-      });
-    }
-  </script>
 </body>
 </html>
