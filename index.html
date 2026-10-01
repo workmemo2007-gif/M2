@@ -1,182 +1,1484 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>تصميم التلفاز</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080b16">
+  <title>الصورة التفاعلية</title>
+
+  <!-- خط الرقعة و Montserrat -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+
   <style>
+    :root {
+      color-scheme: dark;
+      --gold: #ffd66b;
+      --gold-bright: #fff1b8;
+      --gold-dark-bg: rgba(30, 22, 10, 0.92);
+      --off-white-translucent: rgba(250, 248, 242, 0.18);
+      --off-white-glow: rgba(255, 253, 245, 0.95);
+      --gold-border: rgba(255, 214, 107, 0.85);
+      --circle-size: clamp(40px, 5.8vw, 52px);
+    }
+
     * {
       box-sizing: border-box;
+    }
+
+    html, body {
       margin: 0;
       padding: 0;
+      overflow-x: hidden;
+      overflow-y: auto;
+      font-family: "Aref Ruqaa", serif;
+      scroll-behavior: smooth;
     }
 
     body {
-      background-color: #121212;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      font-family: system-ui, -apple-system, sans-serif;
-    }
-
-    /* 1. تكبير حجم هيكل التلفاز */
-    .tv-frame {
-      width: 750px;
-      max-width: 95vw;
-      background: linear-gradient(145deg, #2d2d2d, #1a1a1a);
-      border-radius: 18px;
-      padding: 24px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6),
-                  inset 0 2px 3px rgba(255, 255, 255, 0.1);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
       position: relative;
+      background-color: #080b16;
+      background-image: url("https://raw.githubusercontent.com/workmemo2007-gif/R1/c4c2ac757d6fb303ea96a912e78dc58c420103f4/IMG_2572.png");
+      background-size: cover;
+      background-position: center top;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      will-change: background-position;
     }
 
-    /* 3. الشاشة في أعلى التلفاز بالوضع الأفقي */
-    .tv-screen {
-      width: 100%;
-      height: 420px; /* العرض والأرتفاع بالوضع الأفقي */
-      background: #050505;
-      border-radius: 10px;
-      border: 4px solid #111;
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.9);
-    }
-
-    /* محتوى الشاشة (تم إزالة النص المطلوب) */
-    .screen-content {
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at center, #1b2838 0%, #0d1117 100%);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: #fff;
-    }
-
-    /* انعكاس إضاءة الشاشة */
-    .screen-glow {
-      position: absolute;
+    /* غشاء أسود شفاف لإبراز الكتابات والنصوص */
+    body::before {
+      content: "";
+      position: fixed;
       top: 0;
       left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, transparent 60%);
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.55);
+      z-index: 0;
       pointer-events: none;
     }
 
-    /* 4. شريط الأزرار أسفل الشاشة بالوضع الأفقي */
-    .tv-controls-bar {
+    .section-container {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .artwork {
+      position: relative;
+      width: min(72vw, 68vh, 560px);
+      aspect-ratio: 1;
+      transform: rotate(5deg);
+      isolation: isolate;
+    }
+
+    .artwork-image {
+      display: block;
       width: 100%;
-      margin-top: 20px;
+      height: 100%;
+      object-fit: contain;
+      user-select: none;
+      -webkit-user-drag: none;
+      filter: drop-shadow(0 0 22px rgba(28, 69, 255, .2));
+    }
+
+    /* تصميم عرض الصورة الثانية */
+    .second-artwork-container {
+      position: relative;
+      z-index: 1;
       display: flex;
-      flex-direction: row; /* وضع أفقي للأزرار */
-      justify-content: space-between;
+      flex-direction: column;
       align-items: center;
-      padding: 0 15px;
+      justify-content: center;
+      padding: 20px 10px 10px 10px;
+      box-sizing: border-box;
     }
 
-    .brand-logo {
-      color: #666;
-      font-size: 13px;
-      font-weight: bold;
-      letter-spacing: 2px;
-    }
-
-    /* مجموعة الأزرار الأفقية */
-    .buttons-group {
-      display: flex;
-      flex-direction: row; /* أزرار مجتمعة أفقياً */
-      gap: 12px;
-      align-items: center;
-    }
-
-    .tv-btn {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
+    .second-artwork {
+      width: min(95vw, 90vh, 1000px);
+      max-width: 100%;
+      height: auto;
       border: none;
-      background: linear-gradient(145deg, #3a3a3a, #222);
-      color: #ccc;
-      font-size: 12px;
+      background: transparent;
+      box-shadow: none;
+      filter: drop-shadow(0 15px 30px rgba(0,0,0,0.6));
+      opacity: 0;
+      transform: translateY(120px) scale(0.92);
+      transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    .second-artwork.slide-in {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    /* تصميم قسم التلفاز القديم أسفل الصورة الثانية */
+    .broken-screen-container {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 15px 60px 15px;
+      margin-top: -10px;
+    }
+
+    .broken-screen-wrapper {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
+    /* === تصميم الـ Retro TV === */
+    .main_wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: min(92vw, 32em);
+      font-size: clamp(11px, 2.8vw, 17px);
+      position: relative;
       cursor: pointer;
+      user-select: none;
+      direction: ltr;
+    }
+
+    .main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-top: 3em;
+      position: relative;
+      width: 100%;
+    }
+
+    .antenna {
+      width: 5em;
+      height: 5em;
+      border-radius: 50%;
+      border: 2px solid black;
+      background-color: #f27405;
+      margin-bottom: -6em;
+      margin-left: 0em;
+      z-index: 1;
+      position: relative;
+    }
+
+    .antenna_shadow {
+      position: absolute;
+      background-color: transparent;
+      width: 50px;
+      height: 56px;
+      margin-left: 1.68em;
+      border-radius: 45%;
+      transform: rotate(140deg);
+      border: 4px solid transparent;
+      box-shadow:
+        inset 0px 16px #a85103,
+        inset 0px 16px 1px 1px #a85103;
+    }
+
+    .antenna::after {
+      content: "";
+      position: absolute;
+      margin-top: -9.4em;
+      margin-left: 0.4em;
+      transform: rotate(-25deg);
+      width: 1em;
+      height: 0.5em;
+      border-radius: 50%;
+      background-color: #f69e50;
+    }
+
+    .antenna::before {
+      content: "";
+      position: absolute;
+      margin-top: 0.2em;
+      margin-left: 1.25em;
+      transform: rotate(-20deg);
+      width: 1.5em;
+      height: 0.8em;
+      border-radius: 50%;
+      background-color: #f69e50;
+    }
+
+    .a1 {
+      position: relative;
+      top: -102%;
+      left: -130%;
+      width: 12em;
+      height: 5.5em;
+      border-radius: 50px;
+      background-image: linear-gradient(#171717, #171717, #353535, #353535, #171717);
+      transform: rotate(-29deg);
+      clip-path: polygon(50% 0%, 49% 100%, 52% 100%);
+    }
+
+    .a1d {
+      position: relative;
+      top: -211%;
+      left: -35%;
+      transform: rotate(45deg);
+      width: 0.5em;
+      height: 0.5em;
+      border-radius: 50%;
+      border: 2px solid black;
+      background-color: #979797;
+      z-index: 99;
+    }
+
+    .a2 {
+      position: relative;
+      top: -210%;
+      left: -10%;
+      width: 12em;
+      height: 4em;
+      border-radius: 50px;
+      background-color: #171717;
+      background-image: linear-gradient(#171717, #171717, #353535, #353535, #171717);
+      margin-right: 5em;
+      clip-path: polygon(47% 0, 47% 0, 34% 34%, 54% 25%, 32% 100%, 29% 96%, 49% 32%, 30% 38%);
+      transform: rotate(-8deg);
+    }
+
+    .a2d {
+      position: relative;
+      top: -294%;
+      left: 94%;
+      width: 0.5em;
+      height: 0.5em;
+      border-radius: 50%;
+      border: 2px solid black;
+      background-color: #979797;
+      z-index: 99;
+    }
+
+    .tv {
+      width: 22em;
+      height: 13.5em;
+      margin-top: 3em;
+      border-radius: 20px;
+      background-color: #d36604;
       display: flex;
       justify-content: center;
+      border: 3px solid #1d0e01;
+      box-shadow: inset 0.3em 0.3em #e69635, 0 15px 40px rgba(0,0,0,0.8);
+      position: relative;
+      z-index: 2;
+      transition: transform 0.3s ease;
+    }
+
+    .main_wrapper:hover .tv {
+      transform: scale(1.02);
+    }
+
+    .tv::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 20px;
+      background:
+        repeating-radial-gradient(#d36604 0 0.0001%, #00000070 0 0.0002%) 50% 0/2500px 2500px,
+        repeating-conic-gradient(#d36604 0 0.0001%, #00000070 0 0.0002%) 60% 60%/2500px 2500px;
+      background-blend-mode: difference;
+      opacity: 0.09;
+      pointer-events: none;
+    }
+
+    .curve_svg {
+      position: absolute;
+      margin-top: 0.25em;
+      margin-left: -0.25em;
+      height: 12px;
+      width: 12px;
+      fill: #1d0e01;
+    }
+
+    .display_div {
+      display: flex;
       align-items: center;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.4),
-                  inset 0 1px 1px rgba(255,255,255,0.2);
-      transition: all 0.2s ease;
+      align-self: center;
+      justify-content: center;
+      border-radius: 15px;
+      box-shadow: 3.5px 3.5px 0px #e69635;
     }
 
-    .tv-btn:active {
-      transform: translateY(2px);
-      box-shadow: 0 1px 2px rgba(0,0,0,0.4);
+    .screen_out {
+      width: auto;
+      height: auto;
+      border-radius: 10px;
     }
 
-    .tv-btn.power {
-      background: linear-gradient(145deg, #d32f2f, #9a0007);
-      color: white;
+    .screen_out1 {
+      width: 14.5em;
+      height: 11.2em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+    }
+
+    .screen {
+      position: relative;
+      width: 14.5em;
+      height: 11.2em;
+      font-family: 'Montserrat', sans-serif;
+      border: 3px solid #1d0e01;
+      background-color: #000;
+      border-radius: 12px;
+      z-index: 99;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      letter-spacing: 0.15em;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    /* الشاشة قبل وبعد الكشف */
+    .broken-screen-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: blur(20px) contrast(200%) brightness(50%);
+      transition: filter 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    .screen-noise-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-radial-gradient(#000 0 0.0001%, #ffffff 0 0.0002%) 50% 0/2500px 2500px,
+        repeating-conic-gradient(#000 0 0.0001%, #ffffff 0 0.0002%) 60% 60%/2500px 2500px;
+      background-blend-mode: difference;
+      opacity: 0.75;
+      animation: noise 0.2s infinite alternate;
+      pointer-events: none;
+      transition: opacity 0.8s ease;
+      z-index: 2;
+    }
+
+    .notfound_text {
+      position: absolute;
+      background-color: rgba(0, 0, 0, 0.75);
+      padding: 0.4em 0.8em;
+      font-size: 0.85em;
+      color: var(--gold-bright);
+      font-family: 'Aref Ruqaa', serif;
+      letter-spacing: 0.05em;
+      border-radius: 8px;
+      z-index: 10;
+      border: 1px solid var(--gold);
+      text-shadow: 0 0 10px rgba(0,0,0,0.9), 0 0 12px var(--gold);
+      animation: pulse-hint 1.4s infinite alternate;
+      pointer-events: none;
+      transition: opacity 0.6s ease;
+    }
+
+    /* عند النقر وكشف الصورة */
+    .main_wrapper.revealed .broken-screen-img {
+      filter: blur(0px) contrast(100%) brightness(100%);
+    }
+
+    .main_wrapper.revealed .screen-noise-overlay,
+    .main_wrapper.revealed .notfound_text {
+      opacity: 0;
+    }
+
+    @keyframes noise {
+      100% {
+        background-position: 50% 0, 60% 50%;
+      }
+    }
+
+    .lines {
+      display: flex;
+      column-gap: 0.1em;
+      align-self: flex-end;
+      margin-bottom: 0.8em;
+    }
+
+    .line1, .line3 {
+      width: 2px;
+      height: 0.5em;
+      background-color: black;
+      border-radius: 25px 25px 0px 0px;
+    }
+
+    .line2 {
+      width: 2px;
+      height: 1em;
+      background-color: black;
+      border-radius: 25px 25px 0px 0px;
+    }
+
+    .buttons_div {
+      width: 4.2em;
+      align-self: center;
+      height: 10.8em;
+      background-color: #e69635;
+      border: 2px solid #1d0e01;
+      padding: 0.4em;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      row-gap: 0.7em;
+      box-shadow: 3px 3px 0px #e69635;
+      margin-left: 0.5em;
+    }
+
+    .b1, .b2 {
+      width: 1.8em;
+      height: 1.8em;
+      border-radius: 50%;
+      background-color: #7f5934;
+      border: 2px solid black;
+      position: relative;
+      box-shadow:
+        inset 2px 2px 1px #b49577,
+        -2px 0px #513721,
+        -2px 0px 0px 1px black;
+    }
+
+    .b1 div {
+      position: absolute;
+      top: 0.2em;
+      left: 0.75em;
+      transform: rotate(45deg);
+      width: 0.18em;
+      height: 1.2em;
+      background-color: #000000;
+    }
+
+    .speakers {
+      display: flex;
+      flex-direction: column;
+      row-gap: 0.3em;
+      width: 100%;
+    }
+
+    .speakers .g1 {
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .speakers .g1 .g11, .g12, .g13 {
+      width: 0.45em;
+      height: 0.45em;
+      border-radius: 50%;
+      background-color: #7f5934;
+      border: 1px solid black;
+    }
+
+    .speakers .g {
+      width: 100%;
+      height: 2px;
+      background-color: #171717;
+    }
+
+    .bottom {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      column-gap: 12em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .base1, .base2 {
+      height: 1.2em;
+      width: 2.5em;
+      border: 2px solid #171717;
+      background-color: #4d4d4d;
+      margin-top: -0.15em;
+      z-index: -1;
+    }
+
+    .base3 {
+      position: absolute;
+      height: 0.2em;
+      width: 22em;
+      background-color: #171717;
+      margin-top: 1.8em;
+    }
+
+    /* أسلاك التوصيل 3D التفاعلية أسفل التلفاز */
+    .cables-container {
+      position: relative;
+      width: min(90vw, 650px);
+      height: 120px;
+      margin-top: -20px;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .cables-svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+      filter: drop-shadow(0 12px 10px rgba(0,0,0,0.9));
+    }
+
+    .cable-path {
+      fill: none;
+      stroke-linecap: round;
+    }
+
+    .cable-1 { stroke: url(#cableGrad1); stroke-width: 12; }
+    .cable-2 { stroke: url(#cableGrad2); stroke-width: 16; }
+    .cable-3 { stroke: url(#cableGrad1); stroke-width: 13; }
+
+    .cable-pulse {
+      fill: none;
+      stroke-linecap: round;
+      stroke-dasharray: 40 220;
+      animation: flowPulse linear infinite;
+    }
+
+    .pulse-1 { stroke: #60a5fa; stroke-width: 6; filter: drop-shadow(0 0 8px #3b82f6); animation-duration: 1.8s; }
+    .pulse-2 { stroke: #ffd66b; stroke-width: 8; filter: drop-shadow(0 0 10px #ffd66b); animation-duration: 2.3s; animation-delay: 0.3s; }
+    .pulse-3 { stroke: #60a5fa; stroke-width: 6; filter: drop-shadow(0 0 8px #3b82f6); animation-duration: 2s; animation-delay: 0.7s; }
+
+    @keyframes flowPulse {
+      0% { stroke-dashoffset: 260; }
+      100% { stroke-dashoffset: 0; }
+    }
+
+    @keyframes pulse-hint {
+      0% { opacity: 0.6; transform: scale(0.96); }
+      100% { opacity: 1; transform: scale(1.04); }
+    }
+
+    /* === تصميم الشاشة الحديثة المعطلة 3D (الجديد) === */
+    .modern-screen-container {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 15px 120px 15px;
+      perspective: 1200px;
+    }
+
+    .modern-monitor-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: min(92vw, 760px);
+    }
+
+    .modern-monitor-3d {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transform-style: preserve-3d;
+      transform: rotateX(6deg);
+      transition: transform 0.5s ease;
+    }
+
+    .modern-monitor-3d:hover {
+      transform: rotateX(0deg) scale(1.01);
+    }
+
+    .modern-screen-frame {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #0d121f;
+      border: 6px solid #1a2235;
+      border-bottom-width: 14px;
+      border-radius: 14px;
+      box-shadow:
+        0 25px 60px rgba(0, 0, 0, 0.95),
+        0 0 30px rgba(37, 99, 235, 0.25),
+        inset 0 0 12px rgba(255, 255, 255, 0.08);
+      position: relative;
+      overflow: hidden;
+      background-clip: padding-box;
+    }
+
+    .modern-screen-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: #04060a;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modern-screen-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: blur(20px) contrast(180%) brightness(40%) hue-rotate(170deg);
+      transition: filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    /* تأثيرات العطل والكسور على الشاشة الحديثة */
+    .modern-glitch-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.3) 50%),
+        linear-gradient(90deg, rgba(255, 0, 0, 0.08), rgba(0, 255, 0, 0.03), rgba(0, 0, 255, 0.08));
+      background-size: 100% 4px, 6px 100%;
+      pointer-events: none;
+      z-index: 2;
+      opacity: 0.95;
+      transition: opacity 0.8s ease;
+    }
+
+    .glass-crack-effect {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        radial-gradient(circle at 65% 35%, transparent 0%, rgba(255,255,255,0.2) 2%, transparent 5%),
+        linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.45) 42%, transparent 44%),
+        linear-gradient(25deg, transparent 58%, rgba(255,255,255,0.35) 60%, transparent 62%);
+      pointer-events: none;
+      z-index: 3;
+      opacity: 0.85;
+      transition: opacity 0.8s ease;
+    }
+
+    .modern-status-text {
+      position: absolute;
+      z-index: 10;
+      background: rgba(10, 14, 26, 0.88);
+      border: 1px solid #3b82f6;
+      color: #93c5fd;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-family: 'Montserrat', 'Aref Ruqaa', sans-serif;
+      font-size: clamp(12px, 2vw, 16px);
+      text-align: center;
+      line-height: 1.6;
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+      animation: modern-pulse 1.6s infinite alternate;
+      pointer-events: none;
+      transition: opacity 0.6s ease;
+    }
+
+    @keyframes modern-pulse {
+      0% { opacity: 0.75; transform: scale(0.97); }
+      100% { opacity: 1; transform: scale(1.03); }
+    }
+
+    /* عندما يتم كشف وإصلاح الشاشة الحديثة */
+    .modern-monitor-3d.active .modern-screen-img {
+      filter: blur(0px) contrast(100%) brightness(100%) hue-rotate(0deg);
+    }
+
+    .modern-monitor-3d.active .modern-glitch-overlay,
+    .modern-monitor-3d.active .glass-crack-effect,
+    .modern-monitor-3d.active .modern-status-text {
+      opacity: 0;
+    }
+
+    /* قاعدة وحامل الشاشة 3D Stand */
+    .modern-stand {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      z-index: -1;
+    }
+
+    .stand-neck {
+      width: 70px;
+      height: 42px;
+      background: linear-gradient(180deg, #1e2638, #0b0e17);
+      box-shadow: inset 0 0 5px rgba(0,0,0,0.8);
+      clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
+    }
+
+    .stand-base {
+      width: 240px;
+      height: 12px;
+      background: linear-gradient(90deg, #0f1420, #2a3650, #0f1420);
+      border-radius: 6px 6px 2px 2px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.8);
+    }
+
+    /* شريط الأزرار التفاعلية الأفقي أسفل الشاشة */
+    .modern-control-panel {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      width: 100%;
+      margin-top: 25px;
+      padding: 14px 22px;
+      background: rgba(15, 20, 32, 0.85);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 214, 107, 0.25);
+      border-radius: 50px;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.12);
+      direction: rtl;
+    }
+
+    .panel-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 9px 18px;
+      background: linear-gradient(145deg, #1a2235, #111624);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 25px;
+      color: #e2e8f0;
+      font-family: 'Aref Ruqaa', serif;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      user-select: none;
+    }
+
+    .panel-btn .btn-icon {
+      width: 18px;
+      height: 18px;
+    }
+
+    .panel-btn:hover {
+      background: linear-gradient(145deg, #253350, #182238);
+      border-color: var(--gold);
+      color: var(--gold-bright);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(255, 214, 107, 0.28);
+    }
+
+    .panel-btn:active {
+      transform: translateY(1px);
+    }
+
+    .panel-btn.active {
+      background: linear-gradient(145deg, #b45309, #d97706);
+      border-color: var(--gold-bright);
+      color: #fff;
+      box-shadow: 0 0 18px rgba(217, 119, 6, 0.65);
+    }
+
+    .power-btn.active {
+      background: linear-gradient(145deg, #1d4ed8, #3b82f6);
+      border-color: #60a5fa;
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.75);
     }
 
     .power-led {
-      width: 8px;
-      height: 8px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
-      background-color: #00ff66;
-      box-shadow: 0 0 8px #00ff66;
+      background-color: #ef4444;
+      box-shadow: 0 0 8px #ef4444;
+      margin-right: 4px;
+      transition: all 0.4s ease;
     }
 
-    /* قاعدة التلفاز السفلية */
-    .tv-stand {
-      width: 240px;
-      height: 12px;
-      background: #1a1a1a;
-      border-bottom-left-radius: 8px;
-      border-bottom-right-radius: 8px;
-      box-shadow: 0 6px 12px rgba(0,0,0,0.5);
+    .power-led.active {
+      background-color: #10b981;
+      box-shadow: 0 0 12px #10b981;
+    }
+
+    /* أزرار الحروف التفاعلية */
+    .letter-button {
+      position: absolute;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: var(--circle-size);
+      height: var(--circle-size);
+      padding: 0;
+      border: 2px solid #fff;
+      border-radius: 50px;
+      background: #fff;
+      color: #101a35;
+      font: 700 clamp(22px, 3vw, 32px)/1 "Aref Ruqaa", serif;
+      cursor: pointer;
+      pointer-events: auto;
+      box-shadow:
+        0 0 13px 3px rgba(48, 126, 255, .78),
+        0 0 30px 8px rgba(34, 94, 255, .38),
+        inset 0 0 9px rgba(255, 255, 255, .95);
+      transform: translate(-50%, -50%);
+      transform-origin: center center;
+      transition:
+        width 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        border-radius 0.4s ease,
+        color .2s ease,
+        background .2s ease,
+        border-color .2s ease,
+        box-shadow .25s ease,
+        transform .4s ease;
+      -webkit-tap-highlight-color: transparent;
+      overflow: hidden;
+    }
+
+    .letter-button:hover,
+    .letter-button:focus-visible {
+      outline: none;
+      border-color: #dbeaff;
+      box-shadow:
+        0 0 20px 5px rgba(67, 145, 255, .95),
+        0 0 38px 12px rgba(34, 94, 255, .52),
+        inset 0 0 10px rgba(255, 255, 255, .98);
+      transform: translate(-50%, -50%) scale(1.05);
+    }
+
+    .letter-button[aria-pressed="true"] {
+      border: 2px solid var(--gold-bright);
+      background: rgba(252, 249, 240, 0.16);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      color: var(--gold-bright);
+      box-shadow:
+        0 0 20px 6px rgba(255, 214, 107, 0.45),
+        0 0 40px 14px rgba(255, 194, 54, 0.3),
+        inset 0 0 20px rgba(255, 255, 255, 0.25);
+      animation: golden-glow 1.8s ease-in-out infinite alternate;
+    }
+
+    .letter-button.letter-expandable[aria-pressed="true"] {
+      width: clamp(210px, 48vw, 260px);
+      height: auto;
+      min-height: 100px;
+      padding: 10px 14px 14px 14px;
+      border-radius: 16px;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+    }
+
+    .letter-button.letter-expandable[aria-pressed="true"] .letter-text {
+      display: none;
+    }
+
+    .typed-container {
+      display: none;
+      width: 100%;
+      text-align: right;
+      direction: rtl;
+    }
+
+    .letter-button.letter-expandable[aria-pressed="true"] .typed-container {
+      display: block;
+    }
+
+    .typed-text {
+      color: var(--off-white-glow);
+      font-size: clamp(13px, 1.9vw, 16px);
+      line-height: 1.6;
+      white-space: pre-line;
+      margin: 0;
+      text-shadow: 0 0 8px rgba(0, 0, 0, 0.9), 0 0 12px rgba(255, 214, 107, 0.7);
+      font-weight: 700;
+    }
+
+    .audio-waves {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      width: 100%;
+      height: 18px;
+      margin-top: 10px;
+      padding-top: 4px;
+      border-top: 1px solid rgba(255, 214, 107, 0.35);
+    }
+
+    .audio-wave-bar {
+      flex: 1;
+      margin: 0 1px;
+      height: 100%;
+      background-color: var(--gold-bright);
+      border-radius: 2px;
+      transform-origin: bottom;
+      animation: wave-bounce 0.8s ease-in-out infinite alternate;
+      box-shadow: 0 0 6px rgba(255, 214, 107, 0.7);
+    }
+
+    .audio-wave-bar:nth-child(2n) { animation-delay: 0.15s; }
+    .audio-wave-bar:nth-child(3n) { animation-delay: 0.3s; }
+    .audio-wave-bar:nth-child(4n) { animation-delay: 0.45s; }
+    .audio-wave-bar:nth-child(5n) { animation-delay: 0.2s; }
+
+    @keyframes wave-bounce {
+      0% { transform: scaleY(0.15); opacity: 0.4; }
+      100% { transform: scaleY(1); opacity: 1; }
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1em;
+      background-color: var(--gold-bright);
+      vertical-align: middle;
+      animation: blink 0.7s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    @keyframes golden-glow {
+      from {
+        box-shadow:
+          0 0 14px 4px rgba(255, 211, 94, .5),
+          0 0 28px 8px rgba(255, 194, 54, .3),
+          inset 0 0 14px rgba(255, 255, 255, .2);
+      }
+      to {
+        box-shadow:
+          0 0 22px 8px rgba(255, 231, 153, .8),
+          0 0 45px 18px rgba(255, 194, 54, .5),
+          inset 0 0 22px rgba(255, 255, 255, .35);
+      }
+    }
+
+    .letter-ra { left: 82%; top: 87%; }
+    .letter-ta { left: 85%; top: 16%; }
+    .letter-ta[aria-pressed="true"] {
+      transform: translate(-100%, -100%);
+      transform-origin: bottom right;
+    }
+    .letter-alif { left: 47%; top: 14%; }
+    .letter-jeem { left: 13%; top: 88%; }
+    .letter-jeem[aria-pressed="true"] {
+      transform: translate(0, 0);
+      transform-origin: top left;
+    }
+
+    @media (max-width: 520px) {
+      :root {
+        --circle-size: 42px;
+      }
+      .artwork {
+        width: min(82vw, 64vh, 420px);
+      }
+      .second-artwork {
+        width: 100vw;
+      }
+      .letter-button.letter-expandable[aria-pressed="true"] {
+        width: 200px;
+        min-height: 85px;
+        padding: 8px 10px 10px 10px;
+      }
+      .modern-control-panel {
+        gap: 8px;
+        padding: 10px 14px;
+        border-radius: 25px;
+      }
+      .panel-btn {
+        padding: 7px 12px;
+        font-size: 13px;
+      }
     }
   </style>
 </head>
+
 <body>
+  <main aria-label="مساحة عرض الصورة الحرفية">
+    
+    <!-- القسم الأول: اللوحة التفاعلية والأزرار -->
+    <div class="section-container">
+      <div class="artwork" aria-label="الصورة التفاعلية وحروفها">
+        <img
+          class="artwork-image"
+          src="https://raw.githubusercontent.com/workmemo2007-gif/M2/93d760cc9f33a21f2c0867fa02795531fd73a040/IMG_2573.png"
+          alt="رسم عربي مزخرف"
+          draggable="false"
+        >
 
-  <div style="display: flex; flex-direction: column; align-items: center;">
-    <!-- هيكل التلفاز -->
-    <div class="tv-frame">
-      
-      <!-- 3. الشاشة في أعلى التلفاز بالوضع الأفقي -->
-      <div class="tv-screen">
-        <div class="screen-content">
-          <!-- 2. تم حذف كتابة (اضغط للاصلاح) -->
-        </div>
-        <div class="screen-glow"></div>
+        <!-- حرف الراء -->
+        <button
+          class="letter-button letter-ra letter-expandable"
+          type="button"
+          aria-label="حرف الراء"
+          aria-pressed="false"
+          title="راء"
+          data-letter="ra"
+        >
+          <span class="letter-text">ر</span>
+          <div class="typed-container">
+            <p class="typed-text" id="typed-text-ra"></p><span class="cursor" id="cursor-ra" style="display:none;"></span>
+            <div class="audio-waves">
+              <div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div>
+            </div>
+          </div>
+        </button>
+
+        <!-- حرف التاء -->
+        <button
+          class="letter-button letter-ta letter-expandable"
+          type="button"
+          aria-label="حرف التاء"
+          aria-pressed="false"
+          title="تاء"
+          data-letter="ta"
+        >
+          <span class="letter-text">ت</span>
+          <div class="typed-container">
+            <p class="typed-text" id="typed-text-ta"></p><span class="cursor" id="cursor-ta" style="display:none;"></span>
+            <div class="audio-waves">
+              <div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div>
+            </div>
+          </div>
+        </button>
+
+        <!-- حرف الألف -->
+        <button
+          class="letter-button letter-alif letter-expandable"
+          type="button"
+          aria-label="حرف الألف"
+          aria-pressed="false"
+          title="ألف"
+          data-letter="alif"
+        >
+          <span class="letter-text">ا</span>
+          <div class="typed-container">
+            <p class="typed-text" id="typed-text-alif"></p><span class="cursor" id="cursor-alif" style="display:none;"></span>
+            <div class="audio-waves">
+              <div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div>
+            </div>
+          </div>
+        </button>
+
+        <!-- حرف الجيم -->
+        <button
+          class="letter-button letter-jeem letter-expandable"
+          type="button"
+          aria-label="حرف الجيم"
+          aria-pressed="false"
+          title="جيم"
+          data-letter="jeem"
+        >
+          <span class="letter-text">ج</span>
+          <div class="typed-container">
+            <p class="typed-text" id="typed-text-jeem"></p><span class="cursor" id="cursor-jeem" style="display:none;"></span>
+            <div class="audio-waves">
+              <div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div><div class="audio-wave-bar"></div>
+            </div>
+          </div>
+        </button>
       </div>
-
-      <!-- 4. الأزرار أسفل الشاشة مرتبة أفقياً -->
-      <div class="tv-controls-bar">
-        <div class="power-led" title="مؤشر التشغيل"></div>
-        <span class="brand-logo">SMART TV</span>
-        
-        <div class="buttons-group">
-          <button class="tv-btn" title="القناة التالية">▲</button>
-          <button class="tv-btn" title="القناة السابقة">▼</button>
-          <button class="tv-btn" title="رفع الصوت">+</button>
-          <button class="tv-btn" title="خفض الصوت">-</button>
-          <button class="tv-btn power" title="تشغيل / إيقاف">⏁</button>
-        </div>
-      </div>
-
     </div>
 
-    <!-- قاعدة التلفاز (5. بدون أسلاك توصيل) -->
-    <div class="tv-stand"></div>
-  </div>
+    <!-- القسم الثاني: الصورة العائمة -->
+    <div class="second-artwork-container">
+      <img
+        id="second-img"
+        class="second-artwork"
+        src="https://raw.githubusercontent.com/workmemo2007-gif/M2/adadf85a0ca189e75ecac30f00924564fbb59352/IMG_2577.png"
+        alt="صورة عائمة جديدة"
+        draggable="false"
+      >
+    </div>
 
+    <!-- القسم الثالث: التلفاز الكلاسيكي التفاعلي (Retro TV) -->
+    <div class="broken-screen-container">
+      <div class="broken-screen-wrapper">
+
+        <!-- مجسم التلفاز القديم -->
+        <div class="main_wrapper" id="retro-tv-box" title="انقر لإصلاح الشاشة / إلغاء التشويش">
+          <div class="main">
+            <div class="antenna">
+              <div class="antenna_shadow"></div>
+              <div class="a1"></div>
+              <div class="a1d"></div>
+              <div class="a2"></div>
+              <div class="a2d"></div>
+            </div>
+            <div class="tv">
+              <div class="curve">
+                <svg xml:space="preserve" viewBox="0 0 189.929 189.929" xmlns="http://www.w3.org/2000/svg" class="curve_svg">
+                  <path d="M70.343,70.343c-30.554,30.553-44.806,72.7-39.102,115.635l-29.738,3.951C-5.442,137.659,11.917,86.34,49.129,49.13 C86.34,11.918,137.664-5.445,189.928,1.502l-3.95,29.738C143.041,25.54,100.895,39.789,70.343,70.343z"></path>
+                </svg>
+              </div>
+              <div class="display_div">
+                <div class="screen_out">
+                  <div class="screen_out1">
+                    <div class="screen">
+                      <!-- الصورة المعروضة بالداخل -->
+                      <img class="broken-screen-img" src="https://raw.githubusercontent.com/workmemo2007-gif/M2/cf0d61006943027ac1c821b662336a6501d8641d/IMG_2592.jpeg" alt="الصورة المعروضة" draggable="false">
+                      <!-- غشاء تشويش التلفاز -->
+                      <div class="screen-noise-overlay"></div>
+                      <!-- نص التنبيه -->
+                      <span class="notfound_text">No Signal! ⚡<br>اضغط لإصلاح الشاشة</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="lines">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+              </div>
+              <div class="buttons_div">
+                <div class="b1"><div></div></div>
+                <div class="b2"></div>
+                <div class="speakers">
+                  <div class="g1">
+                    <div class="g11"></div>
+                    <div class="g12"></div>
+                    <div class="g13"></div>
+                  </div>
+                  <div class="g"></div>
+                  <div class="g"></div>
+                </div>
+              </div>
+            </div>
+            <div class="bottom">
+              <div class="base1"></div>
+              <div class="base2"></div>
+              <div class="base3"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- أسلاك التوصيل ثلاثية الأبعاد 3D المتصلة بالتلفاز من الأسفل -->
+        <div class="cables-container">
+          <svg class="cables-svg" viewBox="0 0 800 160" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="cableGrad1" x1="0%" y1="100%" x2="0%" y2="0%">
+                <stop offset="0%" stop-color="#090d1a"/>
+                <stop offset="45%" stop-color="#2563eb"/>
+                <stop offset="70%" stop-color="#60a5fa"/>
+                <stop offset="100%" stop-color="#0a1020"/>
+              </linearGradient>
+              <linearGradient id="cableGrad2" x1="0%" y1="100%" x2="0%" y2="0%">
+                <stop offset="0%" stop-color="#141005"/>
+                <stop offset="40%" stop-color="#d97706"/>
+                <stop offset="75%" stop-color="#ffd66b"/>
+                <stop offset="100%" stop-color="#120e03"/>
+              </linearGradient>
+            </defs>
+
+            <path class="cable-path cable-1" d="M 180 160 C 220 90, 310 50, 360 0" />
+            <path class="cable-path cable-2" d="M 400 160 C 400 100, 400 40, 400 0" />
+            <path class="cable-path cable-3" d="M 620 160 C 580 90, 490 50, 440 0" />
+
+            <path class="cable-pulse pulse-1" d="M 180 160 C 220 90, 310 50, 360 0" />
+            <path class="cable-pulse pulse-2" d="M 400 160 C 400 100, 400 40, 400 0" />
+            <path class="cable-pulse pulse-3" d="M 620 160 C 580 90, 490 50, 440 0" />
+          </svg>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- القسم الرابع: شاشة معطلة حديثة 3D (في نهاية الموقع) -->
+    <div class="modern-screen-container">
+      <div class="modern-monitor-wrapper">
+        <!-- مجسم الشاشة الحديثة 3D -->
+        <div class="modern-monitor-3d" id="modern-monitor">
+          <div class="modern-screen-frame">
+            <div class="modern-screen-inner">
+              <!-- الصورة المعروضة داخل الشاشة الحديثة -->
+              <img class="modern-screen-img" src="https://raw.githubusercontent.com/workmemo2007-gif/M2/cf0d61006943027ac1c821b662336a6501d8641d/IMG_2592.jpeg" alt="الصورة المعروضة" draggable="false">
+              <!-- تأثير التشويش والكسور الحديثة -->
+              <div class="modern-glitch-overlay"></div>
+              <div class="glass-crack-effect"></div>
+              <!-- رسالة تنبيه العطل -->
+              <span class="modern-status-text">SYSTEM ERROR: DISPLAY DAMAGED ⚡<br>اضغط زر التشغيل بالأسفل للإصلاح</span>
+            </div>
+          </div>
+          <!-- حامل الشاشة الحديثة 3D -->
+          <div class="modern-stand">
+            <div class="stand-neck"></div>
+            <div class="stand-base"></div>
+          </div>
+        </div>
+
+        <!-- لوحة الأزرار التفاعلية الأفقية أسفل الشاشة الحديثة -->
+        <div class="modern-control-panel">
+          <button type="button" class="panel-btn power-btn" id="btn-modern-power" title="تشغيل / كشف الصورة">
+            <svg viewBox="0 0 24 24" class="btn-icon"><path fill="currentColor" d="M13,3H11V13H13V3M17.83,5.17L16.41,6.59C18.05,7.91 19,9.9 19,12A7,7 0 0,1 12,19A7,7 0 0,1 5,12C5,9.9 5.95,7.91 7.58,6.58L6.17,5.17C4.21,6.88 3,9.3 3,12A9,9 0 0,0 12,21A9,9 0 0,0 21,12C21,9.3 19.79,6.88 17.83,5.17Z"/></svg>
+            <span>التشغيل</span>
+          </button>
+
+          <button type="button" class="panel-btn music-btn" id="btn-modern-music" title="تشغيل موسيقى رومانسية">
+            <svg viewBox="0 0 24 24" class="btn-icon"><path fill="currentColor" d="M12,3V13.55C11.41,13.21 10.73,13 10,13A5,5 0 0,0 5,18A5,5 0 0,0 10,23A5,5 0 0,0 15,18V6H19V3H12Z"/></svg>
+            <span>موسيقى رومانسية</span>
+          </button>
+
+          <button type="button" class="panel-btn extra-btn" id="btn-modern-source" title="مصدر الإشارة">
+            <svg viewBox="0 0 24 24" class="btn-icon"><path fill="currentColor" d="M21,3H3C1.89,3 1,3.89 1,5V17A2,2 0 0,0 3,19H8V21H16V19H21A2,2 0 0,0 23,17V5C23,3.89 22.1,3 21,3M21,17H3V5H21V17Z"/></svg>
+            <span>المصدر</span>
+          </button>
+
+          <button type="button" class="panel-btn extra-btn" id="btn-modern-menu" title="القائمة">
+            <svg viewBox="0 0 24 24" class="btn-icon"><path fill="currentColor" d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z"/></svg>
+            <span>القائمة</span>
+          </button>
+
+          <button type="button" class="panel-btn extra-btn" id="btn-modern-vol-up" title="رفع الصوت">
+            <svg viewBox="0 0 24 24" class="btn-icon"><path fill="currentColor" d="M3,9H7L12,4V20L7,15H3V9M14,11H17V8H19V11H22V13H19V16H17V13H14V11Z"/></svg>
+            <span>+</span>
+          </button>
+
+          <button type="button" class="panel-btn extra-btn" id="btn-modern-vol-down" title="خفض الصوت">
+            <svg viewBox="0 0 24 24" class="btn-icon"><path fill="currentColor" d="M3,9H7L12,4V20L7,15H3V9M14,11H22V13H14V11Z"/></svg>
+            <span>-</span>
+          </button>
+
+          <div class="power-led" id="modern-led" title="مؤشر الحالة"></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- الأصوات -->
+  <audio id="audio-ra" preload="metadata">
+    <source src="https://raw.githubusercontent.com/workmemo2007-gif/M2/43ae8c0dcba605028e4de75ff57d79451060c899/%E2%80%8E%E2%81%A8%D8%AD%D8%B1%D9%81%20%D8%B1%E2%81%A9.mp3" type="audio/mpeg">
+  </audio>
+
+  <audio id="audio-ta" preload="metadata">
+    <source src="https://raw.githubusercontent.com/workmemo2007-gif/J/3170a08c4916f27102b32cdacaca86335bb27383/%E2%80%8E%E2%81%A8%D8%AD%D8%B1%D9%81%20%D8%AA%E2%81%A9.mp3" type="audio/mpeg">
+  </audio>
+
+  <audio id="audio-alif" preload="metadata">
+    <source src="https://raw.githubusercontent.com/workmemo2007-gif/M2/72ad2bf2d4691e866f88413a9f1bd6a809c2c125/%E2%80%8E%E2%81%A8%D8%AD%D8%B1%D9%81%20%D8%A7%E2%81%A9.mp3" type="audio/mpeg">
+  </audio>
+
+  <audio id="audio-jeem" preload="metadata">
+    <source src="https://raw.githubusercontent.com/workmemo2007-gif/M2/8da0fced89cbc566d6cffe25fce5347ab6e10d22/telegram-cloud-document-2-5321499372058354999.mp4.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- صوت الموسيقى الرومانسية للشاشة الحديثة -->
+  <audio id="audio-romantic" loop preload="metadata">
+    <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-piano-112188.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    function updateBackgroundOnScroll() {
+      const scrollY = window.scrollY;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      
+      if (maxScroll > 0) {
+        const scrollPercent = (scrollY / maxScroll) * 100;
+        document.body.style.backgroundPositionY = `${scrollPercent}%`;
+      }
+    }
+
+    window.addEventListener("scroll", updateBackgroundOnScroll);
+    window.addEventListener("resize", updateBackgroundOnScroll);
+
+    const buttons = document.querySelectorAll(".letter-button");
+
+    const audioMap = {
+      ra: document.getElementById("audio-ra"),
+      ta: document.getElementById("audio-ta"),
+      alif: document.getElementById("audio-alif"),
+      jeem: document.getElementById("audio-jeem")
+    };
+
+    const textMap = {
+      ra: `رسمتك بالخيال والله جابك
+وصلت لمرحلة أرتاح بعذابك
+هو العنده مثلك يزعل شبيك
+ومنو غيرك يسوى بقلبي أخليه
+منو يزعل بشر يسوى لـ مية
+يلوموني وقلبهم مو عليك`,
+
+      ta: `تعرف غلاتك لو بعد؟
+محتاج أبينها أكثر؟
+يل بيك لهاني العمر.. ما ركزت بيه من مر
+يمكن إذا قتلي شكثر تهواني راح أتحير
+الليلة أعد محبتك.. بس باجر تزود أكثر`,
+
+      alif: `أنتِ.. أنتِ روحي
+أنتِ روحي وراحتي
+وآخر ندى على الورد ينزل
+أنتِ ليلي ولادتي ودفاي
+اللي جمع حلاوة الشمس والظل`,
+
+      jeem: `جمالك جمال.. جمالك جمال مو عادي
+كلامك كلام.. كلامك كلام مو عادي
+شو بدك دلال.. على صوت الدلال غفيلي
+شو بدك غرام.. ليل الغرام هنيلي`
+    };
+
+    let typingTimeout;
+
+    function startTyping(text, textElement, cursorElement, speed = 130) {
+      textElement.textContent = "";
+      cursorElement.style.display = "inline-block";
+      let index = 0;
+
+      function type() {
+        if (index < text.length) {
+          textElement.textContent += text.charAt(index);
+          index++;
+          typingTimeout = setTimeout(type, speed);
+        }
+      }
+      type();
+    }
+
+    const audioRomantic = document.getElementById("audio-romantic");
+    const btnModernMusic = document.getElementById("btn-modern-music");
+
+    function stopAllEffects() {
+      clearTimeout(typingTimeout);
+
+      Object.values(audioMap).forEach(audio => {
+        if (audio) {
+          audio.pause();
+          audio.currentTime = 0;
+        }
+      });
+
+      if (audioRomantic) {
+        audioRomantic.pause();
+        if (btnModernMusic) btnModernMusic.classList.remove("active");
+      }
+
+      ['ra', 'ta', 'alif', 'jeem'].forEach(key => {
+        const txt = document.getElementById(`typed-text-${key}`);
+        const cur = document.getElementById(`cursor-${key}`);
+        if (txt) txt.textContent = "";
+        if (cur) cur.style.display = "none";
+      });
+    }
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const isCurrentlyActive = button.getAttribute("aria-pressed") === "true";
+        const letterKey = button.getAttribute("data-letter");
+
+        buttons.forEach((btn) => btn.setAttribute("aria-pressed", "false"));
+        stopAllEffects();
+
+        if (!isCurrentlyActive) {
+          button.setAttribute("aria-pressed", "true");
+
+          if (letterKey && textMap[letterKey]) {
+            const audioObj = audioMap[letterKey];
+            if (audioObj) {
+              audioObj.play().catch(() => {});
+            }
+
+            const textEl = document.getElementById(`typed-text-${letterKey}`);
+            const cursorEl = document.getElementById(`cursor-${letterKey}`);
+            startTyping(textMap[letterKey], textEl, cursorEl, 130);
+          }
+        }
+      });
+    });
+
+    const secondImg = document.getElementById("second-img");
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          secondImg.classList.add("slide-in");
+        }
+      });
+    }, { threshold: 0.15 });
+
+    observer.observe(secondImg);
+
+    // التفاعل عند النقر على التلفاز الكلاسيكي
+    const retroTvBox = document.getElementById("retro-tv-box");
+    if (retroTvBox) {
+      retroTvBox.addEventListener("click", () => {
+        retroTvBox.classList.toggle("revealed");
+      });
+    }
+
+    // === التفاعل مع الشاشة الحديثة المعطلة 3D وأزرارها الأفقيّة ===
+    const modernMonitor = document.getElementById("modern-monitor");
+    const btnModernPower = document.getElementById("btn-modern-power");
+    const btnModernSource = document.getElementById("btn-modern-source");
+    const btnModernMenu = document.getElementById("btn-modern-menu");
+    const btnModernVolUp = document.getElementById("btn-modern-vol-up");
+    const btnModernVolDown = document.getElementById("btn-modern-vol-down");
+    const modernLed = document.getElementById("modern-led");
+
+    // زر التشغيل وإصلاح الشاشة
+    if (btnModernPower && modernMonitor) {
+      btnModernPower.addEventListener("click", () => {
+        const isActive = modernMonitor.classList.toggle("active");
+        btnModernPower.classList.toggle("active", isActive);
+        if (modernLed) modernLed.classList.toggle("active", isActive);
+      });
+    }
+
+    // زر تشغيل الموسيقى الرومانسية
+    if (btnModernMusic && audioRomantic) {
+      btnModernMusic.addEventListener("click", () => {
+        if (audioRomantic.paused) {
+          stopAllEffects();
+          audioRomantic.play().then(() => {
+            btnModernMusic.classList.add("active");
+          }).catch(() => {});
+        } else {
+          audioRomantic.pause();
+          btnModernMusic.classList.remove("active");
+        }
+      });
+    }
+
+    // أزرار زيادة وخفض الصوت
+    if (btnModernVolUp && audioRomantic) {
+      btnModernVolUp.addEventListener("click", () => {
+        if (audioRomantic.volume < 1) {
+          audioRomantic.volume = Math.min(1, audioRomantic.volume + 0.1);
+        }
+      });
+    }
+
+    if (btnModernVolDown && audioRomantic) {
+      btnModernVolDown.addEventListener("click", () => {
+        if (audioRomantic.volume > 0) {
+          audioRomantic.volume = Math.max(0, audioRomantic.volume - 0.1);
+        }
+      });
+    }
+
+    // أزرار إضافية (المصدر والقائمة) للواقعية
+    if (btnModernSource) {
+      btnModernSource.addEventListener("click", () => {
+        btnModernSource.classList.add("active");
+        setTimeout(() => btnModernSource.classList.remove("active"), 600);
+      });
+    }
+
+    if (btnModernMenu) {
+      btnModernMenu.addEventListener("click", () => {
+        btnModernMenu.classList.add("active");
+        setTimeout(() => btnModernMenu.classList.remove("active"), 600);
+      });
+    }
+  </script>
 </body>
 </html>
