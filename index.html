@@ -24,7 +24,6 @@
       --off-white-glow: rgba(255, 253, 245, 0.95);
       --gold-border: rgba(255, 214, 107, 0.85);
       --circle-size: clamp(40px, 5.8vw, 52px);
-      --red-love: #ff2a5f;
     }
 
     * {
@@ -45,6 +44,7 @@
       background-color: #080b16;
       background-image: url("https://raw.githubusercontent.com/workmemo2007-gif/R1/c4c2ac757d6fb303ea96a912e78dc58c420103f4/IMG_2572.png");
       background-size: cover;
+      /* البداية التلقائية من أعلى الصورة */
       background-position: center top;
       background-repeat: no-repeat;
       background-attachment: fixed;
@@ -62,39 +62,6 @@
       background-color: rgba(0, 0, 0, 0.55);
       z-index: 0;
       pointer-events: none;
-    }
-
-    /* 1. شريط التقدم بشكل خيط الحب الأحمر */
-    .love-thread-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 12px;
-      z-index: 9999;
-      pointer-events: none;
-      display: flex;
-      align-items: center;
-    }
-
-    .love-thread-line {
-      height: 4px;
-      background: linear-gradient(90deg, #ff2a5f, #ff758c, #ff2a5f);
-      width: 0%;
-      box-shadow: 0 0 10px #ff2a5f, 0 0 18px rgba(255, 42, 95, 0.8);
-      transition: width 0.1s linear;
-      border-radius: 0 4px 4px 0;
-      position: relative;
-    }
-
-    .love-thread-heart {
-      position: absolute;
-      left: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--red-love);
-      font-size: 16px;
-      text-shadow: 0 0 8px #ff2a5f;
     }
 
     .section-container {
@@ -124,7 +91,7 @@
       filter: drop-shadow(0 0 22px rgba(28, 69, 255, .2));
     }
 
-    /* 2. تصميم بطاقة الكشط السهلة Scratch Card */
+    /* تصميم عرض الصورة الجديدة عائمة مباشرة أسفل الأولى وأنيميشن انزلاق */
     .second-artwork-container {
       position: relative;
       z-index: 1;
@@ -137,148 +104,132 @@
       box-sizing: border-box;
     }
 
-    .scratch-card-wrapper {
-      position: relative;
+    .second-artwork {
       width: min(98vw, 95vh, 1100px);
       max-width: 100%;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+      height: auto;
+      border: none;
+      background: transparent;
+      box-shadow: none;
+      filter: drop-shadow(0 15px 30px rgba(0,0,0,0.6));
       opacity: 0;
       transform: translateY(120px) scale(0.92);
       transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .scratch-card-wrapper.slide-in {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-
-    .second-artwork {
-      width: 100%;
-      height: auto;
-      display: block;
       user-select: none;
       -webkit-user-drag: none;
     }
 
-    .scratch-canvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      cursor: pointer;
-      touch-action: none;
+    .second-artwork.slide-in {
+      opacity: 1;
+      transform: translateY(0) scale(1);
     }
 
-    .scratch-hint {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      background: rgba(0, 0, 0, 0.65);
-      color: var(--gold-bright);
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 14px;
-      pointer-events: none;
-      z-index: 2;
-      border: 1px solid var(--gold-border);
-      backdrop-filter: blur(5px);
-    }
-
-    /* 3. دفتر/ألبوم الصور الكلاسيكي (Flipbook) */
-    .flipbook-section {
+    /* تصميم قسم الشاشة المعطلة في نهاية الموقع */
+    .broken-screen-container {
       position: relative;
       z-index: 1;
-      padding: 60px 15px 100px 15px;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
+      padding: 40px 15px 80px 15px;
     }
 
-    .flipbook-title {
-      color: var(--gold-bright);
-      font-size: clamp(22px, 4vw, 32px);
-      margin-bottom: 25px;
-      text-shadow: 0 0 10px rgba(255, 214, 107, 0.5);
-    }
-
-    .flipbook-container {
+    .broken-screen-box {
       position: relative;
       width: min(90vw, 550px);
-      height: min(120vw, 680px);
-      perspective: 1500px;
-    }
-
-    .flipbook-page {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      border-radius: 12px;
-      background: #151b2e;
-      border: 2px solid var(--gold-border);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.8);
-      padding: 18px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      transform-origin: right center;
-      transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
-      backface-visibility: hidden;
-      user-select: none;
-    }
-
-    .flipbook-page.flipped {
-      transform: rotateY(-180deg);
-    }
-
-    .flipbook-img-container {
-      width: 100%;
-      height: 75%;
-      border-radius: 8px;
+      aspect-ratio: 1600 / 2000;
+      border-radius: 20px;
       overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.1);
+      cursor: pointer;
+      box-shadow: 0 0 35px rgba(0, 0, 0, 0.95), 0 0 15px rgba(255, 214, 107, 0.2);
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      background-color: #000;
     }
 
-    .flipbook-img-container img {
+    .broken-screen-box:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 45px rgba(255, 214, 107, 0.4);
+    }
+
+    .broken-screen-img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      display: block;
+      filter: blur(28px) contrast(220%) brightness(55%) saturate(180%);
+      transition: filter 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s ease;
+      animation: static-flicker 1.8s infinite alternate ease-in-out;
+      user-select: none;
+      -webkit-user-drag: none;
     }
 
-    .flipbook-caption {
-      color: var(--off-white-glow);
-      font-size: clamp(15px, 2.2vw, 18px);
-      text-align: center;
-      margin-top: 10px;
+    /* مؤثرات الخطوط والتشويش */
+    .screen-glitch-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.35),
+        rgba(0, 0, 0, 0.35) 2px,
+        transparent 2px,
+        transparent 4px
+      );
+      pointer-events: none;
+      z-index: 2;
+      transition: opacity 0.8s ease;
+      animation: glitch-scanlines 0.25s infinite linear;
     }
 
-    .flipbook-controls {
-      display: flex;
-      gap: 15px;
-      margin-top: 20px;
-    }
-
-    .flipbook-btn {
-      background: rgba(255, 214, 107, 0.15);
-      border: 1px solid var(--gold-border);
+    .screen-hint-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       color: var(--gold-bright);
-      padding: 8px 20px;
-      border-radius: 20px;
-      cursor: pointer;
-      font-family: inherit;
-      font-size: 16px;
-      backdrop-filter: blur(5px);
-      transition: all 0.3s ease;
+      font-size: clamp(20px, 3.5vw, 28px);
+      font-weight: 700;
+      text-shadow: 0 0 10px rgba(0,0,0,0.9), 0 0 18px var(--gold);
+      z-index: 3;
+      pointer-events: none;
+      text-align: center;
+      transition: opacity 0.6s ease;
+      animation: pulse-hint 1.4s infinite alternate;
+      width: 80%;
     }
 
-    .flipbook-btn:hover {
-      background: var(--gold);
-      color: #080b16;
+    /* الشاشة بعد النقر لتصليح التشويش وإظهار الصورة */
+    .broken-screen-box.revealed .broken-screen-img {
+      filter: blur(0px) contrast(100%) brightness(100%) saturate(100%);
+      animation: none;
+    }
+
+    .broken-screen-box.revealed .screen-glitch-overlay,
+    .broken-screen-box.revealed .screen-hint-text {
+      opacity: 0;
+    }
+
+    @keyframes static-flicker {
+      0% { filter: blur(22px) contrast(180%) brightness(50%) hue-rotate(0deg); }
+      25% { filter: blur(28px) contrast(240%) brightness(80%) hue-rotate(90deg); }
+      50% { filter: blur(18px) contrast(160%) brightness(40%) hue-rotate(180deg); }
+      75% { filter: blur(32px) contrast(260%) brightness(75%) hue-rotate(270deg); }
+      100% { filter: blur(25px) contrast(200%) brightness(60%) hue-rotate(360deg); }
+    }
+
+    @keyframes glitch-scanlines {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(4px); }
+    }
+
+    @keyframes pulse-hint {
+      0% { opacity: 0.5; transform: translate(-50%, -50%) scale(0.96); }
+      100% { opacity: 1; transform: translate(-50%, -50%) scale(1.04); }
     }
 
     .letter-button {
@@ -460,6 +411,9 @@
       .artwork {
         width: min(82vw, 64vh, 420px);
       }
+      .second-artwork {
+        width: 100vw;
+      }
       .letter-button.letter-expandable[aria-pressed="true"] {
         width: 200px;
         min-height: 85px;
@@ -470,13 +424,6 @@
 </head>
 
 <body>
-
-  <!-- شريط تقدم خيط الحب -->
-  <div class="love-thread-container">
-    <div style="color: var(--red-love); font-size: 14px; margin-right: 5px;">❤️</div>
-    <div class="love-thread-line" id="loveThread"></div>
-  </div>
-
   <main aria-label="مساحة عرض الصورة الحرفية">
     
     <div class="section-container">
@@ -562,55 +509,28 @@
       </div>
     </div>
 
-    <!-- القسم الثاني: بطاقة الكشط Scratch Card -->
+    <!-- القسم الثاني: الصورة الجديدة -->
     <div class="second-artwork-container">
-      <div id="scratch-wrapper" class="scratch-card-wrapper">
-        <div class="scratch-hint">✨ اكشط الشاشة بلطف لتكتشف السر</div>
-        <img
-          id="second-img"
-          class="second-artwork"
-          src="https://raw.githubusercontent.com/workmemo2007-gif/M2/adadf85a0ca189e75ecac30f00924564fbb59352/IMG_2577.png"
-          alt="صورة عائمة جديدة"
-          draggable="false"
-        >
-        <canvas id="scratchCanvas" class="scratch-canvas"></canvas>
-      </div>
+      <img
+        id="second-img"
+        class="second-artwork"
+        src="https://raw.githubusercontent.com/workmemo2007-gif/M2/adadf85a0ca189e75ecac30f00924564fbb59352/IMG_2577.png"
+        alt="صورة عائمة جديدة"
+        draggable="false"
+      >
     </div>
 
-    <!-- القسم الثالث: ألبوم الذكريات التفاعلي Flipbook -->
-    <div class="flipbook-section">
-      <div class="flipbook-title">📖 ألبوم الخاطرات والذكريات</div>
-      <div class="flipbook-container" id="flipbook">
-        
-        <!-- صفحة 3 -->
-        <div class="flipbook-page" style="z-index: 1;">
-          <div class="flipbook-img-container">
-            <img src="https://raw.githubusercontent.com/workmemo2007-gif/R1/c4c2ac757d6fb303ea96a912e78dc58c420103f4/IMG_2572.png" alt="ذكرى 3">
-          </div>
-          <div class="flipbook-caption">"أنظر إليك وكأنك العالم بأسره"</div>
-        </div>
-
-        <!-- صفحة 2 -->
-        <div class="flipbook-page" style="z-index: 2;">
-          <div class="flipbook-img-container">
-            <img src="https://raw.githubusercontent.com/workmemo2007-gif/M2/adadf85a0ca189e75ecac30f00924564fbb59352/IMG_2577.png" alt="ذكرى 2">
-          </div>
-          <div class="flipbook-caption">"في كل تفاصيلك أجد حبًا جديدًا"</div>
-        </div>
-
-        <!-- صفحة 1 -->
-        <div class="flipbook-page" style="z-index: 3;">
-          <div class="flipbook-img-container">
-            <img src="https://raw.githubusercontent.com/workmemo2007-gif/M2/93d760cc9f33a21f2c0867fa02795531fd73a040/IMG_2573.png" alt="ذكرى 1">
-          </div>
-          <div class="flipbook-caption">"بداية اللحظات الساحرة والجميلة"</div>
-        </div>
-
-      </div>
-
-      <div class="flipbook-controls">
-        <button class="flipbook-btn" onclick="prevPage()">الصفحة السابقة ➔</button>
-        <button class="flipbook-btn" onclick="nextPage()">⬅ الصفحة التالية</button>
+    <!-- القسم الثالث: الشاشة المعطلة (المغوشة) -->
+    <div class="broken-screen-container">
+      <div class="broken-screen-box" id="broken-screen-box" title="انقر لإصلاح الشاشة">
+        <img
+          class="broken-screen-img"
+          src="https://raw.githubusercontent.com/workmemo2007-gif/M2/cf0d61006943027ac1c821b662336a6501d8641d/IMG_2592.jpeg"
+          alt="الصورة المعروضة"
+          draggable="false"
+        >
+        <div class="screen-glitch-overlay"></div>
+        <div class="screen-hint-text">اضغط لإصلاح الشاشة ⚡</div>
       </div>
     </div>
 
@@ -634,88 +554,22 @@
   </audio>
 
   <script>
-    // 1. تحديث شريط التقدم بخيط الحب وحركة الخلفية مع التمرير
-    function updateOnScroll() {
+    // ربط حركة خلفية الصورة بين أعلى الصورة (0%) وأسفل الصورة (100%)
+    function updateBackgroundOnScroll() {
       const scrollY = window.scrollY;
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
       
       if (maxScroll > 0) {
+        // حساب نسبة التمرير الحالية من 0 إلى 100
         const scrollPercent = (scrollY / maxScroll) * 100;
+        // تطبيق النسبة المئوية على موقّع الخلفية العمودي
         document.body.style.backgroundPositionY = `${scrollPercent}%`;
-        
-        // شريط خيط الحب
-        const thread = document.getElementById("loveThread");
-        if (thread) {
-          thread.style.width = `${scrollPercent}%`;
-        }
       }
     }
 
-    window.addEventListener("scroll", updateOnScroll);
-    window.addEventListener("resize", updateOnScroll);
+    window.addEventListener("scroll", updateBackgroundOnScroll);
+    window.addEventListener("resize", updateBackgroundOnScroll);
 
-    // 2. منطق بطاقة الكشط (Scratch Card Logic)
-    const canvas = document.getElementById("scratchCanvas");
-    const ctx = canvas.getContext("2d");
-    const imgContainer = document.getElementById("scratch-wrapper");
-    let isDrawing = false;
-
-    function initScratchCard() {
-      canvas.width = imgContainer.clientWidth;
-      canvas.height = imgContainer.clientHeight;
-
-      // إنشاء خلفية الطبقة التي سيتم كشطها (ذهبية فاخرة مع نقش ناعم)
-      ctx.fillStyle = "#2a1f10";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      ctx.fillStyle = "#ffd66b";
-      ctx.font = "20px 'Aref Ruqaa', serif";
-      ctx.textAlign = "center";
-      ctx.fillText("✨ امسح هنا لتكشف الصورة ✨", canvas.width / 2, canvas.height / 2);
-    }
-
-    function scratch(e) {
-      if (!isDrawing) return;
-      const rect = canvas.getBoundingClientRect();
-      const x = (e.clientX || e.touches[0].clientX) - rect.left;
-      const y = (e.clientY || e.touches[0].clientY) - rect.top;
-
-      ctx.globalCompositeOperation = "destination-out";
-      ctx.beginPath();
-      ctx.arc(x, y, 35, 0, Math.PI * 2); // نصف قطر واسع للكشط السريع والسهل
-      ctx.fill();
-    }
-
-    canvas.addEventListener("mousedown", (e) => { isDrawing = true; scratch(e); });
-    canvas.addEventListener("mousemove", scratch);
-    window.addEventListener("mouseup", () => isDrawing = false);
-
-    canvas.addEventListener("touchstart", (e) => { isDrawing = true; scratch(e); });
-    canvas.addEventListener("touchmove", scratch);
-    window.addEventListener("touchend", () => isDrawing = false);
-
-    window.addEventListener("load", initScratchCard);
-    window.addEventListener("resize", initScratchCard);
-
-    // 3. ألبوم الصفحات (Flipbook Logic)
-    const pages = document.querySelectorAll(".flipbook-page");
-    let currentPage = pages.length - 1;
-
-    function nextPage() {
-      if (currentPage >= 0) {
-        pages[currentPage].classList.add("flipped");
-        currentPage--;
-      }
-    }
-
-    function prevPage() {
-      if (currentPage < pages.length - 1) {
-        currentPage++;
-        pages[currentPage].classList.remove("flipped");
-      }
-    }
-
-    // منطق الحروف والصوتيات الأساسي
     const buttons = document.querySelectorAll(".letter-button");
 
     const audioMap = {
@@ -811,17 +665,25 @@
       });
     });
 
-    // انيميشن ظهور بطاقة الكشط
-    const scratchWrapper = document.getElementById("scratch-wrapper");
+    // انيميشن ظهور الصورة الثانية
+    const secondImg = document.getElementById("second-img");
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          scratchWrapper.classList.add("slide-in");
+          secondImg.classList.add("slide-in");
         }
       });
     }, { threshold: 0.15 });
 
-    observer.observe(scratchWrapper);
+    observer.observe(secondImg);
+
+    // تفعيل وتعديل تفاعل الشاشة المعطلة عند النقر
+    const brokenScreenBox = document.getElementById("broken-screen-box");
+    if (brokenScreenBox) {
+      brokenScreenBox.addEventListener("click", () => {
+        brokenScreenBox.classList.toggle("revealed");
+      });
+    }
   </script>
 </body>
 </html>
