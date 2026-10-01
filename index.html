@@ -6,13 +6,10 @@
   <meta name="theme-color" content="#080b16">
   <title>الصورة التفاعلية</title>
 
-  <!-- خط الرقعة -->
+  <!-- خط الرقعة و Montserrat -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&display=swap"
-    rel="stylesheet"
-  >
+  <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -122,7 +119,7 @@
       transform: translateY(0) scale(1);
     }
 
-    /* تصميم قسم الشاشة المعطلة أسفل الصورة الثانية مباشرة */
+    /* تصميم قسم التلفاز القديم أسفل الصورة الثانية */
     .broken-screen-container {
       position: relative;
       z-index: 1;
@@ -142,100 +139,394 @@
       width: 100%;
     }
 
-    .broken-screen-box {
+    /* === تصميم الـ Retro TV === */
+    .main_wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: min(92vw, 32em);
+      font-size: clamp(11px, 2.8vw, 17px);
+      position: relative;
+      cursor: pointer;
+      user-select: none;
+      direction: ltr;
+    }
+
+    .main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-top: 3em;
+      position: relative;
+      width: 100%;
+    }
+
+    .antenna {
+      width: 5em;
+      height: 5em;
+      border-radius: 50%;
+      border: 2px solid black;
+      background-color: #f27405;
+      margin-bottom: -6em;
+      margin-left: 0em;
+      z-index: 1;
+      position: relative;
+    }
+
+    .antenna_shadow {
+      position: absolute;
+      background-color: transparent;
+      width: 50px;
+      height: 56px;
+      margin-left: 1.68em;
+      border-radius: 45%;
+      transform: rotate(140deg);
+      border: 4px solid transparent;
+      box-shadow:
+        inset 0px 16px #a85103,
+        inset 0px 16px 1px 1px #a85103;
+    }
+
+    .antenna::after {
+      content: "";
+      position: absolute;
+      margin-top: -9.4em;
+      margin-left: 0.4em;
+      transform: rotate(-25deg);
+      width: 1em;
+      height: 0.5em;
+      border-radius: 50%;
+      background-color: #f69e50;
+    }
+
+    .antenna::before {
+      content: "";
+      position: absolute;
+      margin-top: 0.2em;
+      margin-left: 1.25em;
+      transform: rotate(-20deg);
+      width: 1.5em;
+      height: 0.8em;
+      border-radius: 50%;
+      background-color: #f69e50;
+    }
+
+    .a1 {
+      position: relative;
+      top: -102%;
+      left: -130%;
+      width: 12em;
+      height: 5.5em;
+      border-radius: 50px;
+      background-image: linear-gradient(#171717, #171717, #353535, #353535, #171717);
+      transform: rotate(-29deg);
+      clip-path: polygon(50% 0%, 49% 100%, 52% 100%);
+    }
+
+    .a1d {
+      position: relative;
+      top: -211%;
+      left: -35%;
+      transform: rotate(45deg);
+      width: 0.5em;
+      height: 0.5em;
+      border-radius: 50%;
+      border: 2px solid black;
+      background-color: #979797;
+      z-index: 99;
+    }
+
+    .a2 {
+      position: relative;
+      top: -210%;
+      left: -10%;
+      width: 12em;
+      height: 4em;
+      border-radius: 50px;
+      background-color: #171717;
+      background-image: linear-gradient(#171717, #171717, #353535, #353535, #171717);
+      margin-right: 5em;
+      clip-path: polygon(47% 0, 47% 0, 34% 34%, 54% 25%, 32% 100%, 29% 96%, 49% 32%, 30% 38%);
+      transform: rotate(-8deg);
+    }
+
+    .a2d {
+      position: relative;
+      top: -294%;
+      left: 94%;
+      width: 0.5em;
+      height: 0.5em;
+      border-radius: 50%;
+      border: 2px solid black;
+      background-color: #979797;
+      z-index: 99;
+    }
+
+    .tv {
+      width: 22em;
+      height: 13.5em;
+      margin-top: 3em;
+      border-radius: 20px;
+      background-color: #d36604;
+      display: flex;
+      justify-content: center;
+      border: 3px solid #1d0e01;
+      box-shadow: inset 0.3em 0.3em #e69635, 0 15px 40px rgba(0,0,0,0.8);
       position: relative;
       z-index: 2;
-      /* حجم يتناسب مع حجم الصورة الثانية */
-      width: min(88vw, 75vh, 750px);
-      aspect-ratio: 1600 / 2000;
-      border-radius: 24px;
-      overflow: hidden;
-      cursor: pointer;
-      /* زيادة سماكة الإطار وإعطاء مظهر 3D بارز */
-      border: 12px solid #0e1526;
-      box-shadow: 
-        0 0 0 2px rgba(255, 214, 107, 0.5),
-        0 20px 50px rgba(0, 0, 0, 0.95),
-        inset 0 0 25px rgba(0, 0, 0, 0.9);
-      transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+      transition: transform 0.3s ease;
+    }
+
+    .main_wrapper:hover .tv {
+      transform: scale(1.02);
+    }
+
+    .tv::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 20px;
+      background:
+        repeating-radial-gradient(#d36604 0 0.0001%, #00000070 0 0.0002%) 50% 0/2500px 2500px,
+        repeating-conic-gradient(#d36604 0 0.0001%, #00000070 0 0.0002%) 60% 60%/2500px 2500px;
+      background-blend-mode: difference;
+      opacity: 0.09;
+      pointer-events: none;
+    }
+
+    .curve_svg {
+      position: absolute;
+      margin-top: 0.25em;
+      margin-left: -0.25em;
+      height: 12px;
+      width: 12px;
+      fill: #1d0e01;
+    }
+
+    .display_div {
+      display: flex;
+      align-items: center;
+      align-self: center;
+      justify-content: center;
+      border-radius: 15px;
+      box-shadow: 3.5px 3.5px 0px #e69635;
+    }
+
+    .screen_out {
+      width: auto;
+      height: auto;
+      border-radius: 10px;
+    }
+
+    .screen_out1 {
+      width: 14.5em;
+      height: 11.2em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+    }
+
+    .screen {
+      position: relative;
+      width: 14.5em;
+      height: 11.2em;
+      font-family: 'Montserrat', sans-serif;
+      border: 3px solid #1d0e01;
       background-color: #000;
+      border-radius: 12px;
+      z-index: 99;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      letter-spacing: 0.15em;
+      text-align: center;
+      overflow: hidden;
     }
 
-    .broken-screen-box:hover {
-      transform: scale(1.015);
-      border-color: #16223d;
-      box-shadow: 
-        0 0 0 3px rgba(255, 214, 107, 0.8),
-        0 25px 60px rgba(0, 0, 0, 1),
-        0 0 30px rgba(255, 214, 107, 0.3);
-    }
-
+    /* الشاشة قبل وبعد الكشف */
     .broken-screen-img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
-      filter: blur(28px) contrast(220%) brightness(55%) saturate(180%);
-      transition: filter 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s ease;
-      animation: static-flicker 1.8s infinite alternate ease-in-out;
+      filter: blur(20px) contrast(200%) brightness(50%);
+      transition: filter 0.8s cubic-bezier(0.25, 1, 0.5, 1);
       user-select: none;
       -webkit-user-drag: none;
     }
 
-    .screen-glitch-overlay {
+    .screen-noise-overlay {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: repeating-linear-gradient(
-        0deg,
-        rgba(0, 0, 0, 0.35),
-        rgba(0, 0, 0, 0.35) 2px,
-        transparent 2px,
-        transparent 4px
-      );
+      inset: 0;
+      background:
+        repeating-radial-gradient(#000 0 0.0001%, #ffffff 0 0.0002%) 50% 0/2500px 2500px,
+        repeating-conic-gradient(#000 0 0.0001%, #ffffff 0 0.0002%) 60% 60%/2500px 2500px;
+      background-blend-mode: difference;
+      opacity: 0.75;
+      animation: noise 0.2s infinite alternate;
       pointer-events: none;
-      z-index: 2;
       transition: opacity 0.8s ease;
-      animation: glitch-scanlines 0.25s infinite linear;
+      z-index: 2;
     }
 
-    .screen-hint-text {
+    .notfound_text {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      background-color: rgba(0, 0, 0, 0.75);
+      padding: 0.4em 0.8em;
+      font-size: 0.85em;
       color: var(--gold-bright);
-      font-size: clamp(20px, 3.5vw, 28px);
-      font-weight: 700;
-      text-shadow: 0 0 10px rgba(0,0,0,0.9), 0 0 18px var(--gold);
-      z-index: 3;
-      pointer-events: none;
-      text-align: center;
-      transition: opacity 0.6s ease;
+      font-family: 'Aref Ruqaa', serif;
+      letter-spacing: 0.05em;
+      border-radius: 8px;
+      z-index: 10;
+      border: 1px solid var(--gold);
+      text-shadow: 0 0 10px rgba(0,0,0,0.9), 0 0 12px var(--gold);
       animation: pulse-hint 1.4s infinite alternate;
-      width: 80%;
+      pointer-events: none;
+      transition: opacity 0.6s ease;
     }
 
-    /* كشف الشاشة بعد النقر */
-    .broken-screen-box.revealed .broken-screen-img {
-      filter: blur(0px) contrast(100%) brightness(100%) saturate(100%);
-      animation: none;
+    /* عند النقر وكشف الصورة */
+    .main_wrapper.revealed .broken-screen-img {
+      filter: blur(0px) contrast(100%) brightness(100%);
     }
 
-    .broken-screen-box.revealed .screen-glitch-overlay,
-    .broken-screen-box.revealed .screen-hint-text {
+    .main_wrapper.revealed .screen-noise-overlay,
+    .main_wrapper.revealed .notfound_text {
       opacity: 0;
     }
 
-    /* أسلاك التوصيل 3D التفاعلية */
+    @keyframes noise {
+      100% {
+        background-position: 50% 0, 60% 50%;
+      }
+    }
+
+    .lines {
+      display: flex;
+      column-gap: 0.1em;
+      align-self: flex-end;
+      margin-bottom: 0.8em;
+    }
+
+    .line1, .line3 {
+      width: 2px;
+      height: 0.5em;
+      background-color: black;
+      border-radius: 25px 25px 0px 0px;
+    }
+
+    .line2 {
+      width: 2px;
+      height: 1em;
+      background-color: black;
+      border-radius: 25px 25px 0px 0px;
+    }
+
+    .buttons_div {
+      width: 4.2em;
+      align-self: center;
+      height: 10.8em;
+      background-color: #e69635;
+      border: 2px solid #1d0e01;
+      padding: 0.4em;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      row-gap: 0.7em;
+      box-shadow: 3px 3px 0px #e69635;
+      margin-left: 0.5em;
+    }
+
+    .b1, .b2 {
+      width: 1.8em;
+      height: 1.8em;
+      border-radius: 50%;
+      background-color: #7f5934;
+      border: 2px solid black;
+      position: relative;
+      box-shadow:
+        inset 2px 2px 1px #b49577,
+        -2px 0px #513721,
+        -2px 0px 0px 1px black;
+    }
+
+    .b1 div {
+      position: absolute;
+      top: 0.2em;
+      left: 0.75em;
+      transform: rotate(45deg);
+      width: 0.18em;
+      height: 1.2em;
+      background-color: #000000;
+    }
+
+    .speakers {
+      display: flex;
+      flex-direction: column;
+      row-gap: 0.3em;
+      width: 100%;
+    }
+
+    .speakers .g1 {
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .speakers .g1 .g11, .g12, .g13 {
+      width: 0.45em;
+      height: 0.45em;
+      border-radius: 50%;
+      background-color: #7f5934;
+      border: 1px solid black;
+    }
+
+    .speakers .g {
+      width: 100%;
+      height: 2px;
+      background-color: #171717;
+    }
+
+    .bottom {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      column-gap: 12em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .base1, .base2 {
+      height: 1.2em;
+      width: 2.5em;
+      border: 2px solid #171717;
+      background-color: #4d4d4d;
+      margin-top: -0.15em;
+      z-index: -1;
+    }
+
+    .base3 {
+      position: absolute;
+      height: 0.2em;
+      width: 22em;
+      background-color: #171717;
+      margin-top: 1.8em;
+    }
+
+    /* أسلاك التوصيل 3D التفاعلية أسفل التلفاز */
     .cables-container {
       position: relative;
-      width: min(88vw, 75vh, 750px);
-      height: 140px;
-      margin-top: -12px;
-      z-index: 1;
+      width: min(90vw, 650px);
+      height: 120px;
+      margin-top: -20px;
+      z-index: 0;
       pointer-events: none;
     }
 
@@ -251,12 +542,10 @@
       stroke-linecap: round;
     }
 
-    /* أسلاك 3D ذات تدرج لوني مجسم */
     .cable-1 { stroke: url(#cableGrad1); stroke-width: 12; }
     .cable-2 { stroke: url(#cableGrad2); stroke-width: 16; }
     .cable-3 { stroke: url(#cableGrad1); stroke-width: 13; }
 
-    /* أنيميشن حركة نبضات الكهرباء والطاقة داخل الأسلاك */
     .cable-pulse {
       fill: none;
       stroke-linecap: round;
@@ -273,24 +562,12 @@
       100% { stroke-dashoffset: 0; }
     }
 
-    @keyframes static-flicker {
-      0% { filter: blur(22px) contrast(180%) brightness(50%) hue-rotate(0deg); }
-      25% { filter: blur(28px) contrast(240%) brightness(80%) hue-rotate(90deg); }
-      50% { filter: blur(18px) contrast(160%) brightness(40%) hue-rotate(180deg); }
-      75% { filter: blur(32px) contrast(260%) brightness(75%) hue-rotate(270deg); }
-      100% { filter: blur(25px) contrast(200%) brightness(60%) hue-rotate(360deg); }
-    }
-
-    @keyframes glitch-scanlines {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(4px); }
-    }
-
     @keyframes pulse-hint {
-      0% { opacity: 0.5; transform: translate(-50%, -50%) scale(0.96); }
-      100% { opacity: 1; transform: translate(-50%, -50%) scale(1.04); }
+      0% { opacity: 0.6; transform: scale(0.96); }
+      100% { opacity: 1; transform: scale(1.04); }
     }
 
+    /* أزرار الحروف التفاعلية */
     .letter-button {
       position: absolute;
       z-index: 2;
@@ -448,15 +725,12 @@
     }
 
     .letter-ra { left: 82%; top: 87%; }
-    
     .letter-ta { left: 85%; top: 16%; }
     .letter-ta[aria-pressed="true"] {
       transform: translate(-100%, -100%);
       transform-origin: bottom right;
     }
-
     .letter-alif { left: 47%; top: 14%; }
-
     .letter-jeem { left: 13%; top: 88%; }
     .letter-jeem[aria-pressed="true"] {
       transform: translate(0, 0);
@@ -485,6 +759,7 @@
 <body>
   <main aria-label="مساحة عرض الصورة الحرفية">
     
+    <!-- القسم الأول: اللوحة التفاعلية والأزرار -->
     <div class="section-container">
       <div class="artwork" aria-label="الصورة التفاعلية وحروفها">
         <img
@@ -579,25 +854,71 @@
       >
     </div>
 
-    <!-- القسم الثالث: الشاشة المعطلة مباشرة أسفل الصورة الثانية -->
+    <!-- القسم الثالث: التلفاز الكلاسيكي التفاعلي (Retro TV) -->
     <div class="broken-screen-container">
       <div class="broken-screen-wrapper">
-        <div class="broken-screen-box" id="broken-screen-box" title="انقر لإصلاح الشاشة">
-          <img
-            class="broken-screen-img"
-            src="https://raw.githubusercontent.com/workmemo2007-gif/M2/cf0d61006943027ac1c821b662336a6501d8641d/IMG_2592.jpeg"
-            alt="الصورة المعروضة"
-            draggable="false"
-          >
-          <div class="screen-glitch-overlay"></div>
-          <div class="screen-hint-text">اضغط لإصلاح الشاشة ⚡</div>
+
+        <!-- مجسم التلفاز القديم -->
+        <div class="main_wrapper" id="retro-tv-box" title="انقر لإصلاح الشاشة / إلغاء التشويش">
+          <div class="main">
+            <div class="antenna">
+              <div class="antenna_shadow"></div>
+              <div class="a1"></div>
+              <div class="a1d"></div>
+              <div class="a2"></div>
+              <div class="a2d"></div>
+            </div>
+            <div class="tv">
+              <div class="curve">
+                <svg xml:space="preserve" viewBox="0 0 189.929 189.929" xmlns="http://www.w3.org/2000/svg" class="curve_svg">
+                  <path d="M70.343,70.343c-30.554,30.553-44.806,72.7-39.102,115.635l-29.738,3.951C-5.442,137.659,11.917,86.34,49.129,49.13 C86.34,11.918,137.664-5.445,189.928,1.502l-3.95,29.738C143.041,25.54,100.895,39.789,70.343,70.343z"></path>
+                </svg>
+              </div>
+              <div class="display_div">
+                <div class="screen_out">
+                  <div class="screen_out1">
+                    <div class="screen">
+                      <!-- الصورة المعروضة بالداخل -->
+                      <img class="broken-screen-img" src="https://raw.githubusercontent.com/workmemo2007-gif/M2/cf0d61006943027ac1c821b662336a6501d8641d/IMG_2592.jpeg" alt="الصورة المعروضة" draggable="false">
+                      <!-- غشاء تشويش التلفاز -->
+                      <div class="screen-noise-overlay"></div>
+                      <!-- نص التنبيه -->
+                      <span class="notfound_text">No Signal! ⚡<br>اضغط لإصلاح الشاشة</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="lines">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+              </div>
+              <div class="buttons_div">
+                <div class="b1"><div></div></div>
+                <div class="b2"></div>
+                <div class="speakers">
+                  <div class="g1">
+                    <div class="g11"></div>
+                    <div class="g12"></div>
+                    <div class="g13"></div>
+                  </div>
+                  <div class="g"></div>
+                  <div class="g"></div>
+                </div>
+              </div>
+            </div>
+            <div class="bottom">
+              <div class="base1"></div>
+              <div class="base2"></div>
+              <div class="base3"></div>
+            </div>
+          </div>
         </div>
 
-        <!-- أسلاك التوصيل ثلاثية الأبعاد 3D المتصلة من الأسفل -->
+        <!-- أسلاك التوصيل ثلاثية الأبعاد 3D المتصلة بالتلفاز من الأسفل -->
         <div class="cables-container">
           <svg class="cables-svg" viewBox="0 0 800 160" preserveAspectRatio="none">
             <defs>
-              <!-- تدرج ألوان مجسم للأسلاك -->
               <linearGradient id="cableGrad1" x1="0%" y1="100%" x2="0%" y2="0%">
                 <stop offset="0%" stop-color="#090d1a"/>
                 <stop offset="45%" stop-color="#2563eb"/>
@@ -612,17 +933,16 @@
               </linearGradient>
             </defs>
 
-            <!-- المسارات الأساسية للأسلاك الضخمة 3D -->
             <path class="cable-path cable-1" d="M 180 160 C 220 90, 310 50, 360 0" />
             <path class="cable-path cable-2" d="M 400 160 C 400 100, 400 40, 400 0" />
             <path class="cable-path cable-3" d="M 620 160 C 580 90, 490 50, 440 0" />
 
-            <!-- حركة تدفق نبضات الكهرباء داخل الأسلاك -->
             <path class="cable-pulse pulse-1" d="M 180 160 C 220 90, 310 50, 360 0" />
             <path class="cable-pulse pulse-2" d="M 400 160 C 400 100, 400 40, 400 0" />
             <path class="cable-pulse pulse-3" d="M 620 160 C 580 90, 490 50, 440 0" />
           </svg>
         </div>
+
       </div>
     </div>
 
@@ -765,10 +1085,11 @@
 
     observer.observe(secondImg);
 
-    const brokenScreenBox = document.getElementById("broken-screen-box");
-    if (brokenScreenBox) {
-      brokenScreenBox.addEventListener("click", () => {
-        brokenScreenBox.classList.toggle("revealed");
+    // التفاعل عند النقر على التلفاز (إصلاح الشاشة/كشف الصورة)
+    const retroTvBox = document.getElementById("retro-tv-box");
+    if (retroTvBox) {
+      retroTvBox.addEventListener("click", () => {
+        retroTvBox.classList.toggle("revealed");
       });
     }
   </script>
