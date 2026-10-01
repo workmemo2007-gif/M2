@@ -44,7 +44,6 @@
       background-color: #080b16;
       background-image: url("https://raw.githubusercontent.com/workmemo2007-gif/R1/c4c2ac757d6fb303ea96a912e78dc58c420103f4/IMG_2572.png");
       background-size: cover;
-      /* البداية التلقائية من أعلى الصورة */
       background-position: center top;
       background-repeat: no-repeat;
       background-attachment: fixed;
@@ -91,21 +90,20 @@
       filter: drop-shadow(0 0 22px rgba(28, 69, 255, .2));
     }
 
-    /* تصميم عرض الصورة الجديدة عائمة مباشرة أسفل الأولى وأنيميشن انزلاق */
+    /* تصميم عرض الصورة الثانية */
     .second-artwork-container {
       position: relative;
       z-index: 1;
-      min-height: 80vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 20px 10px 60px 10px;
+      padding: 20px 10px 10px 10px;
       box-sizing: border-box;
     }
 
     .second-artwork {
-      width: min(98vw, 95vh, 1100px);
+      width: min(95vw, 90vh, 1000px);
       max-width: 100%;
       height: auto;
       border: none;
@@ -124,34 +122,52 @@
       transform: translateY(0) scale(1);
     }
 
-    /* تصميم قسم الشاشة المعطلة في نهاية الموقع */
+    /* تصميم قسم الشاشة المعطلة أسفل الصورة الثانية مباشرة */
     .broken-screen-container {
       position: relative;
       z-index: 1;
-      min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 40px 15px 80px 15px;
+      padding: 10px 15px 120px 15px;
+      margin-top: -10px;
+    }
+
+    .broken-screen-wrapper {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
     }
 
     .broken-screen-box {
       position: relative;
-      width: min(90vw, 550px);
+      z-index: 2;
+      /* حجم يتناسب مع حجم الصورة الثانية */
+      width: min(88vw, 75vh, 750px);
       aspect-ratio: 1600 / 2000;
-      border-radius: 20px;
+      border-radius: 24px;
       overflow: hidden;
       cursor: pointer;
-      box-shadow: 0 0 35px rgba(0, 0, 0, 0.95), 0 0 15px rgba(255, 214, 107, 0.2);
-      border: 2px solid rgba(255, 255, 255, 0.15);
-      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      /* زيادة سماكة الإطار وإعطاء مظهر 3D بارز */
+      border: 12px solid #0e1526;
+      box-shadow: 
+        0 0 0 2px rgba(255, 214, 107, 0.5),
+        0 20px 50px rgba(0, 0, 0, 0.95),
+        inset 0 0 25px rgba(0, 0, 0, 0.9);
+      transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
       background-color: #000;
     }
 
     .broken-screen-box:hover {
-      transform: scale(1.02);
-      box-shadow: 0 0 45px rgba(255, 214, 107, 0.4);
+      transform: scale(1.015);
+      border-color: #16223d;
+      box-shadow: 
+        0 0 0 3px rgba(255, 214, 107, 0.8),
+        0 25px 60px rgba(0, 0, 0, 1),
+        0 0 30px rgba(255, 214, 107, 0.3);
     }
 
     .broken-screen-img {
@@ -166,7 +182,6 @@
       -webkit-user-drag: none;
     }
 
-    /* مؤثرات الخطوط والتشويش */
     .screen-glitch-overlay {
       position: absolute;
       top: 0;
@@ -203,7 +218,7 @@
       width: 80%;
     }
 
-    /* الشاشة بعد النقر لتصليح التشويش وإظهار الصورة */
+    /* كشف الشاشة بعد النقر */
     .broken-screen-box.revealed .broken-screen-img {
       filter: blur(0px) contrast(100%) brightness(100%) saturate(100%);
       animation: none;
@@ -212,6 +227,50 @@
     .broken-screen-box.revealed .screen-glitch-overlay,
     .broken-screen-box.revealed .screen-hint-text {
       opacity: 0;
+    }
+
+    /* أسلاك التوصيل 3D التفاعلية */
+    .cables-container {
+      position: relative;
+      width: min(88vw, 75vh, 750px);
+      height: 140px;
+      margin-top: -12px;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .cables-svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+      filter: drop-shadow(0 12px 10px rgba(0,0,0,0.9));
+    }
+
+    .cable-path {
+      fill: none;
+      stroke-linecap: round;
+    }
+
+    /* أسلاك 3D ذات تدرج لوني مجسم */
+    .cable-1 { stroke: url(#cableGrad1); stroke-width: 12; }
+    .cable-2 { stroke: url(#cableGrad2); stroke-width: 16; }
+    .cable-3 { stroke: url(#cableGrad1); stroke-width: 13; }
+
+    /* أنيميشن حركة نبضات الكهرباء والطاقة داخل الأسلاك */
+    .cable-pulse {
+      fill: none;
+      stroke-linecap: round;
+      stroke-dasharray: 40 220;
+      animation: flowPulse linear infinite;
+    }
+
+    .pulse-1 { stroke: #60a5fa; stroke-width: 6; filter: drop-shadow(0 0 8px #3b82f6); animation-duration: 1.8s; }
+    .pulse-2 { stroke: #ffd66b; stroke-width: 8; filter: drop-shadow(0 0 10px #ffd66b); animation-duration: 2.3s; animation-delay: 0.3s; }
+    .pulse-3 { stroke: #60a5fa; stroke-width: 6; filter: drop-shadow(0 0 8px #3b82f6); animation-duration: 2s; animation-delay: 0.7s; }
+
+    @keyframes flowPulse {
+      0% { stroke-dashoffset: 260; }
+      100% { stroke-dashoffset: 0; }
     }
 
     @keyframes static-flicker {
@@ -509,7 +568,7 @@
       </div>
     </div>
 
-    <!-- القسم الثاني: الصورة الجديدة -->
+    <!-- القسم الثاني: الصورة العائمة -->
     <div class="second-artwork-container">
       <img
         id="second-img"
@@ -520,17 +579,50 @@
       >
     </div>
 
-    <!-- القسم الثالث: الشاشة المعطلة (المغوشة) -->
+    <!-- القسم الثالث: الشاشة المعطلة مباشرة أسفل الصورة الثانية -->
     <div class="broken-screen-container">
-      <div class="broken-screen-box" id="broken-screen-box" title="انقر لإصلاح الشاشة">
-        <img
-          class="broken-screen-img"
-          src="https://raw.githubusercontent.com/workmemo2007-gif/M2/cf0d61006943027ac1c821b662336a6501d8641d/IMG_2592.jpeg"
-          alt="الصورة المعروضة"
-          draggable="false"
-        >
-        <div class="screen-glitch-overlay"></div>
-        <div class="screen-hint-text">اضغط لإصلاح الشاشة ⚡</div>
+      <div class="broken-screen-wrapper">
+        <div class="broken-screen-box" id="broken-screen-box" title="انقر لإصلاح الشاشة">
+          <img
+            class="broken-screen-img"
+            src="https://raw.githubusercontent.com/workmemo2007-gif/M2/cf0d61006943027ac1c821b662336a6501d8641d/IMG_2592.jpeg"
+            alt="الصورة المعروضة"
+            draggable="false"
+          >
+          <div class="screen-glitch-overlay"></div>
+          <div class="screen-hint-text">اضغط لإصلاح الشاشة ⚡</div>
+        </div>
+
+        <!-- أسلاك التوصيل ثلاثية الأبعاد 3D المتصلة من الأسفل -->
+        <div class="cables-container">
+          <svg class="cables-svg" viewBox="0 0 800 160" preserveAspectRatio="none">
+            <defs>
+              <!-- تدرج ألوان مجسم للأسلاك -->
+              <linearGradient id="cableGrad1" x1="0%" y1="100%" x2="0%" y2="0%">
+                <stop offset="0%" stop-color="#090d1a"/>
+                <stop offset="45%" stop-color="#2563eb"/>
+                <stop offset="70%" stop-color="#60a5fa"/>
+                <stop offset="100%" stop-color="#0a1020"/>
+              </linearGradient>
+              <linearGradient id="cableGrad2" x1="0%" y1="100%" x2="0%" y2="0%">
+                <stop offset="0%" stop-color="#141005"/>
+                <stop offset="40%" stop-color="#d97706"/>
+                <stop offset="75%" stop-color="#ffd66b"/>
+                <stop offset="100%" stop-color="#120e03"/>
+              </linearGradient>
+            </defs>
+
+            <!-- المسارات الأساسية للأسلاك الضخمة 3D -->
+            <path class="cable-path cable-1" d="M 180 160 C 220 90, 310 50, 360 0" />
+            <path class="cable-path cable-2" d="M 400 160 C 400 100, 400 40, 400 0" />
+            <path class="cable-path cable-3" d="M 620 160 C 580 90, 490 50, 440 0" />
+
+            <!-- حركة تدفق نبضات الكهرباء داخل الأسلاك -->
+            <path class="cable-pulse pulse-1" d="M 180 160 C 220 90, 310 50, 360 0" />
+            <path class="cable-pulse pulse-2" d="M 400 160 C 400 100, 400 40, 400 0" />
+            <path class="cable-pulse pulse-3" d="M 620 160 C 580 90, 490 50, 440 0" />
+          </svg>
+        </div>
       </div>
     </div>
 
@@ -554,15 +646,12 @@
   </audio>
 
   <script>
-    // ربط حركة خلفية الصورة بين أعلى الصورة (0%) وأسفل الصورة (100%)
     function updateBackgroundOnScroll() {
       const scrollY = window.scrollY;
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
       
       if (maxScroll > 0) {
-        // حساب نسبة التمرير الحالية من 0 إلى 100
         const scrollPercent = (scrollY / maxScroll) * 100;
-        // تطبيق النسبة المئوية على موقّع الخلفية العمودي
         document.body.style.backgroundPositionY = `${scrollPercent}%`;
       }
     }
@@ -665,7 +754,6 @@
       });
     });
 
-    // انيميشن ظهور الصورة الثانية
     const secondImg = document.getElementById("second-img");
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -677,7 +765,6 @@
 
     observer.observe(secondImg);
 
-    // تفعيل وتعديل تفاعل الشاشة المعطلة عند النقر
     const brokenScreenBox = document.getElementById("broken-screen-box");
     if (brokenScreenBox) {
       brokenScreenBox.addEventListener("click", () => {
