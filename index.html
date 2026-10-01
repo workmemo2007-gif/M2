@@ -60,10 +60,12 @@
       pointer-events: none;
     }
 
+    /* تم تقليل المسافة لجلب الصورة الثانية أقرب */
     .section-container {
       position: relative;
       z-index: 1;
-      min-height: 100vh;
+      min-height: auto;
+      padding: 40px 0 10px 0;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -87,7 +89,7 @@
       filter: drop-shadow(0 0 22px rgba(28, 69, 255, .2));
     }
 
-    /* تصميم عرض الصورة الثانية */
+    /* تصميم عرض الصورة الثانية (تم تقريبها من الأولى) */
     .second-artwork-container {
       position: relative;
       z-index: 1;
@@ -95,7 +97,8 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 20px 10px 10px 10px;
+      padding: 0px 10px 10px 10px;
+      margin-top: -10px;
       box-sizing: border-box;
     }
 
@@ -108,7 +111,7 @@
       box-shadow: none;
       filter: drop-shadow(0 15px 30px rgba(0,0,0,0.6));
       opacity: 0;
-      transform: translateY(120px) scale(0.92);
+      transform: translateY(60px) scale(0.92);
       transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
       user-select: none;
       -webkit-user-drag: none;
@@ -127,7 +130,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 60px 15px 120px 15px;
+      padding: 40px 15px 40px 15px;
       perspective: 1200px;
     }
 
@@ -526,6 +529,117 @@
       transform-origin: top left;
     }
 
+    /* === تصميم أزرار العودة والقلب في نهاية الصفحة === */
+    .footer-controls {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 10px 0 60px 0;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 26px;
+      background: linear-gradient(145deg, #1e2738, #111624);
+      border: 1px solid var(--gold-border);
+      border-radius: 30px;
+      color: var(--gold-bright);
+      font-family: "Aref Ruqaa", serif;
+      font-size: 20px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(255, 214, 107, 0.1);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      user-select: none;
+    }
+
+    .back-btn .btn-icon {
+      width: 22px;
+      height: 22px;
+      fill: currentColor;
+    }
+
+    .back-btn:hover {
+      background: linear-gradient(145deg, #2a3752, #182238);
+      border-color: var(--gold-bright);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 22px rgba(255, 214, 107, 0.4);
+    }
+
+    .back-btn:active {
+      transform: translateY(1px);
+    }
+
+    .heart-btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      padding: 0;
+      background: linear-gradient(145deg, #831843, #9d174d);
+      border: 1px solid #f472b6;
+      border-radius: 50%;
+      color: #fce7f3;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(219, 39, 119, 0.4);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      user-select: none;
+    }
+
+    .heart-btn .btn-icon {
+      width: 26px;
+      height: 26px;
+      fill: currentColor;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+      transition: transform 0.2s ease;
+    }
+
+    .heart-btn:hover {
+      transform: scale(1.12);
+      background: linear-gradient(145deg, #9d174d, #be185d);
+      box-shadow: 0 6px 20px rgba(219, 39, 119, 0.7);
+    }
+
+    .heart-btn:hover .btn-icon {
+      transform: scale(1.1);
+    }
+
+    .heart-btn:active {
+      transform: scale(0.92);
+    }
+
+    /* تأثير القلوب الوردي المنبعثة والحائمة */
+    .floating-heart {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      user-select: none;
+      animation: floatUp 1.8s ease-out forwards;
+      filter: drop-shadow(0 2px 6px rgba(236, 72, 153, 0.6));
+    }
+
+    @keyframes floatUp {
+      0% {
+        opacity: 1;
+        transform: translate(0, 0) scale(0.5) rotate(0deg);
+      }
+      50% {
+        opacity: 0.95;
+        transform: translate(var(--tx), -70px) scale(1.2) rotate(var(--rot));
+      }
+      100% {
+        opacity: 0;
+        transform: translate(var(--tx-end), -160px) scale(0.7) rotate(var(--rot-end));
+      }
+    }
+
     @media (max-width: 520px) {
       :root {
         --circle-size: 42px;
@@ -644,7 +758,7 @@
       </div>
     </div>
 
-    <!-- القسم الثاني: الصورة العائمة -->
+    <!-- القسم الثاني: الصورة العائمة (مُقرّبة الآن) -->
     <div class="second-artwork-container">
       <img
         id="second-img"
@@ -708,6 +822,18 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- القسم الرابع: أزرار العودة والقلب بأسفل الصفحة -->
+    <div class="footer-controls">
+      <button type="button" class="back-btn" id="btn-back" title="العودة لأعلى الصفحة">
+        <svg viewBox="0 0 24 24" class="btn-icon"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>
+        <span>العودة</span>
+      </button>
+
+      <button type="button" class="heart-btn" id="btn-heart" title="قلب حب">
+        <svg viewBox="0 0 24 24" class="btn-icon"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+      </button>
     </div>
 
   </main>
@@ -925,6 +1051,60 @@
         btnModernMenu.classList.add("active");
         setTimeout(() => btnModernMenu.classList.remove("active"), 500);
       });
+    }
+
+    // === برمجة زر العودة وزر القلب بأسفل الصفحة ===
+    const btnBack = document.getElementById("btn-back");
+    if (btnBack) {
+      btnBack.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    }
+
+    const btnHeart = document.getElementById("btn-heart");
+    if (btnHeart) {
+      btnHeart.addEventListener("click", (e) => {
+        const rect = btnHeart.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+
+        // إطلاق مجموعة قلوب وردية عند الضغط
+        const heartCount = 14;
+        for (let i = 0; i < heartCount; i++) {
+          setTimeout(() => {
+            createFloatingHeart(centerX, centerY);
+          }, i * 50);
+        }
+      });
+    }
+
+    function createFloatingHeart(x, y) {
+      const heart = document.createElement("div");
+      heart.className = "floating-heart";
+      
+      // أشكال قلوب وردية متنوعة
+      const heartIcons = ["🩷", "🌸", "💕", "💗"];
+      heart.innerHTML = heartIcons[Math.floor(Math.random() * heartIcons.length)];
+
+      const tx = (Math.random() - 0.5) * 90;
+      const txEnd = tx + (Math.random() - 0.5) * 70;
+      const rot = (Math.random() - 0.5) * 50;
+      const rotEnd = (Math.random() - 0.5) * 90;
+      const size = Math.floor(Math.random() * 14) + 16;
+
+      heart.style.left = `${x - size / 2}px`;
+      heart.style.top = `${y - size / 2}px`;
+      heart.style.fontSize = `${size}px`;
+      heart.style.setProperty("--tx", `${tx}px`);
+      heart.style.setProperty("--tx-end", `${txEnd}px`);
+      heart.style.setProperty("--rot", `${rot}deg`);
+      heart.style.setProperty("--rot-end", `${rotEnd}deg`);
+
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 1800);
     }
   </script>
 </body>
