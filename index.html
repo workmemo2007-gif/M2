@@ -105,7 +105,7 @@
       border-radius: 20px;
       padding: 20px 18px;
       width: 100%;
-      max-width: 380px;
+      max-width: 400px;
       box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4), inset 0 0 12px rgba(255, 255, 255, 0.08);
       color: #fff;
       direction: rtl;
@@ -165,16 +165,19 @@
 
     .quotes-list p {
       margin: 0;
-      font-size: clamp(14px, 3.2vw, 17px);
-      line-height: 1.5;
+      font-size: clamp(14px, 3.2vw, 16px);
+      line-height: 1.6;
       text-shadow: 0 2px 4px rgba(0,0,0,0.6);
     }
 
-    .quotes-list span {
-      color: var(--pink-accent);
-      font-weight: 700;
-      margin-left: 4px;
-      text-shadow: 0 0 6px rgba(255, 102, 163, 0.4);
+    /* تنسيق النص الشفاف والصغير المطلوب للإعادة */
+    .sub-quote {
+      font-size: clamp(11px, 2.5vw, 13px) !important;
+      opacity: 0.65;
+      color: rgba(255, 255, 255, 0.85);
+      margin-top: -4px !important;
+      margin-bottom: 4px !important;
+      padding-right: 12px;
     }
 
     /* شريط الموجات المتذبذبة الأبيض الناصع والمشع بالأسفل */
@@ -418,7 +421,6 @@
       transform-origin: top left;
     }
 
-    /* تم إنزال الشريط السفلي إلى الأسفل أكثر مع مسافة إضافية للأريحية */
     .footer-controls {
       position: relative;
       z-index: 10;
@@ -432,7 +434,7 @@
     .bottom-bar {
       display: flex;
       width: 95%;
-      max-width: 160px; /* تم تصغير الشريط ليحتوي زر القلب وحده بشكل مركزي */
+      max-width: 160px;
       height: 75px; 
       background: #ffffff;
       border-radius: 50px;
@@ -515,7 +517,7 @@
       }
       .glass-card {
         padding: 16px 14px;
-        max-width: 320px;
+        max-width: 330px;
       }
       .second-artwork {
         width: 100vw;
@@ -592,7 +594,7 @@
       </div>
     </div>
 
-    <!-- الكارت الزجاجي المصغر والمحسن (بين الصورتين) -->
+    <!-- الكارت الزجاجي المصغر والمحسن (تم تحديث النص بالداخل ورابط الصوت الجديد) -->
     <div class="glass-card-wrapper">
       <div class="glass-card">
         <!-- الشريط العلوي الذي يحمل اسم رتاج وزر تشغيل الموسيقى -->
@@ -603,12 +605,14 @@
           </button>
         </div>
         
-        <!-- الاقتباسات مع الحركات (فتحة، ضمة، كسرة) -->
+        <!-- النص الجديد المطلوب في الكارت -->
         <div class="quotes-list">
-          <p><span>لـِ وردَتِي :</span> أَنْتِ مَنْ تَمْنَحِينَ الوَرْدَ لَوْناً</p>
-          <p><span>لـِ شَمْسِي :</span> شَمْسُ النَّهَارِ بِحُسْنِ وَجْهِكِ تُقْسِمُ</p>
-          <p><span>لـِ فَرَاشَتِي :</span> رُمُوشُ عَيْنَيْهَا أَجْنِحَةُ فَرَاشَاتٍ</p>
-          <p><span>لـِ جَمَالِي :</span> وَأَيُّ جَمَالٍ بَعْدَ عَيْنَيْكِ يُذْكَرُ ؟</p>
+          <p>لم عرفت قبلك واحدة غلبتني</p>
+          <p>غلبتني …. أخذت أسلحتي ، هزمتني .… داخل مملكتي</p>
+          <p class="sub-quote">غلبتني …. أخذت أسلحتي، هزمتني …. داخل مملكتي</p>
+          <p>نزعت عن وجهي اقنعتي</p>
+          <p>لم يحدث ، ابدا…! ، ابدا…!</p>
+          <p>سيدتي</p>
         </div>
 
         <!-- شريط الموجات المتذبذبة الأبيض الناصع والمشع بالأسفل -->
@@ -627,8 +631,8 @@
           <div class="card-wave-bar"></div>
         </div>
 
-        <!-- ملف الصوت الجديد -->
-        <audio id="card-audio-element" src="https://github.com/workmemo2007-gif/M2/raw/b8ee0036523d0961a940629a45ecba2def00c267/telegram-cloud-document-4-5908886701551396105.mp4.mp3" preload="metadata"></audio>
+        <!-- ملف الصوت الجديد المحدث -->
+        <audio id="card-audio-element" src="https://raw.githubusercontent.com/workmemo2007-gif/M2/cb5928cdcc51b2d01ad01d75c6ee1c3479a0b22c/telegram-cloud-document-4-5908886701551396122.mp4%202.mp3" preload="metadata"></audio>
       </div>
     </div>
 
