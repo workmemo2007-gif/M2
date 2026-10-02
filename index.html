@@ -45,7 +45,7 @@
       will-change: background-position;
     }
 
-    /* تم تقليل التأثير الداكن وجعله أكثر شفافية */
+    /* التأثير الداكن الشفاف للخلفية */
     body::before {
       content: "";
       position: fixed;
@@ -86,7 +86,7 @@
       filter: drop-shadow(0 0 22px rgba(28, 69, 255, .2));
     }
 
-    /* === تصميم الكارت الزجاجي المصغر والمحسن === */
+    /* === تصميم الكارت الزجاجي === */
     .glass-card-wrapper {
       position: relative;
       z-index: 2;
@@ -111,7 +111,7 @@
       direction: rtl;
     }
 
-    /* الشريط العلوي (العنوان وزر الموسيقى) */
+    /* الشريط العلوي (العنوان وزر الموسيقى اليدوي الاحتياطي) */
     .card-header-bar {
       display: flex;
       align-items: center;
@@ -128,7 +128,6 @@
       text-shadow: 0 0 10px rgba(255, 214, 107, 0.5);
     }
 
-    /* زر تشغيل الموسيقى العلوي */
     .play-pause-btn {
       width: 36px;
       height: 36px;
@@ -161,26 +160,20 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
+      min-height: 140px; /* لضمان ثبات المساحة ريثما يتم الكتابة */
     }
 
-    .quotes-list p {
+    .card-typed-text {
       margin: 0;
       font-size: clamp(14px, 3.2vw, 16px);
       line-height: 1.6;
+      white-space: pre-line;
       text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+      color: var(--off-white-glow);
+      font-weight: 700;
     }
 
-    /* تنسيق النص الشفاف والصغير المطلوب للإعادة */
-    .sub-quote {
-      font-size: clamp(11px, 2.5vw, 13px) !important;
-      opacity: 0.65;
-      color: rgba(255, 255, 255, 0.85);
-      margin-top: -4px !important;
-      margin-bottom: 4px !important;
-      padding-right: 12px;
-    }
-
-    /* شريط الموجات المتذبذبة الأبيض الناصع والمشع بالأسفل */
+    /* شريط الموجات المتذبذبة الأبيض بالأسفل */
     .card-audio-waves-bottom {
       display: flex;
       align-items: flex-end;
@@ -217,7 +210,6 @@
       0% { transform: scaleY(0.2); }
       100% { transform: scaleY(1); }
     }
-    /* =========================== */
 
     .second-artwork-container {
       position: relative;
@@ -594,10 +586,9 @@
       </div>
     </div>
 
-    <!-- الكارت الزجاجي المصغر والمحسن (تم تحديث النص بالداخل ورابط الصوت الجديد) -->
-    <div class="glass-card-wrapper">
+    <!-- الكارت الزجاجي الذي سيعمل تلقائياً عند التمرير إليه -->
+    <div class="glass-card-wrapper" id="card-trigger-zone">
       <div class="glass-card">
-        <!-- الشريط العلوي الذي يحمل اسم رتاج وزر تشغيل الموسيقى -->
         <div class="card-header-bar">
           <h2 class="card-title">لـ رتــاج</h2>
           <button id="card-play-btn" class="play-pause-btn" aria-label="تشغيل الأغنية">
@@ -605,17 +596,12 @@
           </button>
         </div>
         
-        <!-- النص الجديد المطلوب في الكارت -->
+        <!-- حقل النص الذي سيتم كتابته آلياً عند الظهور -->
         <div class="quotes-list">
-          <p>لم عرفت قبلك واحدة غلبتني</p>
-          <p>غلبتني …. أخذت أسلحتي ، هزمتني .… داخل مملكتي</p>
-          <p class="sub-quote">غلبتني …. أخذت أسلحتي، هزمتني …. داخل مملكتي</p>
-          <p>نزعت عن وجهي اقنعتي</p>
-          <p>لم يحدث ، ابدا…! ، ابدا…!</p>
-          <p>سيدتي</p>
+          <p id="card-typed-box" class="card-typed-text"></p>
         </div>
 
-        <!-- شريط الموجات المتذبذبة الأبيض الناصع والمشع بالأسفل -->
+        <!-- شريط الموجات بالأسفل -->
         <div class="card-audio-waves-bottom" id="card-waves">
           <div class="card-wave-bar"></div>
           <div class="card-wave-bar"></div>
@@ -631,7 +617,7 @@
           <div class="card-wave-bar"></div>
         </div>
 
-        <!-- ملف الصوت الجديد المحدث -->
+        <!-- ملف الصوت الجديد -->
         <audio id="card-audio-element" src="https://raw.githubusercontent.com/workmemo2007-gif/M2/cb5928cdcc51b2d01ad01d75c6ee1c3479a0b22c/telegram-cloud-document-4-5908886701551396122.mp4%202.mp3" preload="metadata"></audio>
       </div>
     </div>
@@ -647,7 +633,7 @@
       >
     </div>
 
-    <!-- القسم الثالث: شريط القلب السفلي المتموضع في الأسفل أكثر -->
+    <!-- القسم الثالث: شريط القلب السفلي -->
     <div class="footer-controls">
       <div class="bottom-bar">
         <button type="button" class="heart-btn" id="btn-heart" title="قلب حب">
@@ -730,8 +716,18 @@
     const cardAudio = document.getElementById("card-audio-element");
     const cardPlayBtn = document.getElementById("card-play-btn");
     const cardWaves = document.getElementById("card-waves");
+    const cardTriggerZone = document.getElementById("card-trigger-zone");
+    const cardTypedBox = document.getElementById("card-typed-box");
+    
     const playIconSVG = `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
     const pauseIconSVG = `<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`;
+
+    const cardFullText = `لم عرفت قبلك واحدة غلبتني
+غلبتني …. أخذت أسلحتي ، هزمتني .… داخل مملكتي
+<span style="font-size: 0.85em; opacity: 0.65; display: block; margin-top: 4px;">غلبتني …. أخذت أسلحتي، هزمتني …. داخل مملكتي</span>
+نزعت عن وجهي اقنعتي
+لم يحدث ، ابدا…! ، ابدا…!
+سيدتي`;
 
     function startTyping(text, textElement, cursorElement, speed = 130) {
       textElement.textContent = "";
@@ -748,6 +744,56 @@
       type();
     }
 
+    // كتابة النص الخاص بالكارت تدريجياً (يتعامل مع HTML لكي يدعم الخط الصغير الشفاف)
+    let cardTypingStarted = false;
+    function startCardAutoPlayAndTyping() {
+      if (cardTypingStarted) return;
+      cardTypingStarted = true;
+
+      stopAllEffects(); // إيقاف أي أصوات أخرى للحروف
+
+      // تشغيل الأغنية تلقائياً
+      if (cardAudio) {
+        cardAudio.play().catch(() => {});
+        cardPlayBtn.innerHTML = pauseIconSVG;
+        if (cardWaves) {
+          cardWaves.querySelectorAll('.card-wave-bar').forEach(b => b.classList.add('active'));
+        }
+      }
+
+      // كتابة النص المتزامن
+      let tempDiv = document.createElement("div");
+      tempDiv.innerHTML = cardFullText;
+      let plainText = tempDiv.textContent || tempDiv.innerText || "";
+      
+      cardTypedBox.innerHTML = "";
+      let index = 0;
+      function typeCard() {
+        if (index < plainText.length) {
+          cardTypedBox.textContent += plainText.charAt(index);
+          index++;
+          setTimeout(typeCard, 75); // سرعة الكتابة
+        } else {
+          // عند الانتهاء يتم وضع الكود بالكامل بضيغه HTML لضمان ظهور السطر الصغير والشفاف بدقة
+          cardTypedBox.innerHTML = cardFullText;
+        }
+      }
+      typeCard();
+    }
+
+    // مراقب التمرير لتفعيل الكارت تلقائياً عند الوصول إليه
+    const cardObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          startCardAutoPlayAndTyping();
+        }
+      });
+    }, { threshold: 0.4 }); // يتحقق عند ظهور 40% من الكارت على الشاشة
+
+    if (cardTriggerZone) {
+      cardObserver.observe(cardTriggerZone);
+    }
+
     function stopAllEffects() {
       clearTimeout(typingTimeout);
 
@@ -758,15 +804,6 @@
           audio.currentTime = 0;
         }
       });
-
-      // إيقاف صوت الكارت الزجاجي إذا كان يعمل لكي لا تتداخل الأصوات
-      if (cardAudio) {
-        cardAudio.pause();
-        cardPlayBtn.innerHTML = playIconSVG;
-        if (cardWaves) {
-          cardWaves.querySelectorAll('.card-wave-bar').forEach(b => b.classList.remove('active'));
-        }
-      }
 
       // مسح نصوص الحروف
       ['ra', 'ta', 'alif', 'jeem'].forEach(key => {
@@ -786,6 +823,15 @@
         buttons.forEach((btn) => btn.setAttribute("aria-pressed", "false"));
         stopAllEffects();
 
+        // إيقاف صوت الكارت إذا تم النقر على أي حرف لكي لا تتداخل الأصوات
+        if (cardAudio) {
+          cardAudio.pause();
+          cardPlayBtn.innerHTML = playIconSVG;
+          if (cardWaves) {
+            cardWaves.querySelectorAll('.card-wave-bar').forEach(b => b.classList.remove('active'));
+          }
+        }
+
         if (!isCurrentlyActive) {
           button.setAttribute("aria-pressed", "true");
 
@@ -803,11 +849,11 @@
       });
     });
 
-    // === برمجة زر وموجات الصوت داخل الكارت الزجاجي ===
+    // زر التشغيل اليدوي للكارت في حال رغب المستخدم بإعادته يدوياً
     if (cardPlayBtn && cardAudio) {
       cardPlayBtn.addEventListener("click", () => {
         if (cardAudio.paused) {
-          stopAllEffects(); // إيقاف أي أصوات أخرى
+          stopAllEffects();
           cardAudio.play().catch(() => {});
           cardPlayBtn.innerHTML = pauseIconSVG;
           if (cardWaves) {
