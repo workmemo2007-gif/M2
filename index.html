@@ -57,12 +57,12 @@
       pointer-events: none;
     }
 
-    /* تم تنزيل الصورة للأسفل */
+    /* تم تنزيل الصورة التفاعلية للأسفل أكثر بزيادة الـ padding-top */
     .section-container {
       position: relative;
       z-index: 1;
       min-height: auto;
-      padding: 120px 0 20px 0; /* تم زيادة الـ padding العلوي لتنزيل الصورة */
+      padding: 220px 0 20px 0; 
       display: flex;
       align-items: center;
       justify-content: center;
@@ -72,7 +72,6 @@
       position: relative;
       width: min(72vw, 68vh, 560px);
       aspect-ratio: 1;
-      /* تم إمالة الصورة للأسفل قليلاً */
       transform: rotate(-6deg) translateY(20px); 
       isolation: isolate;
     }
@@ -289,29 +288,32 @@
       transform-origin: top left;
     }
 
-    /* === تصميم شريط العودة والقلب الأفقي الجديد === */
+    /* === تصميم شريط العودة والقلب الأفقي الجديد (أكثر طولاً وعرضاً للأسفل) === */
     .footer-controls {
       position: relative;
       z-index: 10;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 40px 20px 80px 20px;
+      /* تم تنزيل الأزرار للأسفل بزيادة padding-top و padding-bottom */
+      padding: 100px 20px 120px 20px;
       width: 100%;
     }
 
     .bottom-bar {
       display: flex;
-      width: 92%;
-      max-width: 600px;
-      height: 65px;
+      /* تم تكبير عرض الشريط */
+      width: 95%;
+      max-width: 750px; 
+      /* تم زيادة طول (ارتفاع) الشريط */
+      height: 85px; 
       background: #ffffff;
-      border-radius: 40px;
+      border-radius: 50px;
       /* توهج أبيض ناصع ومشع للشريط بالكامل */
       box-shadow: 
-        0 0 20px rgba(255, 255, 255, 0.8), 
-        0 0 40px rgba(255, 255, 255, 0.5), 
-        inset 0 0 15px rgba(255, 255, 255, 1);
+        0 0 25px rgba(255, 255, 255, 0.8), 
+        0 0 50px rgba(255, 255, 255, 0.5), 
+        inset 0 0 20px rgba(255, 255, 255, 1);
       overflow: hidden;
     }
 
@@ -320,12 +322,13 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 12px;
+      gap: 16px; /* مسافة أكبر بين الأيقونة والنص */
       background: transparent;
       border: none;
       color: #080b16;
       font-family: "Aref Ruqaa", serif;
-      font-size: 24px;
+      /* تم تكبير خط العودة */
+      font-size: 28px; 
       font-weight: 700;
       cursor: pointer;
       transition: background 0.3s ease;
@@ -333,8 +336,9 @@
     }
 
     .back-btn .btn-icon {
-      width: 26px;
-      height: 26px;
+      /* تم تكبير أيقونة العودة */
+      width: 32px;
+      height: 32px;
       fill: currentColor;
     }
 
@@ -346,7 +350,8 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 90px;
+      /* تم زيادة عرض زر القلب ليتناسب مع الحجم الجديد */
+      width: 120px;
       /* لون القلب الوردي المتصل بالشريط */
       background: linear-gradient(145deg, #ff66a3, #db2777);
       border: none;
@@ -358,8 +363,9 @@
     }
 
     .heart-btn .btn-icon {
-      width: 30px;
-      height: 30px;
+      /* تم تكبير أيقونة القلب */
+      width: 38px;
+      height: 38px;
       fill: currentColor;
       filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
       transition: transform 0.2s ease;
@@ -418,17 +424,22 @@
         padding: 8px 10px 10px 10px;
       }
       .bottom-bar {
-        height: 55px;
+        /* زيادة حجم الشريط على الجوال أيضاً */
+        height: 70px;
       }
       .back-btn {
-        font-size: 20px;
+        font-size: 24px;
+      }
+      .back-btn .btn-icon {
+        width: 26px;
+        height: 26px;
       }
       .heart-btn {
-        width: 75px;
+        width: 90px;
       }
       .heart-btn .btn-icon {
-        width: 24px;
-        height: 24px;
+        width: 30px;
+        height: 30px;
       }
     }
   </style>
