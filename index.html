@@ -45,7 +45,7 @@
       will-change: background-position;
     }
 
-    /* التأثير الداكن الشفاف للخلفية */
+    /* تم تقليل التأثير الداكن وجعله أكثر شفافية */
     body::before {
       content: "";
       position: fixed;
@@ -86,7 +86,7 @@
       filter: drop-shadow(0 0 22px rgba(28, 69, 255, .2));
     }
 
-    /* === تصميم الكارت الزجاجي === */
+    /* === تصميم الكارت الزجاجي المصغر والمحسن === */
     .glass-card-wrapper {
       position: relative;
       z-index: 2;
@@ -111,7 +111,7 @@
       direction: rtl;
     }
 
-    /* الشريط العلوي (العنوان وزر الموسيقى اليدوي الاحتياطي) */
+    /* الشريط العلوي (العنوان وزر الموسيقى) */
     .card-header-bar {
       display: flex;
       align-items: center;
@@ -128,6 +128,7 @@
       text-shadow: 0 0 10px rgba(255, 214, 107, 0.5);
     }
 
+    /* زر تشغيل الموسيقى العلوي */
     .play-pause-btn {
       width: 36px;
       height: 36px;
@@ -160,20 +161,26 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
-      min-height: 140px; /* لضمان ثبات المساحة ريثما يتم الكتابة */
     }
 
-    .card-typed-text {
+    .quotes-list p {
       margin: 0;
       font-size: clamp(14px, 3.2vw, 16px);
       line-height: 1.6;
-      white-space: pre-line;
       text-shadow: 0 2px 4px rgba(0,0,0,0.6);
-      color: var(--off-white-glow);
-      font-weight: 700;
     }
 
-    /* شريط الموجات المتذبذبة الأبيض بالأسفل */
+    /* تنسيق النص الشفاف والصغير المطلوب للإعادة */
+    .sub-quote {
+      font-size: clamp(11px, 2.5vw, 13px) !important;
+      opacity: 0.65;
+      color: rgba(255, 255, 255, 0.85);
+      margin-top: -4px !important;
+      margin-bottom: 4px !important;
+      padding-right: 12px;
+    }
+
+    /* شريط الموجات المتذبذبة الأبيض الناصع والمشع بالأسفل */
     .card-audio-waves-bottom {
       display: flex;
       align-items: flex-end;
@@ -210,6 +217,7 @@
       0% { transform: scaleY(0.2); }
       100% { transform: scaleY(1); }
     }
+    /* =========================== */
 
     .second-artwork-container {
       position: relative;
@@ -407,55 +415,96 @@
       transform-origin: bottom right;
     }
     .letter-alif { left: 47%; top: 14%; }
-    .letter-jeem { left: 13%; top: 88%; }
+    
+    /* حرف الجيم: تعديل الطبق وارتفاعه ليطفو فوق الكارت (z-index أعلى ومكان ظهوره) */
+    .letter-jeem { 
+      left: 13%; 
+      top: 88%; 
+      z-index: 1000 !important;
+    }
     .letter-jeem[aria-pressed="true"] {
       transform: translate(0, 0);
       transform-origin: top left;
+      z-index: 1000 !important;
     }
 
+    /* تعديل شريط العودة السفلي ليكون شريطاً أفقياً أبيض ناصعاً ومتحداً مع القلب */
     .footer-controls {
       position: relative;
       z-index: 10;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 130px 20px 160px 20px;
+      padding: 100px 20px 140px 20px;
       width: 100%;
     }
 
     .bottom-bar {
       display: flex;
-      width: 95%;
-      max-width: 160px;
-      height: 75px; 
+      width: 90%;
+      max-width: 420px;
+      height: 65px; 
       background: #ffffff;
-      border-radius: 50px;
+      border-radius: 40px;
       box-shadow: 
-        0 0 25px rgba(255, 255, 255, 0.8), 
-        0 0 50px rgba(255, 255, 255, 0.5), 
-        inset 0 0 20px rgba(255, 255, 255, 1);
+        0 0 25px rgba(255, 255, 255, 0.9), 
+        0 0 50px rgba(255, 255, 255, 0.6), 
+        inset 0 0 15px rgba(255, 255, 255, 1);
       overflow: hidden;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
+      padding: 0 8px;
     }
 
+    /* زر العودة داخل الشريط الأفقي الأبيض */
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      border: none;
+      color: #080b16;
+      font-family: "Aref Ruqaa", serif;
+      font-size: clamp(16px, 2.5vw, 19px);
+      font-weight: 700;
+      cursor: pointer;
+      padding: 0 15px;
+      height: 100%;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      text-decoration: none;
+    }
+
+    .back-btn:hover {
+      opacity: 0.75;
+      transform: scale(1.03);
+    }
+
+    .back-btn svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    /* زر القلب المدمج داخل الشريط الأبيض الطويل */
     .heart-btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 100%;
-      height: 100%;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
       background: linear-gradient(145deg, #ff66a3, #db2777);
       border: none;
       color: #fff;
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: transform 0.3s ease, background 0.3s ease;
       user-select: none;
+      box-shadow: 0 3px 10px rgba(219, 39, 119, 0.4);
     }
 
     .heart-btn .btn-icon {
-      width: 38px;
-      height: 38px;
+      width: 26px;
+      height: 26px;
       fill: currentColor;
       filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
       transition: transform 0.2s ease;
@@ -463,6 +512,7 @@
 
     .heart-btn:hover {
       background: linear-gradient(145deg, #db2777, #be185d);
+      transform: scale(1.08);
     }
 
     .heart-btn:hover .btn-icon {
@@ -520,12 +570,21 @@
         padding: 8px 10px 10px 10px;
       }
       .bottom-bar {
-        height: 65px;
-        max-width: 130px;
+        height: 58px;
+        width: 92%;
+        max-width: 340px;
+      }
+      .back-btn {
+        font-size: 15px;
+        padding: 0 10px;
+      }
+      .heart-btn {
+        width: 44px;
+        height: 44px;
       }
       .heart-btn .btn-icon {
-        width: 30px;
-        height: 30px;
+        width: 22px;
+        height: 22px;
       }
     }
   </style>
@@ -586,9 +645,10 @@
       </div>
     </div>
 
-    <!-- الكارت الزجاجي الذي سيعمل تلقائياً عند التمرير إليه -->
-    <div class="glass-card-wrapper" id="card-trigger-zone">
+    <!-- الكارت الزجاجي المصغر والمحسن (تم تحديث النص بالداخل ورابط الصوت الجديد) -->
+    <div class="glass-card-wrapper">
       <div class="glass-card">
+        <!-- الشريط العلوي الذي يحمل اسم رتاج وزر تشغيل الموسيقى -->
         <div class="card-header-bar">
           <h2 class="card-title">لـ رتــاج</h2>
           <button id="card-play-btn" class="play-pause-btn" aria-label="تشغيل الأغنية">
@@ -596,12 +656,17 @@
           </button>
         </div>
         
-        <!-- حقل النص الذي سيتم كتابته آلياً عند الظهور -->
+        <!-- النص الجديد المطلوب في الكارت -->
         <div class="quotes-list">
-          <p id="card-typed-box" class="card-typed-text"></p>
+          <p>لم عرفت قبلك واحدة غلبتني</p>
+          <p>غلبتني …. أخذت أسلحتي ، هزمتني .… داخل مملكتي</p>
+          <p class="sub-quote">غلبتني …. أخذت أسلحتي، هزمتني …. داخل مملكتي</p>
+          <p>نزعت عن وجهي اقنعتي</p>
+          <p>لم يحدث ، ابدا…! ، ابدا…!</p>
+          <p>سيدتي</p>
         </div>
 
-        <!-- شريط الموجات بالأسفل -->
+        <!-- شريط الموجات المتذبذبة الأبيض الناصع والمشع بالأسفل -->
         <div class="card-audio-waves-bottom" id="card-waves">
           <div class="card-wave-bar"></div>
           <div class="card-wave-bar"></div>
@@ -617,7 +682,7 @@
           <div class="card-wave-bar"></div>
         </div>
 
-        <!-- ملف الصوت الجديد -->
+        <!-- ملف الصوت الجديد المحدث -->
         <audio id="card-audio-element" src="https://raw.githubusercontent.com/workmemo2007-gif/M2/cb5928cdcc51b2d01ad01d75c6ee1c3479a0b22c/telegram-cloud-document-4-5908886701551396122.mp4%202.mp3" preload="metadata"></audio>
       </div>
     </div>
@@ -633,9 +698,13 @@
       >
     </div>
 
-    <!-- القسم الثالث: شريط القلب السفلي -->
+    <!-- القسم الثالث: شريط طويل أفقياً أبيض ناصع يضم زر العودة والقلب متاحين معاً -->
     <div class="footer-controls">
       <div class="bottom-bar">
+        <a href="#" class="back-btn" id="btn-back" title="العودة">
+          <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+          العودة للبداية
+        </a>
         <button type="button" class="heart-btn" id="btn-heart" title="قلب حب">
           <svg viewBox="0 0 24 24" class="btn-icon"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
         </button>
@@ -716,18 +785,8 @@
     const cardAudio = document.getElementById("card-audio-element");
     const cardPlayBtn = document.getElementById("card-play-btn");
     const cardWaves = document.getElementById("card-waves");
-    const cardTriggerZone = document.getElementById("card-trigger-zone");
-    const cardTypedBox = document.getElementById("card-typed-box");
-    
     const playIconSVG = `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
     const pauseIconSVG = `<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`;
-
-    const cardFullText = `لم عرفت قبلك واحدة غلبتني
-غلبتني …. أخذت أسلحتي ، هزمتني .… داخل مملكتي
-<span style="font-size: 0.85em; opacity: 0.65; display: block; margin-top: 4px;">غلبتني …. أخذت أسلحتي، هزمتني …. داخل مملكتي</span>
-نزعت عن وجهي اقنعتي
-لم يحدث ، ابدا…! ، ابدا…!
-سيدتي`;
 
     function startTyping(text, textElement, cursorElement, speed = 130) {
       textElement.textContent = "";
@@ -744,56 +803,6 @@
       type();
     }
 
-    // كتابة النص الخاص بالكارت تدريجياً (يتعامل مع HTML لكي يدعم الخط الصغير الشفاف)
-    let cardTypingStarted = false;
-    function startCardAutoPlayAndTyping() {
-      if (cardTypingStarted) return;
-      cardTypingStarted = true;
-
-      stopAllEffects(); // إيقاف أي أصوات أخرى للحروف
-
-      // تشغيل الأغنية تلقائياً
-      if (cardAudio) {
-        cardAudio.play().catch(() => {});
-        cardPlayBtn.innerHTML = pauseIconSVG;
-        if (cardWaves) {
-          cardWaves.querySelectorAll('.card-wave-bar').forEach(b => b.classList.add('active'));
-        }
-      }
-
-      // كتابة النص المتزامن
-      let tempDiv = document.createElement("div");
-      tempDiv.innerHTML = cardFullText;
-      let plainText = tempDiv.textContent || tempDiv.innerText || "";
-      
-      cardTypedBox.innerHTML = "";
-      let index = 0;
-      function typeCard() {
-        if (index < plainText.length) {
-          cardTypedBox.textContent += plainText.charAt(index);
-          index++;
-          setTimeout(typeCard, 75); // سرعة الكتابة
-        } else {
-          // عند الانتهاء يتم وضع الكود بالكامل بضيغه HTML لضمان ظهور السطر الصغير والشفاف بدقة
-          cardTypedBox.innerHTML = cardFullText;
-        }
-      }
-      typeCard();
-    }
-
-    // مراقب التمرير لتفعيل الكارت تلقائياً عند الوصول إليه
-    const cardObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          startCardAutoPlayAndTyping();
-        }
-      });
-    }, { threshold: 0.4 }); // يتحقق عند ظهور 40% من الكارت على الشاشة
-
-    if (cardTriggerZone) {
-      cardObserver.observe(cardTriggerZone);
-    }
-
     function stopAllEffects() {
       clearTimeout(typingTimeout);
 
@@ -804,6 +813,15 @@
           audio.currentTime = 0;
         }
       });
+
+      // إيقاف صوت الكارت الزجاجي إذا كان يعمل لكي لا تتداخل الأصوات
+      if (cardAudio) {
+        cardAudio.pause();
+        cardPlayBtn.innerHTML = playIconSVG;
+        if (cardWaves) {
+          cardWaves.querySelectorAll('.card-wave-bar').forEach(b => b.classList.remove('active'));
+        }
+      }
 
       // مسح نصوص الحروف
       ['ra', 'ta', 'alif', 'jeem'].forEach(key => {
@@ -823,15 +841,6 @@
         buttons.forEach((btn) => btn.setAttribute("aria-pressed", "false"));
         stopAllEffects();
 
-        // إيقاف صوت الكارت إذا تم النقر على أي حرف لكي لا تتداخل الأصوات
-        if (cardAudio) {
-          cardAudio.pause();
-          cardPlayBtn.innerHTML = playIconSVG;
-          if (cardWaves) {
-            cardWaves.querySelectorAll('.card-wave-bar').forEach(b => b.classList.remove('active'));
-          }
-        }
-
         if (!isCurrentlyActive) {
           button.setAttribute("aria-pressed", "true");
 
@@ -849,11 +858,11 @@
       });
     });
 
-    // زر التشغيل اليدوي للكارت في حال رغب المستخدم بإعادته يدوياً
+    // === برمجة زر وموجات الصوت داخل الكارت الزجاجي ===
     if (cardPlayBtn && cardAudio) {
       cardPlayBtn.addEventListener("click", () => {
         if (cardAudio.paused) {
-          stopAllEffects();
+          stopAllEffects(); // إيقاف أي أصوات أخرى
           cardAudio.play().catch(() => {});
           cardPlayBtn.innerHTML = pauseIconSVG;
           if (cardWaves) {
@@ -886,6 +895,18 @@
       });
     }, { threshold: 0.15 });
     observer.observe(secondImg);
+
+    // برمجة زر العودة للبداية
+    const btnBack = document.getElementById("btn-back");
+    if (btnBack) {
+      btnBack.addEventListener("click", (e) => {
+        e.preventDefault();
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+    }
 
     // برمجة زر القلب
     const btnHeart = document.getElementById("btn-heart");
