@@ -45,6 +45,7 @@
       will-change: background-position;
     }
 
+    /* تم تقليل التأثير الداكن وجعله أكثر شفافية */
     body::before {
       content: "";
       position: fixed;
@@ -52,7 +53,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.55);
+      background-color: rgba(0, 0, 0, 0.30);
       z-index: 0;
       pointer-events: none;
     }
@@ -85,74 +86,52 @@
       filter: drop-shadow(0 0 22px rgba(28, 69, 255, .2));
     }
 
-    /* === تصميم الكارت الزجاجي === */
+    /* === تصميم الكارت الزجاجي المصغر والمحسن === */
     .glass-card-wrapper {
       position: relative;
       z-index: 2;
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 20px;
-      margin: 30px 0;
+      padding: 15px;
+      margin: 25px 0;
     }
 
     .glass-card {
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 24px;
-      padding: 30px 25px;
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 20px;
+      padding: 20px 18px;
       width: 100%;
-      max-width: 500px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4), inset 0 0 15px rgba(255, 255, 255, 0.1);
+      max-width: 380px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4), inset 0 0 12px rgba(255, 255, 255, 0.08);
       color: #fff;
       direction: rtl;
     }
 
-    .card-title {
-      text-align: center;
-      font-size: clamp(28px, 5vw, 36px);
-      color: var(--gold-bright);
-      margin: 0 0 20px 0;
-      padding-bottom: 15px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-      text-shadow: 0 0 15px rgba(255, 214, 107, 0.5);
-    }
-
-    .quotes-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .quotes-list p {
-      margin: 0;
-      font-size: clamp(18px, 4vw, 22px);
-      line-height: 1.6;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.6);
-    }
-
-    .quotes-list span {
-      color: var(--pink-accent);
-      font-weight: 700;
-      margin-left: 6px;
-      text-shadow: 0 0 8px rgba(255, 102, 163, 0.4);
-    }
-
-    /* مشغل الصوت داخل الكارت */
-    .card-audio-player {
+    /* الشريط العلوي (العنوان وزر الموسيقى) */
+    .card-header-bar {
       display: flex;
       align-items: center;
-      gap: 15px;
-      margin-top: 25px;
-      padding-top: 20px;
-      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      justify-content: space-between;
+      padding-bottom: 12px;
+      margin-bottom: 15px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.18);
     }
 
+    .card-title {
+      font-size: clamp(20px, 4vw, 24px);
+      color: var(--gold-bright);
+      margin: 0;
+      text-shadow: 0 0 10px rgba(255, 214, 107, 0.5);
+    }
+
+    /* زر تشغيل الموسيقى العلوي */
     .play-pause-btn {
-      width: 45px;
-      height: 45px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       border: none;
       background: rgba(255, 255, 255, 0.9);
@@ -163,39 +142,78 @@
       cursor: pointer;
       transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
       flex-shrink: 0;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      box-shadow: 0 3px 8px rgba(0,0,0,0.3);
     }
 
     .play-pause-btn:hover {
       transform: scale(1.08);
       background: #fff;
-      box-shadow: 0 4px 15px rgba(255,255,255,0.5);
+      box-shadow: 0 3px 12px rgba(255,255,255,0.6);
     }
 
     .play-pause-btn svg {
-      width: 22px;
-      height: 22px;
+      width: 18px;
+      height: 18px;
       fill: currentColor;
     }
 
-    .audio-progress-container {
+    .quotes-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .quotes-list p {
+      margin: 0;
+      font-size: clamp(14px, 3.2vw, 17px);
+      line-height: 1.5;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+    }
+
+    .quotes-list span {
+      color: var(--pink-accent);
+      font-weight: 700;
+      margin-left: 4px;
+      text-shadow: 0 0 6px rgba(255, 102, 163, 0.4);
+    }
+
+    /* شريط الموجات المتذبذبة الأبيض الناصع والمشع بالأسفل */
+    .card-audio-waves-bottom {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      width: 100%;
+      height: 22px;
+      margin-top: 18px;
+      padding-top: 6px;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .card-wave-bar {
       flex: 1;
-      height: 6px;
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 3px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .audio-progress-bar {
+      margin: 0 1.5px;
       height: 100%;
-      width: 0%;
-      background: var(--pink-accent);
-      border-radius: 3px;
-      transition: width 0.1s linear;
-      box-shadow: 0 0 10px rgba(255, 102, 163, 0.8);
+      background-color: #ffffff;
+      border-radius: 2px;
+      transform-origin: bottom;
+      animation: card-wave-bounce 0.8s ease-in-out infinite alternate;
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.9), 0 0 15px rgba(255, 255, 255, 0.5);
+      opacity: 0.4;
     }
 
+    .card-wave-bar.active {
+      opacity: 1;
+    }
+
+    .card-wave-bar:nth-child(2n) { animation-delay: 0.12s; }
+    .card-wave-bar:nth-child(3n) { animation-delay: 0.25s; }
+    .card-wave-bar:nth-child(4n) { animation-delay: 0.38s; }
+    .card-wave-bar:nth-child(5n) { animation-delay: 0.18s; }
+
+    @keyframes card-wave-bounce {
+      0% { transform: scaleY(0.2); }
+      100% { transform: scaleY(1); }
+    }
     /* =========================== */
 
     .second-artwork-container {
@@ -400,21 +418,22 @@
       transform-origin: top left;
     }
 
+    /* تم إنزال الشريط السفلي إلى الأسفل أكثر مع مسافة إضافية للأريحية */
     .footer-controls {
       position: relative;
       z-index: 10;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 100px 20px 120px 20px;
+      padding: 130px 20px 160px 20px;
       width: 100%;
     }
 
     .bottom-bar {
       display: flex;
       width: 95%;
-      max-width: 750px; 
-      height: 85px; 
+      max-width: 160px; /* تم تصغير الشريط ليحتوي زر القلب وحده بشكل مركزي */
+      height: 75px; 
       background: #ffffff;
       border-radius: 50px;
       box-shadow: 
@@ -422,43 +441,18 @@
         0 0 50px rgba(255, 255, 255, 0.5), 
         inset 0 0 20px rgba(255, 255, 255, 1);
       overflow: hidden;
-    }
-
-    .back-btn {
-      flex: 1;
-      display: inline-flex;
-      align-items: center;
       justify-content: center;
-      gap: 16px; 
-      background: transparent;
-      border: none;
-      color: #080b16;
-      font-family: "Aref Ruqaa", serif;
-      font-size: 28px; 
-      font-weight: 700;
-      cursor: pointer;
-      transition: background 0.3s ease;
-      user-select: none;
-    }
-
-    .back-btn .btn-icon {
-      width: 32px;
-      height: 32px;
-      fill: currentColor;
-    }
-
-    .back-btn:hover {
-      background: rgba(0, 0, 0, 0.04);
+      align-items: center;
     }
 
     .heart-btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 120px;
+      width: 100%;
+      height: 100%;
       background: linear-gradient(145deg, #ff66a3, #db2777);
       border: none;
-      border-right: 3px solid rgba(255, 255, 255, 0.3);
       color: #fff;
       cursor: pointer;
       transition: background 0.3s ease;
@@ -520,7 +514,8 @@
         padding: 10px;
       }
       .glass-card {
-        padding: 25px 20px;
+        padding: 16px 14px;
+        max-width: 320px;
       }
       .second-artwork {
         width: 100vw;
@@ -531,17 +526,8 @@
         padding: 8px 10px 10px 10px;
       }
       .bottom-bar {
-        height: 70px;
-      }
-      .back-btn {
-        font-size: 24px;
-      }
-      .back-btn .btn-icon {
-        width: 26px;
-        height: 26px;
-      }
-      .heart-btn {
-        width: 90px;
+        height: 65px;
+        max-width: 130px;
       }
       .heart-btn .btn-icon {
         width: 30px;
@@ -606,31 +592,43 @@
       </div>
     </div>
 
-    <!-- الكارت الزجاجي الجديد (بين الصورتين) -->
+    <!-- الكارت الزجاجي المصغر والمحسن (بين الصورتين) -->
     <div class="glass-card-wrapper">
       <div class="glass-card">
-        <h2 class="card-title">لـ رتــاج</h2>
-        
-        <div class="quotes-list">
-          <p><span>لـ وردتي :</span> انت من تمنحين الورد لونا</p>
-          <p><span>لـ شمسي :</span> شمس النهار بحسن وجهك تقسم</p>
-          <p><span>لـ فراشتي :</span> رموش عينيها اجنحه فراشات</p>
-          <p><span>لـ جمالي :</span> واي جمال بعد عينيك يذكر ؟</p>
-        </div>
-
-        <div class="card-audio-player">
+        <!-- الشريط العلوي الذي يحمل اسم رتاج وزر تشغيل الموسيقى -->
+        <div class="card-header-bar">
+          <h2 class="card-title">لـ رتــاج</h2>
           <button id="card-play-btn" class="play-pause-btn" aria-label="تشغيل الأغنية">
-            <!-- أيقونة التشغيل الافتراضية -->
             <svg viewBox="0 0 24 24" id="play-icon"><path d="M8 5v14l11-7z"/></svg>
           </button>
-          
-          <div class="audio-progress-container" id="progress-container">
-            <div class="audio-progress-bar" id="audio-progress-bar"></div>
-          </div>
-          
-          <!-- يمكنك تغيير رابط الصوت (src) إلى أي أغنية تريدها -->
-          <audio id="card-audio-element" src="https://raw.githubusercontent.com/workmemo2007-gif/M2/8da0fced89cbc566d6cffe25fce5347ab6e10d22/telegram-cloud-document-2-5321499372058354999.mp4.mp3" preload="metadata"></audio>
         </div>
+        
+        <!-- الاقتباسات مع الحركات (فتحة، ضمة، كسرة) -->
+        <div class="quotes-list">
+          <p><span>لـِ وردَتِي :</span> أَنْتِ مَنْ تَمْنَحِينَ الوَرْدَ لَوْناً</p>
+          <p><span>لـِ شَمْسِي :</span> شَمْسُ النَّهَارِ بِحُسْنِ وَجْهِكِ تُقْسِمُ</p>
+          <p><span>لـِ فَرَاشَتِي :</span> رُمُوشُ عَيْنَيْهَا أَجْنِحَةُ فَرَاشَاتٍ</p>
+          <p><span>لـِ جَمَالِي :</span> وَأَيُّ جَمَالٍ بَعْدَ عَيْنَيْكِ يُذْكَرُ ؟</p>
+        </div>
+
+        <!-- شريط الموجات المتذبذبة الأبيض الناصع والمشع بالأسفل -->
+        <div class="card-audio-waves-bottom" id="card-waves">
+          <div class="card-wave-bar"></div>
+          <div class="card-wave-bar"></div>
+          <div class="card-wave-bar"></div>
+          <div class="card-wave-bar"></div>
+          <div class="card-wave-bar"></div>
+          <div class="card-wave-bar"></div>
+          <div class="card-wave-bar"></div>
+          <div class="card-wave-bar"></div>
+          <div class="card-wave-bar"></div>
+          <div class="card-wave-bar"></div>
+          <div class="card-wave-bar"></div>
+          <div class="card-wave-bar"></div>
+        </div>
+
+        <!-- ملف الصوت الجديد -->
+        <audio id="card-audio-element" src="https://github.com/workmemo2007-gif/M2/raw/b8ee0036523d0961a940629a45ecba2def00c267/telegram-cloud-document-4-5908886701551396105.mp4.mp3" preload="metadata"></audio>
       </div>
     </div>
 
@@ -645,13 +643,9 @@
       >
     </div>
 
-    <!-- القسم الثالث: شريط العودة والقلب الأفقي المتصل -->
+    <!-- القسم الثالث: شريط القلب السفلي المتموضع في الأسفل أكثر -->
     <div class="footer-controls">
       <div class="bottom-bar">
-        <button type="button" class="back-btn" id="btn-back" title="العودة لأعلى الصفحة">
-          <svg viewBox="0 0 24 24" class="btn-icon"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>
-          <span>العودة</span>
-        </button>
         <button type="button" class="heart-btn" id="btn-heart" title="قلب حب">
           <svg viewBox="0 0 24 24" class="btn-icon"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
         </button>
@@ -731,7 +725,7 @@
     // عناصر الكارت الصوتي
     const cardAudio = document.getElementById("card-audio-element");
     const cardPlayBtn = document.getElementById("card-play-btn");
-    const cardProgressBar = document.getElementById("audio-progress-bar");
+    const cardWaves = document.getElementById("card-waves");
     const playIconSVG = `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
     const pauseIconSVG = `<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`;
 
@@ -765,6 +759,9 @@
       if (cardAudio) {
         cardAudio.pause();
         cardPlayBtn.innerHTML = playIconSVG;
+        if (cardWaves) {
+          cardWaves.querySelectorAll('.card-wave-bar').forEach(b => b.classList.remove('active'));
+        }
       }
 
       // مسح نصوص الحروف
@@ -802,33 +799,30 @@
       });
     });
 
-    // === برمجة مشغل الصوت داخل الكارت الزجاجي ===
+    // === برمجة زر وموجات الصوت داخل الكارت الزجاجي ===
     if (cardPlayBtn && cardAudio) {
       cardPlayBtn.addEventListener("click", () => {
         if (cardAudio.paused) {
-          // إيقاف أصوات الحروف الأخرى أولاً
-          stopAllEffects();
-          // ثم تشغيل صوت الكارت
-          cardAudio.play();
+          stopAllEffects(); // إيقاف أي أصوات أخرى
+          cardAudio.play().catch(() => {});
           cardPlayBtn.innerHTML = pauseIconSVG;
+          if (cardWaves) {
+            cardWaves.querySelectorAll('.card-wave-bar').forEach(b => b.classList.add('active'));
+          }
         } else {
           cardAudio.pause();
           cardPlayBtn.innerHTML = playIconSVG;
+          if (cardWaves) {
+            cardWaves.querySelectorAll('.card-wave-bar').forEach(b => b.classList.remove('active'));
+          }
         }
       });
 
-      // تحديث شريط التقدم
-      cardAudio.addEventListener("timeupdate", () => {
-        if (cardAudio.duration) {
-          const progressPercent = (cardAudio.currentTime / cardAudio.duration) * 100;
-          cardProgressBar.style.width = `${progressPercent}%`;
-        }
-      });
-
-      // إعادة الأيقونة عند انتهاء الأغنية
       cardAudio.addEventListener("ended", () => {
         cardPlayBtn.innerHTML = playIconSVG;
-        cardProgressBar.style.width = "0%";
+        if (cardWaves) {
+          cardWaves.querySelectorAll('.card-wave-bar').forEach(b => b.classList.remove('active'));
+        }
       });
     }
 
@@ -842,14 +836,6 @@
       });
     }, { threshold: 0.15 });
     observer.observe(secondImg);
-
-    // برمجة زر العودة
-    const btnBack = document.getElementById("btn-back");
-    if (btnBack) {
-      btnBack.addEventListener("click", () => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      });
-    }
 
     // برمجة زر القلب
     const btnHeart = document.getElementById("btn-heart");
